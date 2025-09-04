@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>純 CSS Media Query RWD 範例</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: "Segoe UI", sans-serif;
+            transition: background 0.3s;
+        }
+
+        header {
+            margin-bottom: 20px;
+        }
+
+        .nav-desktop,
+        .nav-pad,
+        .nav-mobile {
+            display: none;
+            padding: 10px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-desktop {
+            background-color: #222;
+        }
+
+        .nav-pad {
+            background-color: #007bff;
+        }
+
+        .nav-mobile {
+            background-color: #444;
+        }
+
+        h1,
+        p {
+            text-align: center;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: #eee;
+            border: 1px solid #ccc;
+            padding: 20px;
+            text-align: center;
+            flex: 1 1 100%;
+            max-width: 100%;
+        }
+
+        /* 手機 <768px */
+        @media (max-width: 767px) {
+            body {
+                background-color: #fff;
+                font-size: 16px;
+            }
+
+            .nav-mobile {
+                display: block;
+            }
+
+            .card {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+        }
+
+        /* 平板 768~1076px */
+        @media (min-width: 768px) and (max-width: 1076px) {
+            body {
+                background-color: #1ebed7;
+                font-size: 18px;
+            }
+
+            .nav-pad {
+                display: block;
+            }
+
+            .card {
+                flex: 1 1 calc(50% - 10px);
+                max-width: calc(50% - 10px);
+            }
+        }
+
+        /* 桌機 ≥1077px */
+        @media (min-width: 1077px) {
+            body {
+                background-color: #003366;
+                color: white;
+                font-size: 20px;
+            }
+
+            .nav-desktop {
+                display: block;
+            }
+
+            .card {
+                background-color: #005599;
+                color: white;
+                flex: 1 1 calc(33.33% - 10px);
+                max-width: calc(33.33% - 10px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="nav-desktop">桌機選單（大/等於1077px）：三欄卡片（深藍背景 + 白字）</div>
+        <div class="nav-pad">PAD選單（介於768~1076px）：兩欄卡片（背景淡藍）</div>
+        <div class="nav-mobile">手機選單（小於768px）：一欄卡片（背景白）</div>
+    </header>
+
+    <h1>CSS Media Query</h1>
+    <p>F12 打開開發人員工具，調整寬度觀察不同選單顯示吧！</p>
+
+    <div class="card-container">
+        <div class="card">卡片 1</div>
+        <div class="card">卡片 2</div>
+        <div class="card">卡片 3</div>
+        <div class="card">卡片 4</div>
+        <div class="card">卡片 5</div>
+        <div class="card">卡片 6</div>
+        <div class="card">卡片 7</div>
+        <div class="card">卡片 8</div>
+        <div class="card">卡片 9</div>
+    </div>
+
+</body>
+
+</html>

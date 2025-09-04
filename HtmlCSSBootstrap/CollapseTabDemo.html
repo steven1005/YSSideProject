@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap 4 範例：折疊、分頁與導航</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        /* 關鍵 CSS：讓每個 section 佔滿整個視窗高度 */
+        section {
+            min-height: calc(100vh - 56px);
+            /* 100vh 減去 navbar 的高度 */
+            display: flex;
+            /* 使用 flexbox 讓內容垂直居中 */
+            flex-direction: column;
+            /* 讓內容垂直排列 */
+            justify-content: center;
+            /* 垂直居中 */
+            align-items: center;
+            /* 水平居中 */
+            padding: 20px 0;
+            /* 增加一些內邊距，避免內容緊貼邊緣 */
+            text-align: center;
+            /* 讓 section 內的文字置中 */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <section id="sectionNav" class="mb-5">
+
+            <h3>1. 基本導航 (Nav) 範例</h3>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                <div class="container">
+                    <a class="navbar-brand" href="#">網站標誌</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#sectionNav">導航(Nav)範例<span
+                                        class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sectionCollapse">折疊(collapse)範例</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sectionTabs">分頁(Tab)範例</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+        </section>
+
+        <section id="sectionCollapse">
+            <h3>2. 基本折疊 (Collapse) 範例</h3>
+            <div class="text-center mb-4">
+                <button class="btn btn-primary btn-lg" type="button" data-toggle="collapse"
+                    data-target="#simpleCollapseContent" aria-expanded="false" aria-controls="simpleCollapseContent">
+                    點擊切換基本折疊內容
+                </button>
+            </div>
+
+            <div class="collapse pt-5" id="simpleCollapseContent">
+                <div class="my-collapse-content-style card text-center">
+                    <div class="card-header">這是一段可以被折疊和展開的內容。</div>
+                    <div class="card-body">
+                        <p class="mt-2 mb-0">當你點擊上方的按鈕時，這段內容就會出現或消失。</p>
+                        <p>這段文字很長很長，長到需要測試內容是否能正確顯示。</p>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-5">
+            <button class="btn btn-primary mt-3" type="button" data-toggle="collapse" data-target="#homeContent"
+                aria-expanded="false">
+                切換首頁內容
+            </button>
+            <button class="btn btn-primary mt-3" type="button" data-toggle="collapse" data-target="#profileContent"
+                aria-expanded="false">
+                切換個人資料
+            </button>
+            <button class="btn btn-primary mt-3" type="button" data-toggle="collapse" data-target="#contactContent"
+                aria-expanded="false">
+                切換聯絡方式
+            </button>
+            <button class="btn btn-primary mt-3" type="button" data-toggle="collapse" data-target="#tabCollapseContent"
+                aria-expanded="false">
+                切換嵌套折疊內容
+            </button>
+            <div class="collapse show mt-3" id="homeContent">
+                <div class="card card-body">
+                    <h4>歡迎來到首頁！</h4>
+                    <p>這裡是首頁的內容。點擊上方按鈕可以切換我的顯示/隱藏。</p>
+                    <p>現在我以展開狀態顯示。</p>
+                </div>
+            </div>
+
+            <div class="collapse mt-3" id="profileContent">
+                <div class="card card-body">
+                    <h4>這是您的個人資料頁。</h4>
+                    <p>點擊按鈕來顯示或隱藏這段內容。</p>
+                </div>
+            </div>
+
+            <div class="collapse mt-3" id="contactContent">
+                <div class="card card-body">
+                    <h4>聯絡方式</h4>
+                    <p>電話：(02) 1234-5678</p>
+                    <p>信箱：info@example.com</p>
+                </div>
+            </div>
+
+            <div class="collapse mt-3" id="tabCollapseContent">
+                <div class="card card-body">
+                    <h4>這是分頁內的折疊內容！</h4>
+                    <button class="btn btn-secondary mt-2" type="button" data-toggle="collapse"
+                        data-target="#nestedCollapseInnerContent" aria-expanded="false">
+                        點擊切換內層折疊
+                    </button>
+                    <div class="collapse mt-3" id="nestedCollapseInnerContent">
+                        <div class="card card-body">
+                            <p>這個內容只會在您點擊上面的「點擊切換內層折疊」按鈕後才顯示。</p>
+                            <p>這證明了 Bootstrap 的元件可以互相嵌套，實現更複雜的互動介面。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="sectionTabs">
+            <h3 class="mt-5">3. 分頁 (Tabs) (無淡入效果)</h3>
+            <ul class="nav nav-tabs" id="mySimpleTabs">
+                <li class="nav-item">
+                    <a class="nav-link active" id="tab-home" data-toggle="tab" href="#homeTabContent"
+                        aria-selected="true">首頁</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-about" data-toggle="tab" href="#aboutTabContent"
+                        aria-selected="false">關於我們</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-services" data-toggle="tab" href="#servicesTabContent"
+                        aria-selected="false">服務</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="mySimpleTabsContent">
+                <div class="tab-pane active" id="homeTabContent">
+                    <div class="card card-body mt-3">
+                        <h4>歡迎來到首頁！</h4>
+                        <p>這裡是首頁的內容。分頁功能讓您可以將不同主題的內容組織在單一頁面中，節省空間並提高資訊的清晰度。</p>
+                    </div>
+                </div>
+                <div class="tab-pane" id="aboutTabContent">
+                    <div class="card card-body mt-3">
+                        <h4>關於我們</h4>
+                        <p>我們致力於提供高品質的服務和解決方案。</p>
+                        <p>我們的團隊由經驗豐富的專業人士組成。</p>
+                    </div>
+                </div>
+                <div class="tab-pane" id="servicesTabContent">
+                    <div class="card card-body mt-3">
+                        <h4>我們的服務</h4>
+                        <p>提供網站開發、行動應用程式和雲端解決方案。</p>
+                        <p>請聯絡我們以獲取更多資訊。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

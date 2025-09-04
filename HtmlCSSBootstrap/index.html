@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-bs-theme="dark"> <!-- 暗黑模式 -->
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>台大教育訓練：HTML5, CSS3, jQuery, Bootstrap 網頁設計基礎班 [線上課程]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="container">
+
+    <!-- side-bar 
+        最外層的 <div class="sidebar-nav"> 作為整個側邊導航的容器。我們透過 CSS 為它設定了固定定位 (fixed position)，讓它無論頁面如何滾動或切換，都能穩穩地停留在螢幕的特定位置，方便使用者隨時導航。
+        class="sidebar-link"，這個類別是我們在 JavaScript 中選取這些連結的依據，
+        href="#htmlSection" 這樣的屬性，其值 (#htmlSection) 精確地對應到我們網頁中每個滑動區塊的 id (例如 <section id="htmlSection">)。這是實現點擊連結跳轉到對應頁面的關鍵。當使用者點擊這個連結時，JavaScript 會捕獲這個 href 值，並計算出要跳轉到哪一個滑動頁面。
+        -->
+
+    <section class="text-white my-5">
+        <h3>台大教育訓練：HTML5, CSS3, jQuery, Bootstrap 網頁設計基礎班 [線上課程]</h3>
+        <h3>講師：黃安聖</h3>
+        <h3>https://enn.design</h3>
+        <br>
+        <br>
+        <br>
+        <p style="text-align: right;">環隆科技股份有限公司</p>
+        <p style="text-align: right;">系統整合課：Steven 2025/07</p>
+
+    </section>
+
+    <!-- html start -->
+    <section id="htmlSection" class="text-white my-5">
+        <div class=" text-left">
+            <h3>名詞解釋</h3>
+            <ul>
+                <li>
+                    <h4>HTML</h4>
+                    <ul>
+                        <li><strong>全稱：</strong>Hypertext Markup Language</li>
+                        <li><strong>內容：</strong>比如：文字、圖片、影片等、無法實現特效、排版、特殊版型等</li>
+                        <li><strong>用途：</strong>僅用於放置內容，設計與樣式需由CSS實現</li>
+                    </ul>
+                </li>
+                <li>
+                    <h4>CSS</h4>
+                    <ul>
+                        <li><strong>全稱：</strong>Cascading Style Sheets</li>
+                        <li><strong>樣式與設計：</strong>顏色、字型、大小、位置等</li>
+                        <li><strong>排版與定位：</strong>用於切版、版型、元素位置的設定</li>
+                    </ul>
+                </li>
+                <li>
+                    <h4>JS、jQuery</h4>
+                    <ul>
+                        <li><strong>全稱：</strong>JavaScript</li>
+                        <li><strong>行為：</strong>互動、動畫、特效等，可以在瀏覽器上執行，簡稱JS</li>
+                        <li><strong>動態變更：</strong>可以在使用者動作後，變更CSS樣式，或是改變HTML內容</li>
+                        <li><strong>jQuery：</strong>是由JavaScript寫出來的應用函式庫，簡化JavaScript的寫法</li>
+                    </ul>
+                </li>
+                <li>
+                    <h4>Bootstrap</h4>
+                    <ul>
+                        <li>由HTML、CSS和JavaScript寫成的前端框架</li>
+                        <li><strong>目標：</strong>幫助開發者建立美觀、RWD響應式網頁(適應各種螢幕尺寸)</li>
+                        <li><strong>用途：</strong>無需自行編寫大量的CSS代碼</li>
+                    </ul>
+                </li>
+                <li>
+                    <h4><a class="text-decoration-none btn btn-info" href="https://cdnjs.com/">https://cdnjs.com/</a>
+                    </h4>
+                    <ul>
+                        <li>內容傳遞網路(CDN)</li>
+                        <li><strong>目標：</strong>用於在靠近終端使用者的位置快取內容</li>
+                        <li><strong>用途：</strong>允許快速傳輸載入網際網路內容所需的資產，包括 HTML 頁面、JavaScript 檔案、樣式表、影像和影片</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="html-1-Section" class="text-white my-5">
+        <div class="">
+            <h3>HTML 文件基本結構</h3>
+            <pre class="bg-secondary text-white p-3">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-Hant"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;網頁標題&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    這是網頁的主要內容
+  &lt;/body&gt;
+&lt;/html&gt;
+      </pre>
+
+            <ul class="text-left">
+                <li>HTML 是超文件標記語言，用標籤包住內容。</li>
+                <li>HTML 快速寫法 </li>
+                <ul>
+                    <li>自動產生<mark>! + tab鍵</mark></li>
+                    <li>要產生div標籤，class加上：<mark>p. + tab鍵</mark></li>
+                    <li>要產生div標籤內含有h1、p：<mark>div>h1+p + tab鍵</mark></li>
+                </ul>
+                <li>圖示庫：<a class="btn btn-primary" href="https://fontawesome.com/" target="_blank">Font Awesome</a>
+                </li>
+                <ul>
+                    <li>head 內 link https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css
+                    </li>
+                    <li>使用圖示：&lt;i class="fas fa-camera"&gt;&lt;/i&gt;</li>
+                    <li><i class="fas fa-camera">
+                            camera 圖示範例</i>
+                    </li>
+                </ul>
+            </ul>
+        </div>
+    </section>
+
+    <section id="html-2-Section" class="text-white my-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>HTML 標籤</h3>
+                <table class="table table-bordered table-striped text-center border-primary">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>HTML Tag</th>
+                            <th>用途說明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>&lt;title&gt;</code></td>
+                            <td>瀏覽器的分頁標題</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;h1&gt; ~ &lt;h6&gt;</code></td>
+                            <td>數字越大字越小，用來標示階層式標題</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;p&gt;</code></td>
+                            <td>段落，用於一般文字內容</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;br&gt;</code></td>
+                            <td>斷行，插入換行符號（非段落）</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;mark&gt;</code></td>
+                            <td>標記，用於突出字型</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;img src="..."&gt;</code></td>
+                            <td>圖片，用於顯示圖像</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;a href="..."&gt;</code></td>
+                            <td>超連結，連到其他頁面或網址</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;table&gt;、&lt;thead&gt;、&lt;tr&gt;、&lt;td&gt;</code></td>
+                            <td>表格</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;ol&gt;、&lt;ul&gt;、&lt;li&gt;</code></td>
+                            <td>有排序清單、無排序清單、清單項目</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col-md-6">
+                <h2>每層都用 &lt;div&gt;會導致結構不清、維護困難，稱為 divitis（div過多症）</h2>
+                <table class="table table-bordered table-striped text-center border-primary">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>語意 tag</th>
+                            <th>用來替代 div 的情境</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>&lt;header&gt;</code></td>
+                            <td>頁首區塊</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;nav&gt;</code></td>
+                            <td>導覽列</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;main&gt;</code></td>
+                            <td>主內容區</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;div&gt;</code></td>
+                            <td>無語意的區塊，用來排版、組合模組；display 為 block 從新行開始</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;p&gt;</code></td>
+                            <td>段落：主要用於承載文章、新聞或其他文本內容的段落；display 為 block 從新行開始</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;section&gt;</code></td>
+                            <td>章節或功能區；display 為 block 從新行開始</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;article&gt;</code></td>
+                            <td>可獨立發佈內容（部落格、新聞等）；display 為 block 從新行開始</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;span&gt;、&lt;label&gt;、&lt;img&gt;、&lt;strong&gt;、&lt;em&gt;(斜體)、&lt;a&gt;、&lt;mark&gt;、&lt;code&gt;</code>
+                            </td>
+                            <td>行內元件(inline-element)，無語意的區塊，用來修飾、強調重點；display 為 inline 不佔據整行</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;footer&gt;</code></td>
+                            <td>頁尾區塊，放聯絡方式、社群連結、版權資訊</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="html-3-Section" class="text-white  text-left my-5">
+        <div class="row">
+            <div class="col-md-4">
+
+                <h4>VSCode安裝 <mark>lorem</mark> </h4>
+                <p>在 HTML 中輸入 <code>lorem</code> + Tab，可產生 英文 假文字段落。</p>
+                <pre class="bg-secondary text-white p-3 rounded">
+&lt;p&gt; lorem10 &lt;/p&gt;
+產生 10 個單字的假文字段落
+    </pre>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, culpa!</p>
+                <h4>VSCode安裝 <mark>Chinese lorem</mark> </h4>
+                <p>在 HTML 中輸入 <code>ctlorem</code> + Tab，可產生 中文 假文字段落。</p>
+                <pre class="bg-secondary text-white p-3 rounded">
+&lt;p&gt; ctlorem30 &lt;/p&gt;
+產生 30 個單字的假文字段落
+    </pre>
+                <p>楠雅桌面感染事件，遊戲範圍將會站長法國編輯它是，這時些什麼。</p>
+            </div>
+            <div class="col-md-4">
+                <h4>使用 Picsum 隨機圖片</h4>
+                <p>免費圖片產生器：<a class="btn btn-warning" href="https://picsum.photos/" target="_blank">picsum.photos</a>
+                </p>
+                <img src="https://picsum.photos/seed/tech/466/200" class="rounded w-100" alt="隨機圖片">
+                <p class="mt-3">長方形圖片 <code>https://picsum.photos/寬度/高度</code> </p>
+                <p class="mt-3">正方形圖片 <code>https://picsum.photos/長度</code> </p>
+                <p class="mt-3">指定id圖片 <code>https://picsum.photos/id/237/寬度/高度</code> </p>
+                <p class="mt-3">隨機圖片 <code>https://picsum.photos/seed/{seed}/寬度/高度</code> </p>
+                <p class="mt-3">灰階(Grayscale)圖片 <code>https://picsum.photos/寬度/高度?grayscale</code> </p>
+                <p class="mt-3">模糊(Blur)圖片 = n 調整 <code>https://picsum.photos/寬度/高度/?blur=2</code> </p>
+                <p class="mt-3">結合灰階(Grayscale)、模糊(Blur)圖片 = n 調整
+                    <code>https://picsum.photos/id/870/寬度/高度?grayscale&blur=2</code>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <h4>VSCode：儲存後自動排版</h4>
+                <p>vscode settings -> 輸入format on save</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="html-4-Section" class="text-white my-5">
+        <div class="">
+            <h3>HTML架構</h3>
+
+            <pre class="bg-secondary text-white p-3 rounded text-left">
+            &lt;&excl;DOCTYPE html&gt;
+            &lt;html lang="zh&hyphen;Hant"&gt;
+            &lt;head&gt;
+                &lt;meta charset="UTF&hyphen;8"&gt;
+                &lt;title&gt;網站標題&lt;/title&gt;
+            &lt;/head&gt;
+            &lt;body&gt;
+                &lt;nav&gt;導覽列&lt;/nav&gt;
+                &lt;main&gt;
+                    &lt;section&gt;
+                        &lt;h2 class="text&hyphen;center mb&hyphen;4"&gt;產品特色&lt;/h2&gt;
+                        &lt;div class="row"&gt;
+                            &lt;div class="col&hyphen;md&hyphen;4"&gt;...&lt;/div&gt;
+                            &lt;div class="col&hyphen;md&hyphen;4"&gt;...&lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/section&gt;
+                    &lt;section&gt;產品介紹區&lt;/section&gt;
+                    &lt;section&gt;最新消息區&lt;/section&gt;
+                &lt;/main&gt;
+                &lt;footer&gt;聯絡資訊 © 2025&lt;/footer&gt;
+            &lt;/body&gt;
+            &lt;/html&gt;
+        </pre>
+        </div>
+    </section>
+
+    <!-- css start -->
+    <section id="cssSection" class="text-white my-5">
+        <h3>CSS 基礎</h3>
+        <div class="text-left">於header內link CSS檔，或用 <mark>style</mark>標註</div>
+        <table class="table table-bordered table-striped text-center border-primary">
+            <thead class="thead-dark">
+                <tr>
+                    <th>選擇器</th>
+                    <th>說明</th>
+                    <th>範例</th>
+                    <th>效果說明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>*</code></td>
+                    <td>全域選擇器</td>
+                    <td><code>* { margin: 0; padding: 0; }</code></td>
+                    <td>畫面初始化</td>
+                </tr>
+                <tr>
+                    <td><code>p</code></td>
+                    <td>元件選擇器</td>
+                    <td><code>p { color: blue; }</code></td>
+                    <td>所有段落變藍</td>
+                </tr>
+                <tr>
+                    <td><code>.highlight</code></td>
+                    <td>類別選擇器</td>
+                    <td><code>.highlight { background: yellow; }</code></td>
+                    <td>class 為 highlight 的元件背景變黃</td>
+                </tr>
+                <tr>
+                    <td><code>#object</code></td>
+                    <td>ID 選擇器</td>
+                    <td><code>#object { font-size: 20px; }</code></td>
+                    <td>id 為 object 的元件字體變大</td>
+                </tr>
+                <tr>
+                    <td><code>div p</code></td>
+                    <td>後代選擇器</td>
+                    <td><code>div p { font-style: italic; }</code></td>
+                    <td>所有在 div 裡的 p 文字斜體</td>
+                </tr>
+                <tr>
+                    <td><code>div &gt; p</code></td>
+                    <td>子元件選擇器</td>
+                    <td><code>div &gt; p { font-weight: bold; }</code></td>
+                    <td>div 內第一層 p 文字加粗</td>
+                </tr>
+                <tr>
+                    <td><code>h1, h2</code></td>
+                    <td>群組選擇器</td>
+                    <td><code>h1, h2 { text-align: center; }</code></td>
+                    <td>h1 和 h2 都置中</td>
+                </tr>
+                <tr>
+                    <td><code>a:hover
+                                  a:active
+                        </code></td>
+                    <td>特殊狀態選擇器</td>
+                    <td><code>a:hover { color: red; }
+                                  a:active { color: green; }
+                        </code></td>
+                    <td>滑鼠移到超連結時變紅，點擊時變綠</td>
+                </tr>
+                <tr>
+                    <td><code>.content+p</code></td>
+                    <td>選擇緊接在content元素後的p元素</td>
+                    <td><code>.content+p{ color:blue; }</code></td>
+                    <td>class為.content的元素，後面緊接著的第一個 &lt;p&gt; 標籤，字體變藍</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-left">
+            選擇器等級(由小到大)：* &lt; tag(h1) &lt; class(.) &lt; id(#) &lt; inline-style &lt; !important
+        </div>
+        <a class="btn btn-primary" href="./PracticePage.html" target="_blank">測試網頁</a>
+    </section>
+
+    <section id="css-1-Section" class="text-white my-5">
+        <h3>CSS Media Query</h3>
+        <p>Media Query 用於響應式設計，根據不同裝置或螢幕尺寸調整樣式。</p>
+        <div class="row">
+
+            <div class="col-md-4">
+                <table class="table table-bordered table-striped text-center border-primary">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>條件</th>
+                            <th>意思 / 用途說明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>min-width</code> / <code>max-width</code></td>
+                            <td>最小／最大<strong>螢幕寬度</strong>（最常用，控制 RWD 斷點）</td>
+                        </tr>
+                        <tr>
+                            <td><code>min-height</code> / <code>max-height</code></td>
+                            <td>最小／最大<strong>螢幕高度</strong>（較少用，針對特殊裝置或全螢幕）</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <p>只在螢幕寬度小於等於767px時生效</p>
+                <pre class="bg-secondary text-white p-3 rounded text-left">
+@media (max-width: 767px) {
+            .col{
+                width: 100%;
+            }
+            .col h3{
+                text-align: center;
+                font-size:  24px;
+            }
+        }
+                </pre>
+            </div>
+            <div class="col-md-4">
+                <p>針對平板電腦版型設計樣式：只在視窗寬度768-1076px時生效</p>
+                <pre class="bg-secondary text-white p-3 rounded text-left">
+@media (min-width: 768px) and (max-width: 1076px) {
+            .col{
+                width: calc(100% / 2);
+            }
+            .col h3{
+                text-align: center;
+                font-size:  24px;
+            }
+        }
+                </pre>
+            </div>
+        </div>
+        <a class="btn btn-primary" href="./CSSRWDDemo.html">測試網頁</a>
+    </section>
+
+    <section id="css-2-Section" class="text-white my-5">
+        <div class="">
+            <h3>CSS Position 定位</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>三種常見 CSS 定位方式的簡要解說：</p>
+                    <p class="">1. position: static;</p>
+                    <p>預設值，所有元素預設都是 static。</p>
+                    <p>不會受到 top、right、bottom、left 屬性的影響。</p>
+                    <p>元素會依照正常的文件流排列。</p>
+                    <p>2. position: relative;</p>
+                    <p>元素相對於 <mark>自己原本的位置進行偏移</mark> ，元素仍然佔據原本的空間。</p>
+                    <p>可以搭配 top、right、bottom、left 屬性微調位置。</p>
+                    <p>3. position: absolute;</p>
+                    <p>會尋找 <mark>上一層relative</mark> 當參考點。</p>
+                    <p>可以用 top、right、bottom、left 精確控制位置。</p>
+                </div>
+                <div class="col-md-4">
+                    <textarea class="w-100 h-100">
+.relative-btn {
+    /* 位置預設為 static，不改變原本位置 */
+    top:10px; /* 無效定位 */
+    left:10px; /* 無效定位 */
+}
+                </textarea>
+                </div>
+                <div class="col-md-4">
+                    <textarea class="w-100 h-100">
+.relative-btn {
+    position: relative;
+    /*top: 0px;  由上往下定位 */
+    /*left: 0px;  由左往右定位 */
+    /*right: 0px;  由右往左定位 */
+    bottom: 0px; /* 由下往上定位 */
+}
+
+.relative-btn:hover {
+    background: #0085ad;
+    bottom: 5px; /* 由下往上定位 */
+}
+.relative-btn:active {
+    background: #00ff00;
+}
+                </textarea>
+                    <button class="relative-btn">hover Move</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="css-3-Section" class="text-white my-5">
+        <div class="">
+            <h3>CSS 定位 - absolute - 1</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">CSS：</label>
+                    <textarea id="cssInput9" class="w-100 h-100">
+.outer9 {
+    width: 200px;
+    height: 200px;
+    background: #003666;
+    position: relative;
+    color: white;
+}
+
+.inner9 {
+    width: 100px;
+    height: 100px;
+    background: #2dde98;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+      </textarea>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">HTML：</label>
+                    <textarea id="htmlInput9" rows="15" class="w-100 h-100">
+<div class="outer9">
+  outer
+    <!-- 會尋找上一層relative當參考點。
+    可以用 top、right、bottom、left 精確控制位置。 -->
+  <div class="inner9">
+    inner
+  </div>
+</div>
+      </textarea>
+                </div>
+            </div>
+        </div>
+        <div class="text-center my-5">
+            <button class="btn btn-primary" onclick="updatePreview('cssInput9', 'htmlInput9', 'previewArea9')">執行
+                HTML +
+                CSS</button>
+        </div>
+
+        <div id="previewArea9"></div>
+    </section>
+
+    <section id="css-4-Section" class=" text-white my-5">
+        <div class="">
+            <h3>CSS 定位 - absolute - 2</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">CSS：</label>
+                    <textarea id="cssInput10" rows="15" class="w-100 h-100">
+.card {
+  width: 400px;
+  height: 300px;
+  position: relative;
+  background-image: url("https://picsum.photos/400/300?image=1070"); 
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card-btns button {
+  position: absolute;
+  font-size: 22px;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+.card-btns button:nth-child(1) {
+  top: 10px;
+  right: 10px;
+}
+
+.card-btns button:nth-child(2) {
+  top: 10px;
+  right: 40px;
+}
+
+.card-btns button:nth-child(3) {
+  top: 10px;
+  right: 70px;
+}
+
+.card-btns button:hover {
+  color: pink;
+}
+
+
+.card-header {
+  position: absolute;
+  top: 10px;
+  right: -200px; /* 初始藏起來 */
+  width: 200px;
+  border-radius: 10px 0 0 10px;
+}
+
+/* 當滑鼠進入整個 .card 時觸發滑出 header */
+.card:hover .card-header {
+  right: 0;
+}
+      
+      </textarea>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">HTML：</label>
+                    <textarea id="htmlInput10" rows="15" class="w-100 h-100">
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-btns">
+            <button>
+            <i class="fas fa-heart"></i>
+            </button>
+            <button>
+            <i class="fas fa-thumbs-up"></i>
+            </button>
+            <button>
+            <i class="fab fa-facebook"></i>
+            </button>
+        </div>
+    </div>
+</div>
+      
+      </textarea>
+                </div>
+            </div>
+        </div>
+        <div class="text-center my-5">
+            <button class="btn btn-primary" onclick="updatePreview('cssInput10', 'htmlInput10', 'previewArea10')">
+                執行 HTML + CSS
+            </button>
+        </div>
+
+        <div id="previewArea10"></div>
+    </section>
+
+    <!-- bootstrap start -->
+    <section id="bootstrapSection" class=" text-white  text-left my-5">
+        <div class="">
+            <h3>Bootstrap</h3>
+            <ul>
+                <li>BootStrap：整合 CSS + JS的library，使用特定的選擇器(class)就能使用 </li>
+                <li>重點項目：</li>
+                <ul>
+                    <li>元件(Components)：<a href="https://getbootstrap.com/docs/5.1/components/buttons/"
+                            class="btn btn-primary" target="_blank">button</a></li>
+                    <li>屬性(Utilities)：<a href="https://getbootstrap.com/docs/5.1/utilities/colors/"
+                            class="btn btn-success" target="_blank">color</a></li>
+                    <li>排版網格系統(Layout-Grid)：</li>
+                </ul>
+            </ul>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">CSS：</label>
+                    <textarea id="cssInput11" rows="15" class="w-100 h-100">
+.aLink {
+    color: white;
+    width: 260px;
+    height: 180px;
+    border-radius: 8px;
+    text-decoration: none;
+    padding: 10px;
+    background-color: #0000ff;
+    border: 1px solid white;
+}
+
+<!-- .outer {
+    color: white;
+    width: 360px;
+    height: 280px;
+}
+.inner{
+    color: black;
+    width: 160px;
+    height: 80px;
+} -->
+                                      
+                                      </textarea>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">HTML：</label>
+                    <textarea id="htmlInput11" rows="15" class="w-100 h-100">
+<a href="https://www.google.com" class="aLink" target="_blank">Google</a>
+
+<!-- <div class="outer position-relative bg-primary">
+outer 
+<div class="inner position-absolute bottom-0 end-0 bg-warning">
+inner
+</div>
+</div> -->
+                    
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="text-center my-5">
+                <button class="btn btn-primary" onclick="updatePreview('cssInput11', 'htmlInput11', 'previewArea11')">執行
+                    HTML +
+                    CSS</button>
+            </div>
+
+            <div id="previewArea11"></div>
+    </section>
+
+    <!-- Bootstrap：排版網格系統 -->
+    <section id="bootstrap-1-Section" class=" text-white my-5">
+        <div class="">
+            <h3>Bootstrap：排版網格系統，用來描述元素的寬度(Width)</h3>
+            <p>寬度滿版：<mark>網格為12格</mark>
+                <a class="btn btn-info" href="./BootStrapRWDDemo.html" target="_blank">網格說明</a>
+            </p>
+            <p>使用來包裝所有網頁內容，讓網頁內容在不同裝置(桌機、手機、平板)螢幕上保持適當區塊大小</p>
+
+            <div class="row my-5">
+                <div class="col-md-6">
+                    <textarea rows="15" class="w-100 h-100">
+<!-- 透過row col 來建立 Bootstrap 自動計算「等分」。 -->
+<!-- 第一列：.row 裡有 2 個 .col -->
+<div class=" text-center">
+  <div class="row">
+    <div class="col">
+      1 of 2
+    </div>
+    <div class="col">
+      2 of 2
+    </div>
+</div>
+<!-- 第二列：.row 裡有 3 個 .col -->
+<div class="row">
+    <div class="col">
+      1 of 3
+    </div>
+    <div class="col">
+      2 of 3
+    </div>
+    <div class="col">
+      3 of 3
+    </div>
+  </div>
+</div>
+
+            </textarea>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-bordered table-striped text-center border-primary">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th></th>
+                                <th>對應寬度</th>
+                                <th> max-width</th>
+                                <th>Class prefix</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>手機版面</td>
+                                <td>&lt; 576px</td>
+                                <td>None (auto)</td>
+                                <td>.col-</td>
+                            </tr>
+                            <tr>
+                                <td>平板版面 - sm</td>
+                                <td>&ge; 576px</td>
+                                <td>540px</td>
+                                <td>.col-sm-</td>
+                            </tr>
+                            <tr>
+                                <td>中型裝置 - md</td>
+                                <td>&ge; 768px</td>
+                                <td>720px</td>
+                                <td>.col-md-</td>
+                            </tr>
+                            <tr>
+                                <td>大型裝置 - lg</td>
+                                <td>&ge; 992px</td>
+                                <td>960px</td>
+                                <td>.col-lg-</td>
+                            </tr>
+                            <tr>
+                                <td>大型裝置 - xl</td>
+                                <td>&ge; 1200px</td>
+                                <td>1140px</td>
+                                <td>.col-xl-</td>
+                            </tr>
+                            <tr>
+                                <td>大型裝置 - xxl</td>
+                                <td>&ge; 1400px</td>
+                                <td>1320px</td>
+                                <td>.col-xxl-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+            <div class=" text-center">
+                <div class="row">
+                    <div class="col bg-primary text-white">
+                        1 of 2
+                    </div>
+                    <div class="col bg-danger text-white">
+                        2 of 2
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col bg-success text-white">
+                        1 of 3
+                    </div>
+                    <div class="col bg-info text-white">
+                        2 of 3
+                    </div>
+                    <div class="col bg-warning text-white">
+                        3 of 3
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap：常用 -->
+    <section id="bootstrap-2-Section" class=" text-white my-5">
+        <h3>Bootstrap：Components、Utilities</h3>
+
+        <div class="row">
+            <div class="col-md-3">
+                <table class="table table-bordered table-striped border-primary">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Component</th>
+                            <th>Variants</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <ul>
+                                    <li>btn-</li>
+                                    <li>btn-outline-</li>
+                                    <li>bg-</li>
+                                    <li>border-</li>
+                                    <li>alert-</li>
+                                    <li>alert-</li>
+                                    <li>table-</li>
+                                    <li>link-</li>
+                                    <li>badge text-bg-</li>
+                                    <li>list-group-item list-group-item-</li>
+                                    <li>progress-bar bg-</li>
+                                    <li>spinner-border text-</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    <li>primary</li>
+                                    <li>secondary</li>
+                                    <li>success</li>
+                                    <li>danger</li>
+                                    <li>warning</li>
+                                    <li>info</li>
+                                    <li>light</li>
+                                    <li>dark</li>
+                                    <li>muted</li>
+                                    <li>white</li>
+                                    <li>black</li>
+                                    <li>*gradient (漸層)</li>
+                                    <li>*transparent (bg)</li>
+                                    <li>*close (btn)</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <div class=" gy-3">
+                                    <div class="bg-primary rounded-square" style="width: 44px; height: 24px;"></div>
+                                    <div class="bg-secondary rounded-square" style="width: 44px; height: 24px;">
+                                    </div>
+                                    <div class="bg-success rounded-square" style="width: 44px; height: 24px;"></div>
+                                    <div class="bg-danger rounded-square" style="width: 44px; height: 24px;"></div>
+                                    <div class="bg-warning rounded-square" style="width: 44px; height: 24px;"></div>
+                                    <div class="bg-info rounded-square" style="width: 44px; height: 24px;"></div>
+                                    <div class="bg-light rounded-square border-dark" style="width: 44px; height: 24px;">
+                                    </div>
+                                    <div class="bg-dark rounded-square" style="width: 44px; height: 24px;"></div>
+                                    <div class="bg-muted rounded-square border-dark" style="width: 44px; height: 24px;">
+                                    </div>
+                                    <div class="bg-white rounded-square border-dark" style="width: 44px; height: 24px;">
+                                    </div>
+                                    <div class="bg-black rounded-square border-dark" style="width: 44px; height: 24px;">
+                                    </div>
+                                    <div class="bg-gradient rounded-square border-dark"
+                                        style="width: 44px; height: 24px;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-3">
+                <table class="table table-bordered table-striped border-primary">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="w-25">Utilities</th>
+                            <th class="w-25">Breakpoints</th>
+                            <th class="w-50">Resolution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>text-</p>
+                                <p>col-</p>
+                                <p>fs-</p>
+                                <p>d-</p>
+                            </td>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    <li>none</li>
+                                    <li>sm</li>
+                                    <li>md</li>
+                                    <li>lg</li>
+                                    <li>xl</li>
+                                    <li>xxl</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    <li>&lt;576px</li>
+                                    <li>≥576px</li>
+                                    <li>≥768px</li>
+                                    <li>≥992px</li>
+                                    <li>≥1200px</li>
+                                    <li>≥1400px</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered table-striped border-primary">
+                    <thead class="table-dark">
+                        <td>Class</td>
+                        <td>Size</td>
+                    </thead>
+                    <tr>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>rounded-</li>
+                                <li>btn-</li>
+                                <li>btn-group btn-group-</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>sm</li>
+                                <li>lg</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="table table-bordered table-striped border-primary">
+                    <thead class="table-dark">
+                        <td>
+                            Position、Spacing
+                        </td>
+                        <td>Side</td>
+                        <td>Size</td>
+                    </thead>
+                    <tr>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>float-</li>
+                                <li>m (margin)</li>
+                                <li>p (padding)</li>
+                                <li></li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>s- (left)</li>
+                                <li>e- (right)</li>
+                                <li>t- (top)</li>
+                                <li>b- (bottom)</li>
+                                <li>x- (left、right)</li>
+                                <li>y- (top、bottom)</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>0</li>
+                                <li>1</li>
+                                <li>2</li>
+                                <li>3</li>
+                                <li>4</li>
+                                <li>5</li>
+                                <li>auto</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>position-</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>static</li>
+                                <li>relative</li>
+                                <li>absolute</li>
+                                <li>b- (bottom)</li>
+                                <li>fixed</li>
+                                <li>sticky</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>top-0-100</li>
+                                <li>bottom-0-100</li>
+                                <li>start-0-100</li>
+                                <li>end-0-100</li>
+                                <li>translate-middle</li>
+                                <li>translate-middle-x</li>
+                                <li>translate-middle-y</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-md-3">
+                <table class="table table-bordered table-striped border-primary">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>CSS</th>
+                            <th>Bootstrap</th>
+                            <th>Suffix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    <li>radius</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    <li>rounded-</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    <li>none</li>
+                                    <li>circle</li>
+                                    <li>pill</li>
+                                    <li>top</li>
+                                    <li>bottom</li>
+                                    <li>start (left)</li>
+                                    <li>end (right)</li>
+                                    <li>0 - 5</li>
+                                    <li>top,bottom,start,end-0-5</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    <li>border</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    <li>border-</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    <li> </li>
+                                    <li>top</li>
+                                    <li>bottom</li>
+                                    <li>start (left)</li>
+                                    <li>end (right)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered table-striped border-primary">
+                    <thead class="table-dark">
+                        <td>class</td>
+                        <td>Size</td>
+                    </thead>
+                    <tr>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>rounded-</li>
+                                <li>border-</li>
+                                <li>m-</li>
+                                <li>p-</li>
+                                <li>fs-</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>0</li>
+                                <li>1</li>
+                                <li>2</li>
+                                <li>3</li>
+                                <li>4</li>
+                                <li>5</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>opacity-</li>
+                                <li>bg-opacity-</li>
+                                <li>w- (mw-)</li>
+                                <li>h- (mh-)</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>0</li>
+                                <li>25</li>
+                                <li>50</li>
+                                <li>75</li>
+                                <li>100</li>
+                                <li>auto</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>z-</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>3 - 0</li>
+                                <li>n1</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <div class="col-md-3">
+                <table class="table table-bordered table-striped border-primary">
+                    <thead class="table-dark">
+                        <td>
+                            Text
+                        </td>
+                        <td>Side</td>
+                    </thead>
+                    <tr>
+                        <td>text-</td>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>start</li>
+                                <li>center</li>
+                                <li>end</li>
+                                <li></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="table table-bordered table-striped border-primary">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">類別</th>
+                            <th scope="col">選項</th>
+                            <th scope="col">說明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>overflow-</td>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    <li>auto</li>
+                                    <li>hidden</li>
+                                    <li>visible</li>
+                                    <li>scroll</li>
+                                </ul>
+                            </td>
+                            <td>
+                                內容溢出容器時的顯示方式
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>shadow-</td>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    <li>none</li>
+                                    <li>sm</li>
+                                    <li>lg</li>
+                                </ul>
+                            </td>
+                            <td>
+                                需在父元素上設定，會自動在所有子項目之間創建統一且恰當的間距
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    <li>gap-</li>
+                                    <li>row-gap-</li>
+                                    <li>column-gap-</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    <li>0</li>
+                                    <li>1</li>
+                                    <li>2</li>
+                                    <li>3</li>
+                                    <li>4</li>
+                                    <li>5</li>
+                                </ul>
+                            </td>
+                            <td>
+                                文字大小寫轉換
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>align-</td>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    <li>baseline</li>
+                                    <li>top、middle、bottom</li>
+                                    <li>text-top、text-bottom</li>
+                                </ul>
+                            </td>
+                            <td>
+                                控制行內 (inline) 或表格單元格內元素的垂直對齊
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </section>
+
+    <section id="bootstrap-3-Section" class=" bg-dark text-white my-5">
+        <h3>Bootstrap：Components、Utilities</h3>
+        <div class="row">
+            <div class="col col-sm-6 col-md-4">
+                <table class="table table-bordered table-striped border-primary">
+                    <thead>
+                        <tr>
+                            <th scope="col">類別</th>
+                            <th scope="col">選項</th>
+                            <th scope="col">說明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="6">text-</td>
+                            <td>wrap</td>
+                            <td>文字自動換行</td>
+                        </tr>
+                        <tr>
+                            <td>nowrap</td>
+                            <td>文字不換行</td>
+                        </tr>
+                        <tr>
+                            <td>break</td>
+                            <td>長文字斷行</td>
+                        </tr>
+                        <tr>
+                            <td>lowercase</td>
+                            <td>文字小寫</td>
+                        </tr>
+                        <tr>
+                            <td>uppercase</td>
+                            <td>文字大寫</td>
+                        </tr>
+                        <tr>
+                            <td>reset</td>
+                            <td>無CSS效果</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="7">fw-</td>
+                            <td>bold</td>
+                            <td>粗體</td>
+                        </tr>
+                        <tr>
+                            <td>bolder</td>
+                            <td>更粗體 </td>
+                        </tr>
+                        <tr>
+                            <td>semibold</td>
+                            <td>字半粗 </td>
+                        </tr>
+                        <tr>
+                            <td>medium</td>
+                            <td>中等</td>
+                        </tr>
+                        <tr>
+                            <td>normal</td>
+                            <td>正常</td>
+                        </tr>
+                        <tr>
+                            <td>light</td>
+                            <td>字細</td>
+                        </tr>
+                        <tr>
+                            <td>lighter</td>
+                            <td>字更細</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">fst-</td>
+                            <td>italic</td>
+                            <td>斜體</td>
+                        </tr>
+                        <tr>
+                            <td>normal</td>
+                            <td>正常字型</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col col-sm-6 col-md-4">
+                <table class="table table-bordered table-striped border-primary">
+                    <thead>
+                        <tr>
+                            <th scope="col">類別</th>
+                            <th scope="col">選項</th>
+                            <th scope="col">說明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="4">lh-</td>
+                            <td>1</td>
+                            <td>行高(無額外行距，最緊湊)</td>
+                        </tr>
+                        <tr>
+                            <td>sm</td>
+                            <td>較小行高</td>
+                        </tr>
+                        <tr>
+                            <td>base</td>
+                            <td>預設行高</td>
+                        </tr>
+                        <tr>
+                            <td>lg</td>
+                            <td>較大行高</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="1">font-</td>
+                            <td>monospace</td>
+                            <td>等寬字體</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3">text-decoration-</td>
+                            <td>underline</td>
+                            <td>底線</td>
+                        </tr>
+                        <tr>
+                            <td>line-through</td>
+                            <td>刪除線</td>
+                        </tr>
+                        <tr>
+                            <td>none</td>
+                            <td>無線條</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2"></td>
+                            <td>visible</td>
+                            <td>顯示(無前綴)</td>
+                        </tr>
+                        <tr>
+                            <td>invisible</td>
+                            <td>隱藏(無前綴)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col col-sm-6 col-md-4">
+                <table class="table table-bordered table-striped border-primary">
+                    <thead>
+                        <tr>
+                            <th>類別(display)</th>
+                            <th>選項</th>
+                            <th>說明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="10">d-</td>
+                            <td>inline-block</td>
+                            <td>在div標籤屬於block元素中，讓多個元素在同一行顯示，且能設定尺寸或間距</td>
+                        </tr>
+                        <tr>
+                            <td>inline</td>
+                            <td>行內元素 (display: inline !important;)。</td>
+                        </tr>
+                        <tr>
+                            <td>block</td>
+                            <td>lock元素 (display: block !important;)</td>
+                        </tr>
+                        <tr>
+                            <td>flex</td>
+                            <td>Flexbox 容器 (display: flex !important;)</td>
+                        </tr>
+                        <tr>
+                            <td>inline-flex</td>
+                            <td>行內 Flexbox 容器 (display: inline-flex !important;)</td>
+                        </tr>
+                        <tr>
+                            <td>grid</td>
+                            <td>Grid 容器 (display: grid !important;)</td>
+                        </tr>
+                        <tr>
+                            <td>inline-grid</td>
+                            <td>行內 Grid 容器 (display: inline-grid !important;)</td>
+                        </tr>
+                        <tr>
+                            <td>table</td>
+                            <td>表格 (display: table !important;)</td>
+                        </tr>
+                        <tr>
+                            <td>table-row</td>
+                            <td>表格行 (display: table-row !important;)</td>
+                        </tr>
+                        <tr>
+                            <td>table-cell</td>
+                            <td>表格單元格 (display: table-cell !important;)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="bootstrap-4-Section" class=" bg-dark text-white my-5">
+        <div class="">
+            <h3>Bootstrap：Components、Utilities</h3>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="mb-3">Badges（徽章）</h3>
+                    <h5 class="mt-4 mb-2">主要用途：</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-1"><span class="badge bg-primary me-2">1</span> 計數/通知：顯示未讀訊息數量、購物車商品數量、待辦事項等。
+                        </li>
+                        <li><span class="badge bg-success me-2">2</span> 狀態/分類：標記某個項目或內容的狀態（如「新功能」、「已發布」）或所屬類別。</li>
+                    </ul>
+
+                    <h4 class="mb-3">用法範例：</h4>
+
+                    <div>
+                        <p class="fw-bold">1. 搭配標題 (Headings)</p>
+                        <div class="d-flex align-items-center">
+                            <p class="mb-0 me-3">標題提示文字 <span class="badge bg-primary fs-5">主要</span></p>
+                            <h5 class="mb-0">標題提示文字 <span class="badge bg-info">資訊</span></h5>
+                        </div>
+                        </p>
+
+                    </div>
+
+                    <div>
+                        <p class="fw-bold">2. 搭配按鈕 (Buttons)</p>
+
+                        <div class="d-flex align-items-center">
+                            <button type="button" class="btn btn-primary me-2">
+                                按鍵提示文字 <span class="badge text-bg-warning">4</span>
+                            </button>
+                            <button type="button" class="btn btn-secondary">
+                                訊息 <span class="badge text-bg-light">99+</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="fw-bold">3. 定位徽章 (Positioned Badges)</p>
+                        <button type="button" class="btn btn-primary position-relative me-3">
+                            收件箱
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                99+
+                                <span class="visually-hidden">未讀訊息</span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn btn-dark position-relative">
+                            個人檔案
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
+                                <span class="visually-hidden">新通知</span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="table-responsive mt-2">
+                        <table class="table table-bordered table-striped text-center">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>類別</th>
+                                    <th>範例</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>.bg-primary</code></td>
+                                    <td><span class="badge bg-primary">Primary</span></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.bg-secondary</code></td>
+                                    <td><span class="badge bg-secondary">Secondary</span></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.bg-success</code></td>
+                                    <td><span class="badge bg-success">Success</span></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.bg-danger</code></td>
+                                    <td><span class="badge bg-danger">Danger</span></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.bg-warning</code></td>
+                                    <td><span class="badge bg-warning text-dark">Warning</span></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.bg-info</code></td>
+                                    <td><span class="badge bg-info">Info</span></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.bg-light</code></td>
+                                    <td><span class="badge bg-light text-dark">Light</span></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.bg-dark</code></td>
+                                    <td><span class="badge bg-dark">Dark</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3>Popovers：bootstrap.bundle.min.js and js code</h3>
+                    <div class="mb-2">
+                        <button type="button" class="btn btn-lg btn-success" data-bs-toggle="popover"
+                            data-bs-placement="left" data-bs-title="Popover title"
+                            data-bs-content="And here’s some amazing content. It’s very engaging. Right?">Click to
+                            toggle popover</button>
+                    </div>
+                    <div class="mb-2">
+                        <button type="button" class="btn btn-info" data-bs-toggle="popover" data-bs-placement="right"
+                            data-bs-custom-class="custom-popover" data-bs-title="Custom popover"
+                            data-bs-content="This popover is themed via CSS variables.">
+                            Custom popover
+                        </button>
+                    </div>
+
+                    <h3>Dropdowns</h3>
+                    <div class="btn-group mb-2">
+                        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            success
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+
+                    <h3>progress</h3>
+                    <div class="progress mb-2" role="progressbar" aria-label="Basic example" aria-valuenow="75"
+                        aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar" style="width: 75%"></div>
+                    </div>
+                    <h3>list group</h3>
+                    <div>
+                        <ul class="list-group mb-2">
+                            <li class="list-group-item active" aria-current="true">An active item</li>
+                            <li class="list-group-item">A second item</li>
+                            <li class="list-group-item">A third item</li>
+                            <li class="list-group-item">A fourth item</li>
+                            <li class="list-group-item">And a fifth one</li>
+                        </ul>
+                    </div>
+                    <div class="list-group">
+                        <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+                            The current button
+                        </button>
+                        <button type="button" class="list-group-item list-group-item-action">A second button
+                            item</button>
+                        <button type="button" class="list-group-item list-group-item-action">A third button
+                            item</button>
+                        <button type="button" class="list-group-item list-group-item-action">A fourth button
+                            item</button>
+                        <button type="button" class="list-group-item list-group-item-action" disabled>A disabled
+                            button
+                            item</button>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="bootstrap-5-Section" class=" bg-dark text-white my-5">
+        <h3>回應式網頁設計(RWD：Responsive Web Design)</h3>
+        <p>在不同的裝置（從桌面電腦顯示器到行動電話或其他行動裝置）上瀏覽時對應不同解析度皆有適合的呈現，減少使用者進行縮放、平移和捲動等操作。</p>
+        <h2 class="text-center mb-4">回應式網頁設計 - 卡片(card)組合</h2>
+
+        <div class="row">
+            <!-- 卡片 1 -->
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                <div class="card h-80 shadow-sm">
+                    <img src="https://picsum.photos/600/400?random=1" class="card-img-top" alt="圖1">
+                    <h5 class="card-header fs-5 fs-md-4 fs-lg-3">卡片 一</h5>
+                    <div class="card-body">
+                        <p class="card-text">這是一段說明文字，會隨著卡片內容自動調整。</p>
+                        <a href="#" class="btn btn-primary btn-sm">了解更多</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片 2 -->
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                <div class="card h-80 shadow-sm">
+                    <img src="https://picsum.photos/600/400?random=2" class="card-img-top" alt="圖2">
+                    <h5 class="card-header fs-5 fs-md-4 fs-lg-3">卡片 二</h5>
+                    <div class="card-body">
+                        <p class="card-text">文字會在不同裝置自適應呈現。手機時會一欄、平板雙欄、桌電三欄。</p>
+                        <a href="#" class="btn btn-success btn-sm">查看更多</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片 3 -->
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                <div class="card h-80 shadow-sm">
+                    <img src="https://picsum.photos/600/400?random=3" class="card-img-top" alt="圖3">
+                    <h5 class="card-header fs-5 fs-md-4 fs-lg-3">卡片 三</h5>
+                    <div class="card-body">
+                        <p class="card-text">透過 Bootstrap row + col 設定卡片的排版與寬度。</p>
+                        <a href="#" class="btn btn-warning btn-sm">立即前往</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片 4 -->
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                <div class="card h-80 shadow-sm">
+                    <h5 class="card-header">卡片 四</h5>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped text-center border-primary">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>裝置大小</th>
+                                    <th>字體大小</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>預設（小於576px）</td>
+                                    <td>.fs-6</code>（最小字）</td>
+                                </tr>
+                                <tr>
+                                    <td>≥576px（手機橫向）</td>
+                                    <td>.fs-sm-5</code></td>
+                                </tr>
+                                <tr>
+                                    <td>≥768px（平板）</td>
+                                    <td>.fs-md-4</code></td>
+                                </tr>
+                                <tr>
+                                    <td>≥992px（小筆電）</td>
+                                    <td>.fs-lg-3</code></td>
+                                </tr>
+                                <tr>
+                                    <td>≥1200px（桌電）</td>
+                                    <td>.fs-xl-2</code></td>
+                                </tr>
+                                <tr>
+                                    <td>≥1400px（大螢幕）</td>
+                                    <td>.fs-xxl-1</code>（最大字）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="bootstrap-6-Section" class=" bg-dark text-white py-5 my-5">
+        <div class="row">
+            <div class="col-4">
+                <h3 class="mb-3">carousel 圖片輪播</h3>
+                <p class="text-white text-center">產出 carousel 預設程式碼，簡寫：b4-文件名稱-default</p>
+
+                <div class="d-flex">
+                    <a href="CaroPageDemo.html" class="btn btn-primary mb-4" target="_blank">點擊查看輪播範例</a>
+                </div>
+            </div>
+            <div class="col-4">
+                <h3 class="mb-3 text-center">折疊 (Collapse) 範例</h3>
+
+                <div class="text-center my-3">
+                    <button class="btn btn-primary btn-lg" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#simpleCollapseContent" aria-expanded="false"
+                        aria-controls="simpleCollapseContent">
+                        點擊切換內容
+                    </button>
+                </div>
+
+                <div class="collapse my-3" id="simpleCollapseContent">
+                    <div class="my-collapse-content-style card text-center">
+                        <div class="card-header">這是一段可以被折疊和展開的內容。</div>
+                        <div class="card-body">
+                            <p class="mt-2 mb-0">當你點擊上方的按鈕時，這段內容就會出現或消失。</p>
+                            <p>這段文字很長很長，長到需要測試內容是否能正確顯示。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <textarea rows="25" class="w-100 h-100">
+
+<button class="btn btn-primary btn-lg" type="button" data-bs-toggle="collapse"
+    data-bs-target="#simpleCollapseContent" aria-expanded="false"
+    aria-controls="simpleCollapseContent">
+    點擊切換內容
+</button>
+
+<div class="collapse pt-5" id="simpleCollapseContent">
+    <div class="my-collapse-content-style card text-center">
+        <div class="card-header">這是一段可以被折疊和展開的內容。</div>
+        <div class="card-body">
+            <p class="mt-2 mb-0">當你點擊上方的按鈕時，這段內容就會出現或消失。</p>
+            <p>這段文字很長很長，長到需要測試內容是否能正確顯示。</p>
+        </div>
+    </div>
+</div>
+                    </textarea>
+            </div>
+            <div class="col-4">
+
+                <h3 class="mb-3 text-center">切換 (tab) 範例</h3>
+
+                <nav class="nav nav-pills">
+                    <a data-bs-toggle="tab" class="nav-link active" href="#article3">Environment</a>
+                    <a data-bs-toggle="tab" class="nav-link" href="#article4">Philosophy</a>
+                    <a data-bs-toggle="tab" class="nav-link" href="#article5">Technology</a>
+                </nav>
+                <!-- 為article3 article4 設置tab互動方式 -->
+                <div class="tab-content">
+                    <article id="article3" class="tab-pane my-3 active">
+                        <h3>Environment</h3>
+                        <p>Environment content
+                        </p>
+                    </article>
+                    <article id="article4" class="tab-pane my-3">
+                        <h3>Philosophy</h3>
+                        <p>Philosophy content
+                        </p>
+                    </article>
+                    <article id="article5" class="tab-pane my-3">
+                        <h3>Technology</h3>
+                        <p>Technology content</p>
+                        </ariticle>
+                </div>
+                <textarea rows="20" class="w-100 h-100">
+<nav class="nav nav-pills">
+    <a data-bs-toggle="tab" class="nav-link active" href="#article3">Environment</a>
+    <a data-bs-toggle="tab" class="nav-link" href="#article4">Philosophy</a>
+    <a data-bs-toggle="tab" class="nav-link" href="#article5">Technology</a>
+</nav>
+<!-- 為article3 article4 設置tab互動方式 -->
+<div class="tab-content">
+    <article id="article3" class="tab-pane my-3 active">
+        <h3>Environment</h3>
+        <p>Environment content
+        </p>
+    </article>
+    <article id="article4" class="tab-pane my-3">
+        <h3>Philosophy</h3>
+        <p>Philosophy content
+        </p>
+    </article>
+    <article id="article5" class="tab-pane my-3">
+        <h3>Technology</h3>
+        <p>Technology content</p>
+    </ariticle>
+</div>
+                    </textarea>
+            </div>
+        </div>
+    </section>
+
+    <!-- jquerySection -->
+    <section id="jquerySection" class=" bg-dark text-white py-5 my-5">
+        <div class="my-5">
+            <h2 class="text-center mb-4">jQuery</h2>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-section">
+                        <h4>HTML 程式碼</h4>
+                        <textarea id="htmlInput" rows="20" placeholder="在此輸入你的 HTML 內容..." class="w-100 h-100">
+<div class="my-card">
+    <p id="idHTML">HTML 內容</p>
+    <button id="myButton" class="btn btn-primary">點擊我</button>
+    <span id="showid"  class="text-danger">danger</span>
+    <span id="showid1" class="text-secondary">id1</span>
+    <span id="showid2" class="text-secondary">id2</span>
+    <div> <button id="clickbtn">Click BTN</button></div>
+</div>
+                    </textarea>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-section">
+                        <h4>CSS 程式碼</h4>
+                        <textarea id="cssInput" rows="20" placeholder="在此輸入你的 CSS 樣式..." class="w-100 h-100">
+/* 你可以在這裡寫 CSS */
+.my-card {
+    color: black;
+    border: 1px solid #00bcd4; /* 青綠色邊框 */
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.highlight {
+    color: #ff5722; /* 橙紅色 */
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* 結果區塊樣式 */
+.result-section {
+    background-color: #fff;
+    border: 2px solid #007bff;
+    /* 主題藍色邊框 */
+    border-radius: 8px;
+    padding: 20px;
+    height: 200px;
+    /* 結果區塊的最小高度 */
+    overflow: auto;
+    /* 內容超出時顯示捲軸 */
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.1);
+    /* 淺藍色陰影 */
+}
+
+.result-section h4 {
+    color: #007bff;
+    /* 標題顏色與邊框一致 */
+}
+
+/* 結果區塊內部的 JS 執行按鈕 */
+.run-js-btn {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    width: auto;
+    /* 自動寬度 */
+    padding: 8px 15px;
+    font-size: 0.9em;
+}
+                    </textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="input-section">
+                        <h4>JavaScript 程式碼</h4>
+                        <textarea id="jsInput" rows="20" placeholder="在此輸入你的 JavaScript 程式碼..." class="w-100 h-100">
+// 點擊「執行並預覽」後，這段 JS 會被加載到結果區塊
+// 基本選擇器：$(selector) ex：$(“#header”) $(“#header1,#header2")
+
+// 將 id="idHTML" 的文字改為text-warning
+$("#idHTML").toggleClass("text-warning");
+
+// 切換自行訂義的CSS highlight 類別
+$("#myButton").toggleClass("highlight");
+
+//將 id="showid" 的文字顏色從text-danger變為text-success
+$('#showid.text-danger').removeClass("text-danger");
+$('#showid').addClass("text-success");
+
+//多選擇器，將 id="showid1" 和 id="showid2" 的文字顏色從 text-secondary 變為 text-info
+$('#showid1,#showid2').removeClass("text-secondary");
+$('#showid1,#showid2').addClass("text-info");
+
+$('#clickbtn').on('click', function() {
+        $("#idHTML").toggleClass("invisible");
+    });
+
+                    </textarea>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex align-items-center ">
+                    <div>
+                        <button id="updatePreviewBtn" class="btn btn-primary">
+                            更新預覽 (HTML & CSS)
+                        </button>
+
+                        <button id="runJsInPreviewBtn" class="btn btn-success run-js-btn">
+                            運行 JavaScript
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="result-section">
+                        <div id="previewOutput">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+
+        <script>
+            // 等待 DOM 完全載入後執行
+            $(document).ready(function () {
+                // 獲取所有相關的 jQuery 元素物件
+                const $htmlInput = $('#htmlInput');
+                const $cssInput = $('#cssInput');
+                const $jsInput = $('#jsInput');
+                const $updatePreviewBtn = $('#updatePreviewBtn');
+                const $runJsInPreviewBtn = $('#runJsInPreviewBtn');
+                const $previewOutput = $('#previewOutput');
+
+                /**
+                 * @function updatePreview
+                 * @description 讀取 HTML 和 CSS 輸入，並將其渲染到結果區塊。
+                 * 注意：JS 程式碼不會在此時執行，只會被加載。
+                 */
+                function updatePreview() {
+                    const htmlCode = $htmlInput.val();
+                    const cssCode = $cssInput.val();
+                    const jsCode = $jsInput.val(); // 獲取 JS 程式碼，但此時不執行
+
+                    // 清空結果區塊內容，避免重複渲染
+                    $previewOutput.empty();
+
+                    // 創建 <style> 標籤並添加 CSS
+                    const $styleElement = $('<style>').text(cssCode);
+
+                    // 創建 <div> 容器並添加 HTML
+                    const $html = $('<div>').html(htmlCode);
+
+                    // 將 <style> 和 HTML 內容添加到預覽區塊
+                    // <style> 必須在 HTML 之前才能正確應用樣式
+                    $previewOutput.append($styleElement).append($html);
+
+                    // 將 JS 程式碼儲存到一個 data 屬性中，供 '運行 JS' 按鈕使用
+                    $runJsInPreviewBtn.data('jsCode', jsCode);
+
+                    console.log("預覽已更新 (HTML & CSS)。JS 程式碼已加載，等待點擊 '運行 JavaScript'。");
+                }
+
+                /**
+                 * @function runJavaScript
+                 * @description 獲取並執行儲存在按鈕 data 屬性中的 JavaScript 程式碼。
+                 * 注意：這會在瀏覽器當前頁面的上下文中執行，請小心使用。
+                 */
+                function runJavaScript() {
+                    const jsCodeToRun = $runJsInPreviewBtn.data('jsCode');
+
+                    if (jsCodeToRun) {
+                        try {
+                            // 創建一個新的 <script> 標籤並將 JS 程式碼放入其中
+                            // 將其添加到 previewOutput，這樣 JS 就能操作結果區塊內的元素
+                            const $scriptElement = $('<script>').text(jsCodeToRun);
+                            $previewOutput.append($scriptElement);
+
+                            console.log("JavaScript 程式碼已運行。");
+                            // 執行後移除 script 標籤，防止重複執行或污染 DOM
+                            $scriptElement.remove();
+                        } catch (e) {
+                            alert("JavaScript 執行錯誤：\n" + e.message);
+                            console.error("JavaScript 執行錯誤：", e);
+                        }
+                    } else {
+                        console.log("沒有 JavaScript 程式碼可供運行。");
+                    }
+                }
+
+                // 綁定「更新預覽 (HTML & CSS)」按鈕的點擊事件
+                $updatePreviewBtn.on('click', updatePreview);
+
+                // 綁定「運行 JavaScript」按鈕的點擊事件
+                $runJsInPreviewBtn.on('click', runJavaScript);
+
+                // 頁面載入時，自動執行一次預覽，顯示初始範例效果
+                updatePreview();
+            });
+        </script>
+    </section>
+
+    <section class=" bg-dark text-white text-center my-5">
+        <h3>感謝參與會議</h3>
+        <p>環隆科技股份有限公司</p>
+        <p>系統整合課：Steven 2025/07</p>
+    </section>
+    <!-- jquery.min.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- popper.min.js -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <!-- bootstrap.min.js -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- bootstrap.bundle.min.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
