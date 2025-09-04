@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>程式碼編輯器</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .code-input {
+      display: flex;
+      flex-direction: column;
+    }
+
+    textarea {
+      width: 100%;
+      height: 300px;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 14px;
+      background-color: #fff;
+      resize: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+    }
+
+    #result-area {
+      width: 100%;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      padding: 20px;
+      box-sizing: border-box;
+      border-radius: 5px;
+      min-height: 400px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>線上程式碼預覽</h1>
+
+  <div class="container">
+    <div class="code-input">
+      <h3>HTML</h3>
+      <textarea id="html-code">&lt;h1&gt;我是主標&lt;/h1&gt;
+&lt;h2&gt;我是副標&lt;/h2&gt;
+
+&lt;div&gt;
+  &lt;p&gt;這段在 div 中&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p id="my-element" class="highlight"&gt;這段有 class="highlight"&lt;/p&gt;
+
+&lt;p id="object"&gt;這段有 id="object"&lt;/p&gt;
+
+&lt;button id="myBtn"&gt;點我&lt;/button&gt;</textarea>
+    </div>
+    <div class="code-input">
+      <h3>CSS</h3>
+      <textarea id="css-code">h1 {
+  color: orange;
+}
+
+.highlight {
+  background-color: yellow;
+}
+
+#object {
+  font-size: 24px;
+  color: green;
+}</textarea>
+    </div>
+    <div class="code-input">
+      <h3>JavaScript</h3>
+      <textarea id="js-code">// 綁定點擊事件
+var btn = document.getElementById('myBtn');
+
+// 綁定點擊事件
+btn.addEventListener('click', function() {
+  alert('按鈕被點擊了！JS 執行成功！');
+
+  // 改變按鈕的 id 和文字
+  $('#myBtn').attr('id', 'newBtn').text('New Button Text');
+});
+
+
+// 淡入和淡出 (可以指定速度，如 'slow', 'fast', 或毫秒數)
+$("#my-element").fadeOut(1000); // 1秒淡出</textarea>
+    </div>
+  </div>
+
+  <button id="run-button">執行程式碼</button>
+
+  <hr>
+
+  <h2>結果預覽區</h2>
+  <div id="result-area"></div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    document.getElementById('run-button').addEventListener('click', function () {
+      var htmlCode = document.getElementById('html-code').value;
+      var cssCode = document.getElementById('css-code').value;
+      var jsCode = document.getElementById('js-code').value;
+
+      // Clear previous content
+      document.getElementById('result-area').innerHTML = '';
+
+      // Inject a <style> tag with the CSS code
+      var styleTag = document.createElement('style');
+      styleTag.innerHTML = cssCode;
+      document.getElementById('result-area').appendChild(styleTag);
+
+      // Inject the HTML code directly
+      var tempDiv = document.createElement('div');
+      tempDiv.innerHTML = htmlCode;
+      while (tempDiv.firstChild) {
+        document.getElementById('result-area').appendChild(tempDiv.firstChild);
+      }
+
+      // Create and append the script tag to run the JS
+      var script = document.createElement('script');
+      script.innerHTML = jsCode;
+      document.getElementById('result-area').appendChild(script);
+    });
+  </script>
+
+</body>
+
+</html>
