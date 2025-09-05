@@ -1442,29 +1442,32 @@ inner
 
             <div class="row">
                 <div class="col-md-6">
-                    <h3 class="mb-3">Badges（徽章）</h3>
-                    <h5 class="mt-4 mb-2">主要用途：</h5>
+                    <h3>Badges（徽章）</h3>
+                    <h5>主要用途：</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-1"><span class="badge bg-primary me-2">1</span> 計數/通知：顯示未讀訊息數量、購物車商品數量、待辦事項等。
+                        <li><span class="badge bg-primary">1</span> 計數/通知：顯示未讀訊息數量、購物車商品數量、待辦事項等。
                         </li>
-                        <li><span class="badge bg-success me-2">2</span> 狀態/分類：標記某個項目或內容的狀態（如「新功能」、「已發布」）或所屬類別。</li>
+                        <li><span class="badge bg-success">2</span> 狀態/分類：標記某個項目或內容的狀態（如「新功能」、「已發布」）或所屬類別。</li>
                     </ul>
 
-                    <h4 class="mb-3">用法範例：</h4>
+                    <h4>用法範例：</h4>
 
                     <div>
                         <p class="fw-bold">1. 搭配標題 (Headings)</p>
                         <div class="d-flex align-items-center">
-                            <p class="mb-0 me-3">標題提示文字 <span class="badge bg-primary fs-5">主要</span></p>
-                            <h5 class="mb-0">標題提示文字 <span class="badge bg-info">資訊</span></h5>
+                            <p>標題提示文字 <span class="badge bg-primary fs-5 me-2">主要</span></p>
+                            <h5>標題提示文字 <span class="badge bg-info">資訊</span></h5>
                         </div>
-                        </p>
+                        <textarea class="form-control" rows="3" readonly>
 
+<span class="badge bg-primary">主要</span>
+<span class="badge bg-info">資訊</span>
+
+                        </textarea>
                     </div>
 
                     <div>
                         <p class="fw-bold">2. 搭配按鈕 (Buttons)</p>
-
                         <div class="d-flex align-items-center">
                             <button type="button" class="btn btn-primary me-2">
                                 按鍵提示文字 <span class="badge text-bg-warning">4</span>
@@ -1473,6 +1476,18 @@ inner
                                 訊息 <span class="badge text-bg-light">99+</span>
                             </button>
                         </div>
+
+                        <textarea class="form-control" rows="6" readonly>
+
+<button type="button" class="btn btn-primary">
+    按鍵提示文字 <span class="badge text-bg-warning">4</span>
+</button>
+
+<button type="button" class="btn btn-secondary">
+    訊息 <span class="badge text-bg-light">99+</span>
+</button>
+
+                        </textarea>
                     </div>
 
                     <div>
@@ -1485,7 +1500,7 @@ inner
                                 <span class="visually-hidden">未讀訊息</span>
                             </span>
                         </button>
-                        <button type="button" class="btn btn-dark position-relative">
+                        <button type="button" class="btn btn-warning position-relative">
                             個人檔案
                             <span
                                 class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
@@ -1493,51 +1508,24 @@ inner
                             </span>
                         </button>
                     </div>
+                    <textarea class="form-control mt-2" rows="6" readonly>
+<button type="button" class="btn btn-primary position-relative me-3">
+    收件箱
+    <span
+        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        99+
+        <span class="visually-hidden">未讀訊息</span>
+    </span>
+</button>
 
-                    <div class="table-responsive mt-2">
-                        <table class="table table-bordered table-striped text-center">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>類別</th>
-                                    <th>範例</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><code>.bg-primary</code></td>
-                                    <td><span class="badge bg-primary">Primary</span></td>
-                                </tr>
-                                <tr>
-                                    <td><code>.bg-secondary</code></td>
-                                    <td><span class="badge bg-secondary">Secondary</span></td>
-                                </tr>
-                                <tr>
-                                    <td><code>.bg-success</code></td>
-                                    <td><span class="badge bg-success">Success</span></td>
-                                </tr>
-                                <tr>
-                                    <td><code>.bg-danger</code></td>
-                                    <td><span class="badge bg-danger">Danger</span></td>
-                                </tr>
-                                <tr>
-                                    <td><code>.bg-warning</code></td>
-                                    <td><span class="badge bg-warning text-dark">Warning</span></td>
-                                </tr>
-                                <tr>
-                                    <td><code>.bg-info</code></td>
-                                    <td><span class="badge bg-info">Info</span></td>
-                                </tr>
-                                <tr>
-                                    <td><code>.bg-light</code></td>
-                                    <td><span class="badge bg-light text-dark">Light</span></td>
-                                </tr>
-                                <tr>
-                                    <td><code>.bg-dark</code></td>
-                                    <td><span class="badge bg-dark">Dark</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+<button type="button" class="btn btn-warning position-relative">
+    個人檔案
+    <span
+        class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
+        <span class="visually-hidden">新通知</span>
+    </span>
+</button>
+                    </textarea>
                 </div>
                 <div class="col-md-6">
                     <h3>Popovers：bootstrap.bundle.min.js and js code</h3>

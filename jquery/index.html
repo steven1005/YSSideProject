@@ -20,8 +20,6 @@
 
     pre,
     code {
-      background-color: #333;
-      padding: 1rem;
       border-radius: 5px;
       color: #eee;
     }
@@ -38,7 +36,7 @@
   <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <h4 class="text-white mb-3">HTML 範例：引入 jQuery</h4>
     <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light"><code>&lt;!DOCTYPE html&gt;
+      <pre class="bg-secondary rounded text-light"><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="zh-TW"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -63,21 +61,22 @@
   <p>jQuery 的核心語法是 <code>$(selector).action()</code>。<code>$</code> 符號是 jQuery 的別名，<code>selector</code> 用來查詢 HTML 元素，而
     <code>action()</code> 則是對選中的元素執行的操作。選擇器是 jQuery 最強大的部分之一，它基於 CSS 選擇器，讓您可以非常精準地定位到頁面上的任何元素。
   </p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：多種選擇器應用</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>&lt;div id="container"&gt;
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：多種選擇器應用</h4>
+      <div class="html-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;div id="container"&gt;
     &lt;p class="text-item"&gt;這是一個段落。&lt;/p&gt;
     &lt;span class="text-item"&gt;這是一個 span。&lt;/span&gt;
     &lt;button&gt;點擊我&lt;/button&gt;
 &lt;/div&gt;
 &lt;p&gt;另一個段落。&lt;/p&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：選擇器實戰</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：選擇器實戰</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 // 元素選擇器: 選取所有 &lt;p&gt; 元素，並改變其顏色
 $("p").css("color", "blue");
 
@@ -92,23 +91,25 @@ $("#container p").css("background-color", "yellow");
 
 // 屬性選擇器: 選取所有帶有 'class' 屬性的元素
 $([class]).css("padding", "5px");</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">3: 事件處理 - 響應使用者互動</h1>
   <p>事件是使用者在網頁上的行為，例如點擊、滑鼠移入、鍵盤輸入等。jQuery 提供了簡潔且跨瀏覽器兼容的方式來處理這些事件。<code>.on()</code> 是最推薦的事件綁定方法，它功能強大且靈活。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：事件綁定</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>&lt;button id="myButton"&gt;點擊我&lt;/button&gt;
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：事件綁定</h4>
+      <div class="html-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;button id="myButton"&gt;點擊我&lt;/button&gt;
 &lt;div id="hoverBox" style="width:100px; height:50px; background-color:lightgray;"&gt;滑鼠移入這裡&lt;/div&gt;
 &lt;input type="text" id="myInput" placeholder="在這裡輸入文字"&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：事件處理實戰</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：事件處理實戰</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 // 為按鈕綁定點擊事件
 $("#myButton").on("click", function() {
   alert("按鈕被點擊了！");
@@ -128,16 +129,18 @@ $("#hoverBox").on({
 $("#myInput").on("keyup", function() {
   console.log("輸入框內容: " + $(this).val());
 });</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">4: 動態特效與動畫 - 讓網頁生動起來</h1>
   <p>jQuery 內建了多種常用特效，讓您可以輕易地為網頁加入動畫，提升使用者體驗。這些特效通常都支援速度參數（如 'slow', 'fast', 或毫秒數）和回調函數。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：動畫元素</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>&lt;button id="toggleBtn"&gt;切換顯示/隱藏&lt;/button&gt;
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：動畫元素</h4>
+      <div class="html-code">
+        <pre
+          class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;button id="toggleBtn"&gt;切換顯示/隱藏&lt;/button&gt;
 &lt;div id="myBox" style="width:150px; height:150px; background-color:orange; margin-top:10px;"&gt;&lt;/div&gt;
 
 &lt;button id="fadeBtn"&gt;淡入/淡出&lt;/button&gt;
@@ -145,11 +148,12 @@ $("#myInput").on("keyup", function() {
 
 &lt;button id="slideBtn"&gt;滑動切換&lt;/button&gt;
 &lt;div id="slider" style="width:150px; height:150px; background-color:teal; margin-top:10px; overflow:hidden;"&gt;滑動內容&lt;/div&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：特效實戰</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：特效實戰</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 // 隱藏和顯示
 $("#toggleBtn").on("click", function() {
   $("#myBox").toggle("slow"); // 慢速切換顯示/隱藏
@@ -178,25 +182,27 @@ $("#myBox").on("dblclick", function() {
     alert("自定義動畫完成！");
   });
 });</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">5: DOM 內容與屬性操作 - 讀寫元素資訊</h1>
   <p>DOM (Document Object Model) 是 HTML 和 XML 文件的程式介面。它將頁面解析為一個樹狀結構，讓程式語言可以存取和修改頁面內容。jQuery 提供了簡潔的方法來操作 DOM 元素的內容和屬性。
   </p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：待操作元素</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>&lt;p id="myParagraph"&gt;這是一段原始文字。&lt;/p&gt;
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：待操作元素</h4>
+      <div class="html-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;p id="myParagraph"&gt;這是一段原始文字。&lt;/p&gt;
 &lt;div id="myDiv"&gt;這是 &lt;strong&gt;HTML&lt;/strong&gt; 內容。&lt;/div&gt;
 &lt;input type="text" id="myInput" value="預設值"&gt;
 &lt;a id="myLink" href="#"&gt;點擊這裡&lt;/a&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：內容與屬性操作實戰</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：內容與屬性操作實戰</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 // .text() - 取得或設定純文字內容
 let currentText = $("#myParagraph").text(); // 取得文字
 console.log("原始文字: " + currentText);
@@ -220,16 +226,18 @@ $("#myLink").attr({
   "target": "_blank", // 設定多個屬性
   "title": "前往 Google"
 });</code></pre>
+      </div>
+
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">6: DOM 元素的新增、移除與替換</h1>
   <p>jQuery 提供了多種方法來動態地在文件中新增、移除或替換 HTML 元素，這對於建立動態內容非常有用。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：操作目標</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>&lt;ul id="myList"&gt;
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：操作目標</h4>
+      <div class="html-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;ul id="myList"&gt;
     &lt;li&gt;項目 A&lt;/li&gt;
     &lt;li&gt;項目 B&lt;/li&gt;
 &lt;/ul&gt;
@@ -240,11 +248,12 @@ $("#myLink").attr({
 &lt;/div&gt;
 
 &lt;div id="oldElement"&gt;舊的元素&lt;/div&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：元素操作實戰</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：元素操作實戰</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 // append() - 在元素內部結尾處插入內容
 $("#myList").append("&lt;li&gt;新項目 C&lt;/li&gt;");
 
@@ -265,23 +274,25 @@ $("#container").empty();
 
 // replaceWith() - 替換選中的元素
 $("#oldElement").replaceWith("&lt;div id=\"newElement\"&gt;新的元素&lt;/div&gt;");</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">7: CSS 與樣式操作 - 動態控制外觀</h1>
   <p>jQuery 提供了多種方法來動態地新增、移除、切換或直接設定 CSS 樣式，讓您可以根據使用者互動或資料變化來改變網頁的外觀。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：樣式目標</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>&lt;div id="myBox" style="width:100px; height:100px; background-color:blue;"&gt;&lt;/div&gt;
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：樣式目標</h4>
+      <div class="html-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;div id="myBox" style="width:100px; height:100px; background-color:blue;"&gt;&lt;/div&gt;
 &lt;p class="status-text"&gt;目前狀態：正常&lt;/p&gt;
 &lt;button id="toggleStyleBtn"&gt;切換樣式&lt;/button&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：樣式操作實戰</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：樣式操作實戰</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 // addClass() - 新增一個或多個 class
 $("p").addClass("highlight blue-text");
 
@@ -303,16 +314,17 @@ $("#box").css({
 // 取得 CSS 屬性值
 let bgColor = $("#myBox").css("background-color");
 console.log("背景顏色: " + bgColor);</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">8: DOM 遍歷 (Traversing) - 探索元素關係</h1>
   <p>DOM 遍歷是指在 DOM 樹中移動，從一個選定的元素開始，尋找其父、子、兄弟或其他相關的元素。這對於複雜的頁面操作至關重要。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：複雜結構</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>&lt;div class="container"&gt;
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：複雜結構</h4>
+      <div class="html-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;div class="container"&gt;
     &lt;ul&gt;
         &lt;li&gt;項目 1&lt;/li&gt;
         &lt;li class="active"&gt;項目 2&lt;/li&gt;
@@ -322,11 +334,12 @@ console.log("背景顏色: " + bgColor);</code></pre>
     &lt;span&gt;這是容器內的 span。&lt;/span&gt;
 &lt;/div&gt;
 &lt;div class="another-container"&gt;&lt;/div&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：遍歷實戰</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：遍歷實戰</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 // parent() - 找到直接父元素
 $("li.active").parent().css("border", "2px solid blue");
 
@@ -345,21 +358,24 @@ $("li.active").prev().css("text-decoration", "line-through");
 
 // closest() - 找到最近的符合條件的祖先元素
 $("span").closest(".container").css("background-color", "#eee");</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">9: Chaining (鏈式操作) - 提升程式碼可讀性與效率</h1>
   <p>鏈式操作是 jQuery 的一個強大特性，它允許您在一個 jQuery 物件上連續呼叫多個方法，而無需重複選取元素。這使得程式碼更簡潔、可讀性更高，並且由於減少了 DOM 查詢次數，也能提升效率。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：單一目標元素</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>&lt;div id="chainedElement" style="width:100px; height:100px; background-color:gray;"&gt;&lt;/div&gt;</code></pre>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：單一目標元素</h4>
+      <div class="html-code">
+        <pre
+          class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;div id="chainedElement" style="width:100px; height:100px; background-color:gray;"&gt;&lt;/div&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：鏈式操作實戰</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：鏈式操作實戰</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 $("#chainedElement")
   .css({"border": "2px solid blue", "margin": "10px"})
   .slideUp(1000)
@@ -367,23 +383,25 @@ $("#chainedElement")
   .fadeIn(800, function() {
     alert("動畫序列完成！");
   });</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">10: AJAX 簡介 - 非同步資料載入</h1>
   <p>AJAX (Asynchronous JavaScript and XML) 是一種在不重新整理整個頁面的情況下，與伺服器交換資料並更新部分網頁的技術。jQuery 的 <code>$.ajax()</code> 方法是處理
     AJAX 的主要方式，它簡化了複雜的 XMLHttpRequest 物件操作。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：資料顯示區</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>&lt;button id="loadDataBtn"&gt;載入使用者資料&lt;/button&gt;
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：資料顯示區</h4>
+      <div class="html-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;button id="loadDataBtn"&gt;載入使用者資料&lt;/button&gt;
 &lt;div id="userData"&gt;資料將顯示在這裡...&lt;/div&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：基本 AJAX 請求</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：基本 AJAX 請求</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 $("#loadDataBtn").on("click", function() {
   $.ajax({
     url: "https://jsonplaceholder.typicode.com/users/1", // 範例 API
@@ -408,24 +426,26 @@ $("#loadDataBtn").on("click", function() {
     }
   });
 });</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">11: AJAX - 常用簡寫方法與錯誤處理</h1>
   <p>除了功能完整的 <code>$.ajax()</code>，jQuery 也提供了一些常用的簡寫方法，讓常見的 AJAX 請求更為簡潔。同時，良好的錯誤處理是任何網路請求的關鍵。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：不同請求按鈕</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>&lt;button id="getBtn"&gt;GET 資料&lt;/button&gt;
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：不同請求按鈕</h4>
+      <div class="html-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;button id="getBtn"&gt;GET 資料&lt;/button&gt;
 &lt;button id="postBtn"&gt;POST 資料&lt;/button&gt;
 &lt;button id="jsonBtn"&gt;GET JSON&lt;/button&gt;
 &lt;div id="ajaxResult"&gt;結果顯示區...&lt;/div&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：簡寫方法與錯誤處理</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：簡寫方法與錯誤處理</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 // $.get() - 執行 GET 請求
 $("#getBtn").on("click", function() {
   $.get("https://jsonplaceholder.typicode.com/posts/1", function(data) {
@@ -452,16 +472,17 @@ $("#jsonBtn").on("click", function() {
     $("#ajaxResult").html(`&lt;p style="color:red;"&gt;JSON 失敗: ${status}&lt;/p&gt;`);
   });
 });</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">12: 表單處理 - 收集與提交資料</h1>
   <p>jQuery 簡化了表單資料的收集、驗證和提交。<code>.serialize()</code> 和 <code>.serializeArray()</code> 是處理表單資料的常用方法。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：註冊表單</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：註冊表單</h4>
+      <div class="html-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 <code>&lt;form id="myForm"&gt;
     &lt;label for="username"&gt;使用者名稱:&lt;/label&gt;
     &lt;input type="text" id="username" name="username" required&gt;&lt;br&gt;&lt;br&gt;
@@ -475,11 +496,12 @@ $("#jsonBtn").on("click", function() {
     &lt;button type="submit"&gt;提交表單&lt;/button&gt;
 &lt;/form&gt;
 &lt;div id="formResult"&gt;&lt;/div&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：表單資料處理</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：表單資料處理</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 $("#myForm").on("submit", function(event) {
   event.preventDefault(); // 阻止表單預設提交行為
 
@@ -496,21 +518,24 @@ $("#myForm").on("submit", function(event) {
   // 這裡可以將 formData 透過 AJAX 提交到伺服器
   // $.post("/api/submit-form", formData, function(response) { ... });
 });</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">13: 工具方法 (Utility Methods) - 輔助開發</h1>
   <p>jQuery 提供了一系列實用的工具方法，這些方法不直接操作 DOM，而是提供通用的功能，輔助 JavaScript 開發。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：無特定 HTML，純 JS 邏輯</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>&lt;div id="output"&gt;&lt;/div&gt;</code></pre>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：無特定 HTML，純 JS 邏輯</h4>
+      <div class="html-code">
+        <pre
+          class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;div id="output"&gt;&lt;/div&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：工具方法實戰</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：工具方法實戰</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 let arr = [1, 2, 3, 4, 5];
 let obj = { a: 1, b: 2, c: 3 };
 let output = $("#output");
@@ -543,21 +568,24 @@ let obj1 = { name: "Alice", age: 30 };
 let obj2 = { city: "New York", age: 31 };
 let mergedObj = $.extend({}, obj1, obj2); // 深度複製
 output.append(`&lt;p&gt;$.extend() 結果: ${JSON.stringify(mergedObj)}&lt;/p&gt;`);</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">14: 撰寫 jQuery 外掛 (Plugins) - 擴展功能</h1>
   <p>您可以撰寫自己的 jQuery 外掛來擴展 jQuery 的功能，將重複的程式碼封裝成可重用的模組。這通常是透過擴展 <code>$.fn</code> 物件來實現的。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：外掛目標</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>&lt;div id="myPluginDiv" style="width:100px; height:100px; background-color:blue;"&gt;點擊我&lt;/div&gt;</code></pre>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：外掛目標</h4>
+      <div class="html-code">
+        <pre
+          class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;div id="myPluginDiv" style="width:100px; height:100px; background-color:blue;"&gt;點擊我&lt;/div&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：自定義外掛</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：自定義外掛</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 // 定義一個簡單的 jQuery 外掛
 $.fn.myHighlighter = function(options) {
   // 預設選項
@@ -591,6 +619,7 @@ $("#myPluginDiv").myHighlighter({ color: "white", backgroundColor: "green" });
 
 // 也可以不傳遞選項，使用預設值
 // $("#anotherDiv").myHighlighter();</code></pre>
+      </div>
     </div>
   </div>
 
@@ -598,21 +627,22 @@ $("#myPluginDiv").myHighlighter({ color: "white", backgroundColor: "green" });
   </h1>
   <p>HTML5 引入了 <code>data-*</code> 屬性，允許您在 HTML 元素上儲存自定義資料，而無需使用非標準屬性或 DOM 屬性。jQuery 的 <code>.data()</code>
     方法簡化了這些資料的存取。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：帶有 Data 屬性的元素</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：帶有 Data 屬性的元素</h4>
+      <div class="html-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 <code>&lt;div id="product" data-id="123" data-name="筆記型電腦" data-price="1200"&gt;
     產品名稱: &lt;span id="productName"&gt;&lt;/span&gt;&lt;br&gt;
     產品價格: &lt;span id="productPrice"&gt;&lt;/span&gt;
 &lt;/div&gt;
 &lt;button id="showProductBtn"&gt;顯示產品資訊&lt;/button&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：讀取與設定 Data 屬性</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：讀取與設定 Data 屬性</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 $("#showProductBtn").on("click", function() {
   let $productDiv = $("#product");
 
@@ -636,26 +666,28 @@ $("#showProductBtn").on("click", function() {
     "available": true
   });
 });</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">16: 事件委派 (Event Delegation) - 處理動態內容</h1>
   <p>事件委派是一種高效的事件處理模式，特別適用於動態新增的元素或大量相似元素。它透過將事件監聽器附加到父元素，而不是每個子元素來實現。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：動態列表</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：動態列表</h4>
+      <div class="html-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 <code>&lt;ul id="myDynamicList"&gt;
     &lt;li&gt;靜態項目 1&lt;/li&gt;
     &lt;li&gt;靜態項目 2&lt;/li&gt;
 &lt;/ul&gt;
 &lt;button id="addListItemBtn"&gt;新增列表項目&lt;/button&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：事件委派實戰</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：事件委派實戰</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 // 錯誤的綁定方式 (對動態新增的元素無效)
 // $("#myDynamicList li").on("click", function() {
 //   alert("點擊了: " + $(this).text());
@@ -671,23 +703,25 @@ let itemCounter = 3;
 $("#addListItemBtn").on("click", function() {
   $("#myDynamicList").append(`&lt;li&gt;動態新增項目 ${itemCounter++}&lt;/li&gt;`);
 });</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">17: Deferred Objects / Promises - 處理非同步操作</h1>
   <p>jQuery 的 Deferred 物件提供了一種強大的方式來管理非同步操作（如 AJAX 請求、動畫完成等）的狀態和回調。它類似於 ES6 的 Promise。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：非同步操作結果</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：非同步操作結果</h4>
+      <div class="html-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 <code>&lt;button id="fetchDataBtn"&gt;獲取資料&lt;/button&gt;
 &lt;div id="asyncResult"&gt;資料載入中...&lt;/div&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：Deferred 物件應用</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：Deferred 物件應用</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 $("#fetchDataBtn").on("click", function() {
   $("#asyncResult").text("資料載入中...");
 
@@ -726,23 +760,25 @@ $.when(d1, d2).done(function(result1, result2) {
 // 模擬觸發
 // d1.resolve("任務 1 完成");
 // d2.reject("任務 2 失敗");</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">18: 自定義事件 (Custom Events) - 模組間通訊</h1>
   <p>除了瀏覽器內建的事件（如 click, mouseover），您也可以建立和觸發自己的自定義事件。這對於模組化開發和組件之間的通訊非常有用。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：事件發送與接收者</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：事件發送與接收者</h4>
+      <div class="html-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 <code>&lt;button id="triggerEventBtn"&gt;觸發自定義事件&lt;/button&gt;
 &lt;div id="eventReceiver" style="border:1px solid gray; padding:10px; margin-top:10px;"&gt;等待事件...&lt;/div&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：自定義事件實戰</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：自定義事件實戰</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 // 綁定自定義事件 'myCustomEvent'
 $("#eventReceiver").on("myCustomEvent", function(event, param1, param2) {
   $(this).text(`接收到自定義事件！參數: ${param1}, ${param2}`);
@@ -765,16 +801,17 @@ $("#triggerEventBtn").on("dblclick", function() {
 $("#eventReceiver").on("anotherCustomEvent", function(event) {
   alert("接收到另一個自定義事件: " + event.message);
 });</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">19: 效能優化技巧 - 讓 jQuery 跑得更快</h1>
   <p>雖然 jQuery 已經很高效，但在處理大型應用程式或頻繁的 DOM 操作時，了解一些優化技巧可以顯著提升效能。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：多個元素</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：多個元素</h4>
+      <div class="html-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 <code>&lt;ul id="performanceList"&gt;
     &lt;li class="item"&gt;項目 1&lt;/li&gt;
     &lt;li class="item"&gt;項目 2&lt;/li&gt;
@@ -783,11 +820,12 @@ $("#eventReceiver").on("anotherCustomEvent", function(event) {
     &lt;li class="item"&gt;項目 5&lt;/li&gt;
 &lt;/ul&gt;
 &lt;button id="updateAllBtn"&gt;更新所有項目&lt;/button&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：效能優化實戰</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：效能優化實戰</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 // 1. 緩存選擇器結果
 let $items = $(".item"); // 只查詢一次 DOM
 $("#updateAllBtn").on("click", function() {
@@ -806,16 +844,17 @@ $("#performanceList").append(newItems.join("")); // 一次性添加到 DOM
 // 3. 使用事件委派 (見章節 16)
 // 4. 避免在迴圈中操作 DOM
 // 5. 使用 CSS 類別而非直接操作 .css() (見章節 7)</code></pre>
+      </div>
     </div>
   </div>
 
   <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">20: jQuery UI 與其他相關函式庫 - 擴展 UI 能力</h1>
   <p>雖然 jQuery 本身不提供複雜的 UI 元件，但它有強大的生態系統。jQuery UI 是官方提供的 UI 函式庫，基於 jQuery 構建，提供了豐富的互動式元件和特效。</p>
-  <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-    <h4 class="text-white mb-3">HTML 範例：jQuery UI 元件佔位符</h4>
-    <div class="html-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例：jQuery UI 元件佔位符</h4>
+      <div class="html-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 <code>&lt;!-- 引入 jQuery UI CSS --&gt;
 &lt;link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"&gt;
 
@@ -824,11 +863,12 @@ $("#performanceList").append(newItems.join("")); // 一次性添加到 DOM
 
 &lt;!-- 引入 jQuery UI JS (必須在 jQuery 之後) --&gt;
 &lt;script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"&gt;&lt;/script&gt;</code></pre>
+      </div>
     </div>
-    <h4 class="text-white mb-3">jQuery 範例：使用 jQuery UI</h4>
-    <div class="jquery-code">
-      <pre class="bg-secondary p-3 rounded text-light overflow-auto"
-        style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例：使用 jQuery UI</h4>
+      <div class="jquery-code">
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
 // 初始化日期選擇器
 $("#datepicker").datepicker();
 
@@ -840,6 +880,7 @@ $("#draggable").draggable();
 // - Tabs (分頁)
 // - Autocomplete (自動完成)
 // - Slider (滑塊)</code></pre>
+      </div>
     </div>
   </div>
 
