@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模擬猜拳遊戲</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 50px;
+        }
+
+        .choices button {
+            margin: 5px;
+        }
+
+        #gameResult {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .loading {
+            color: blue;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="mb-4 text-center">模擬猜拳遊戲</h1>
+
+        <div class="text-center mb-4">
+            <h3>請選擇您的出拳：</h3>
+            <div class="choices">
+                <button id="btnRock" class="btn btn-outline-dark">石頭</button>
+                <button id="btnPaper" class="btn btn-outline-dark">布</button>
+                <button id="btnScissors" class="btn btn-outline-dark">剪刀</button>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <p>您的選擇：<strong id="userChoiceDisplay"></strong></p>
+            <p>電腦選擇：<strong id="computerChoiceDisplay"></strong></p>
+        </div>
+
+        <div id="gameResult" class="text-center"></div>
+        <div id="loadingIndicator" class="loading text-center mt-3"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const choices = ['石頭', '布', '剪刀'];
+
+            function determineWinner(user, computer) {
+                if (user === computer) return "平局！";
+                if (
+                    (user === '石頭' && computer === '剪刀') ||
+                    (user === '布' && computer === '石頭') ||
+                    (user === '剪刀' && computer === '布')
+                ) {
+                    return "你贏了！🎉";
+                } else {
+                    return "電腦贏了！😭";
+                }
+            }
+
+            $('.choices button').on('click', function () {
+                var userChoice = $(this).text();
+                $('#userChoiceDisplay').text(userChoice);
+                $('#computerChoiceDisplay').text('...'); // 清空電腦選擇，顯示載入中
+                $('#gameResult').text(''); // 清空上次結果
+                $('#loadingIndicator').text('電腦正在出拳...');
+
+                // 模擬 Ajax 請求
+                $.ajax({
+                    url: '#', // 模擬伺服器
+                    type: 'POST',
+                    data: { user_choice: userChoice },
+                    dataType: 'json',
+                    timeout: 100, // 3秒超時
+
+                    success: function (response) {
+                        $('#computerChoiceDisplay').text(response.computer_choice);
+                        $('#gameResult').text(response.result).removeClass().addClass('text-center font-weight-bold alert alert-' + (response.result.includes("贏了") ? 'success' : response.result.includes("平局") ? 'secondary' : 'danger'));
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $('#gameResult').text('遊戲出錯：' + textStatus).addClass('alert alert-danger');
+                        $('#computerChoiceDisplay').text('錯誤');
+                        console.error("Ajax Error: ", textStatus, errorThrown);
+                    },
+                    complete: function () {
+                        $('#loadingIndicator').text(''); // 隱藏載入指示器
+                    }
+                });
+
+                // --- 模擬伺服器回應 ---
+                setTimeout(function () {
+                    var randomIndex = Math.floor(Math.random() * choices.length);
+                    var computerChoice = choices[randomIndex];
+                    var result = determineWinner(userChoice, computerChoice);
+
+                    var mockResponse = {
+                        computer_choice: computerChoice,
+                        result: result
+                    };
+                    // 觸發自訂事件模擬成功
+                    $('#btnRock').trigger('gameSuccess', [mockResponse]); // 觸發任一個按鈕的事件
+                }, 50); // 延遲 1 秒
+
+                // 綁定自訂的 gameSuccess 事件
+                $(document).on('gameSuccess', function (event, mockData) {
+                    if (mockData) {
+                        $('#computerChoiceDisplay').text(mockData.computer_choice);
+                        $('#gameResult').text(mockData.result).removeClass().addClass('text-center font-weight-bold alert alert-' + (mockData.result.includes("贏了") ? 'success' : mockData.result.includes("平局") ? 'secondary' : 'danger'));
+                    } else {
+                        $('#gameResult').text('模擬伺服器錯誤').addClass('alert alert-danger');
+                    }
+                    $('#loadingIndicator').text(''); // 隱藏載入指示器
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

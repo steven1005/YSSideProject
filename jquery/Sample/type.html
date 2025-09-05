@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注音練習 - 程式碼模式 (真實鍵盤)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1e1e1e;
+            /* VS Code 經典暗色背景 */
+            color: #d4d4d4;
+            /* 淺灰色文字 */
+            font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+            /* 程式碼字型 */
+            transition: background-color 0.5s;
+        }
+
+        .container {
+            max-width: 1100px;
+            /* 擴大容器寬度以容納真實鍵盤佈局 */
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 40px;
+            /* 左右區域的間距 */
+        }
+
+        .left-panel {
+            flex: 1;
+            /* 佔據左側大部分空間 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /* 垂直居中 */
+        }
+
+        .right-panel {
+            width: 450px;
+            /* 調整鍵盤提示區寬度以適應更寬的鍵盤 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .display-area {
+            font-size: 3rem;
+            font-weight: bold;
+            height: 100px;
+            line-height: 100px;
+            margin-bottom: 20px;
+            color: #4ec9b0;
+            white-space: pre-wrap;
+        }
+
+        .input-area {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #userInput {
+            width: 250px;
+            text-align: center;
+            font-size: 1.5rem;
+            background-color: #252526;
+            color: #dcdcdc;
+            border: 1px solid #3a3a3a;
+            caret-color: #dcdcdc;
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        .message {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 0.5s;
+            height: 60px;
+        }
+
+        .message.show {
+            opacity: 1;
+        }
+
+        .message.correct {
+            color: #6a9955;
+        }
+
+        .message.wrong {
+            color: #f44336;
+        }
+
+        h1,
+        h3 {
+            color: #d4d4d4;
+            font-weight: normal;
+        }
+
+        .help-text {
+            font-size: 0.9rem;
+            color: #808080;
+        }
+
+        hr {
+            border-top: 1px solid #3a3a3a;
+        }
+
+        /* 鍵盤提示樣式 */
+        .keyboard-hint {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .keyboard-row {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .key-pair {
+            background-color: #2c2c2c;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 5px 3px;
+            /* 調整內邊距 */
+            min-width: 45px;
+            /* 最小寬度 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s ease, background-color 0.2s;
+            cursor: default;
+            font-family: Consolas, Monaco, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 根據按鍵類型調整寬度 */
+        .key-pair[data-en="space"] {
+            min-width: 250px;
+            padding: 8px 5px;
+        }
+
+        .key-pair[data-en="shift"],
+        .key-pair[data-en="enter"],
+        .key-pair[data-en="delete"],
+        .key-pair[data-en="tab"] {
+            min-width: 80px;
+        }
+
+        .key-pair[data-en="ctrl"],
+        .key-pair[data-en="alt"],
+        .key-pair[data-en="fn"] {
+            min-width: 60px;
+        }
+
+        .key-pair .english {
+            font-size: 0.8rem;
+            /* 減小英文字型 */
+            font-weight: bold;
+            color: #9cdcfe;
+        }
+
+        .key-pair .bopomofo {
+            font-size: 1rem;
+            /* 減小注音字型 */
+            color: #4fc1b2;
+        }
+
+        .key-pair.highlight {
+            background-color: #e6a200;
+            /* 黃色高亮 */
+            border-color: #e6a200;
+            color: #1e1e1e;
+        }
+
+        .key-pair.highlight .bopomofo {
+            color: #1e1e1e;
+        }
+
+        /* 特殊按鍵文字樣式 */
+        .key-pair .english.special {
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 class="text-center mb-4">注音練習 - 程式碼模式</h1>
+        <p class="text-center help-text mb-4">在下方輸入框輸入對應的英文按鍵。</p>
+
+        <div class="main-content">
+            <div class="left-panel">
+                <div class="display-area" id="bopomofoDisplay">ㄅ</div>
+                <div id="message" class="message"></div>
+                <div class="input-area w-100">
+                    <input type="text" id="userInput" maxlength="1" autofocus placeholder="請在此輸入...">
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <h3 class="mt-0 mb-3 text-center">鍵盤對應</h3>
+                <div class="keyboard-hint" id="keyboardHint"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 使用您提供的鍵盤對應表
+            const keyMap = {
+                'a': 'ㄇ', 'b': 'ㄖ', 'c': 'ㄏ', 'd': 'ㄎ', 'e': 'ㄍ', 'f': 'ㄑ', 'g': 'ㄕ', 'h': 'ㄘ', 'i': 'ㄛ', 'j': 'ㄨ', 'k': 'ㄜ', 'l': 'ㄠ', 'm': 'ㄩ', 'n': 'ㄙ', 'o': 'ㄟ', 'p': 'ㄣ', 'q': 'ㄆ', 'r': 'ㄐ', 's': 'ㄋ', 't': 'ㄔ', 'u': 'ㄧ', 'v': 'ㄒ', 'w': 'ㄊ', 'x': 'ㄌ', 'y': 'ㄗ', 'z': 'ㄈ',
+                '1': 'ㄅ', '2': 'ㄉ', '3': 'ˇ', '4': 'ˋ', '5': 'ㄓ', '6': 'ˊ', '7': '˙', '8': 'ㄚ', '9': 'ㄞ', '0': 'ㄢ',
+                '-': 'ㄦ', ';': 'ㄤ', ',': 'ㄝ', '.': 'ㄡ', '/': 'ㄥ'
+            };
+
+            // 使用您提供的鍵盤佈局 - 盡量模擬真實鍵盤結構
+            const keyboardLayout = [
+                // 第一行: esc, F1-F12, del (為了簡潔，僅展示數字鍵和部分符號)
+                // 由於圖片中 F1-F12 區塊較大，這裡只包含數字和部分符號
+                ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'delete'],
+                // 第二行: tab, QWERTY...
+                ['tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
+                // 第三行: caps, ASDFGHJKL;...
+                ['caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'enter'],
+                // 第四行: shift, ZXCVBNM,...
+                ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'shift'],
+                // 第五行: Ctrl, Fn, Alt, Space, Alt, Ctrl, Arrows
+                ['ctrl', 'fn', 'win', 'alt', 'space', 'alt', 'ctrl', 'left', 'up', 'down', 'right']
+            ];
+
+            // 將注音對應到鍵盤佈局中的英文按鍵
+            // 這個對應需要仔細調整，確保每個注音都能找到對應的英文字母/符號
+            const bopomofoToEnKeyMap = {
+                'ㄇ': 'a', 'ㄖ': 'b', 'ㄏ': 'c', 'ㄎ': 'd', 'ㄍ': 'e', 'ㄑ': 'f', 'ㄕ': 'g', 'ㄘ': 'h', 'ㄛ': 'i', 'ㄨ': 'j', 'ㄜ': 'k', 'ㄠ': 'l', 'ㄩ': 'm', 'ㄙ': 'n', 'ㄟ': 'o', 'ㄣ': 'p',
+                'ㄆ': 'q', 'ㄊ': 'w', 'ㄍ': 'e', 'ㄐ': 'r', 'ㄔ': 't', 'ㄗ': 'y', 'ㄧ': 'u', 'ㄛ': 'i', 'ㄟ': 'o', 'ㄣ': 'p', // note: 'ㄍ', 'ㄧ', 'ㄛ', 'ㄟ', 'ㄣ' appear again, need mapping
+                'ㄇ': 'a', 'ㄋ': 's', 'ㄎ': 'd', 'ㄑ': 'f', 'ㄕ': 'g', 'ㄘ': 'h', 'ㄨ': 'j', 'ㄜ': 'k', 'ㄠ': 'l', 'ㄤ': ';',
+                'ㄈ': 'z', 'ㄌ': 'x', 'ㄏ': 'c', 'ㄒ': 'v', 'ㄖ': 'b', 'ㄙ': 'n', 'ㄩ': 'm', 'ㄝ': ',', 'ㄡ': '.', 'ㄥ': '/',
+                // 數字和符號
+                'ㄅ': '1', 'ㄉ': '2', 'ˇ': '3', 'ˋ': '4', 'ㄓ': '5', 'ˊ': '6', '˙': '7', 'ㄚ': '8', 'ㄞ': '9', 'ㄢ': '0',
+                'ㄦ': '-', ';': 'ㄤ', ',': 'ㄝ', '.': 'ㄡ', '/': 'ㄥ' // note: some symbols map to multiple zh, and vice-versa
+            };
+
+            // 為了準確繪製鍵盤，我們需要一個反向查找：從英文鍵找到對應的注音
+            // 並確保每個注音只對應一個英文鍵
+            const reverseKeyMap = {};
+            for (const enKey in keyMap) {
+                const zhSymbol = keyMap[enKey];
+                reverseKeyMap[zhSymbol] = enKey;
+            }
+
+            // 獲取所有可能的注音符號
+            const allBopomofoSymbols = Object.values(keyMap);
+            const uniqueBopomofoSymbols = [...new Set(allBopomofoSymbols)]; // 確保注音符號不重複
+
+            let currentBopomofo = ''; // 記錄當前顯示的注音符號
+            let correctAnswerKey = ''; // 記錄當前注音對應的正確英文字母/數字
+            let isInputLocked = false; // 鎖定輸入，防止動畫期間干擾
+
+            // 繪製提示鍵盤
+            function drawKeyboardHint() {
+                const $keyboardHint = $('#keyboardHint');
+                $keyboardHint.empty();
+
+                // 遍歷 keyboardLayout 陣列來繪製鍵盤
+                $.each(keyboardLayout, function (rowIndex, row) {
+                    const $row = $('<div class="keyboard-row"></div>');
+                    $.each(row, function (keyIndex, key) {
+                        let bopomofo = '';
+                        let englishKey = '';
+
+                        if (typeof key === 'string') { // 如果是簡單的字串（如 'q', '1', 'delete'）
+                            englishKey = key.toLowerCase();
+                            // 查找這個英文字母/符號對應哪個注音
+                            // 需要一個從英文鍵到注音的查找表
+                            for (const zh in keyMap) { // 遍歷 keyMap 找到反向對應
+                                if (keyMap[zh] === englishKey) { // 這裡應該是 keyMap[enKey] === zhSymbol
+                                    // 尋找英文鍵对应的注音
+                                    // 這裡需要一個從英文鍵到注音的映射，keyMap 是從注音到英文鍵
+                                    // 我們需要一個新的映射，例如 enKeyToZhMap
+                                }
+                            }
+                            // 為了簡化，我們將直接使用 keyMap 來反向查找，或建立一個新的映射
+                            // 這裡需要注意，有些英文鍵有多個注音，或反之。
+                            // 我們將優先處理字母鍵，然後是數字鍵，最後是符號鍵。
+
+                            // 創建一個反向映射：從英文鍵找到第一個對應的注音
+                            const mapping = Object.entries(keyMap).find(([enKey, zhSymbol]) => enKey.toLowerCase() === englishKey);
+                            if (mapping) {
+                                bopomofo = mapping[1];
+                            }
+
+                        } else if (typeof key === 'object' && key.zh && key.en) { // 如果是物件 {zh: 'ㄅ', en: 'Q'}
+                            bopomofo = key.zh;
+                            englishKey = key.en.toLowerCase();
+                        } else { // 處理特殊鍵，如 delete, enter, shift
+                            englishKey = key.toLowerCase();
+                            bopomofo = ''; // 特殊鍵通常不顯示注音
+                        }
+
+                        // 建立按鍵 HTML
+                        let keyHtml = `<div class="key-pair" data-en="${englishKey}">
+                                        <span class="english">${englishKey.toUpperCase()}</span>`;
+                        if (bopomofo) { // 只顯示注音如果存在
+                            keyHtml += `<br><span class="bopomofo">${bopomofo}</span>`;
+                        }
+                        keyHtml += `</div>`;
+                        $row.append(keyHtml);
+                    });
+                    $keyboardHint.append($row);
+                });
+                // 處理特殊按鍵的寬度
+                $('[data-en="space"]').addClass('key-space').css('min-width', '250px');
+                $('[data-en="shift"], [data-en="enter"], [data-en="delete"], [data-en="tab"]').css('min-width', '80px');
+                $('[data-en="ctrl"], [data-en="alt"], [data-en="fn"]').css('min-width', '60px');
+            }
+
+            // 隨機選一個注音，並高亮提示鍵
+            function getRandomBopomofo() {
+                // 從 keyMap 的值（注音符號）中隨機選擇一個
+                const randomZhSymbol = uniqueBopomofoSymbols[Math.floor(Math.random() * uniqueBopomofoSymbols.length)];
+                currentBopomofo = randomZhSymbol;
+
+                // 找到這個注音對應的英文鍵
+                // 注意：一個注音可能對應多個英文鍵，我們需要一個可靠的查找機制。
+                // 這裡採用反向查找：先找到這個注音對應的所有英文鍵，然後從中隨機選一個。
+                const possibleEnKeys = Object.keys(keyMap).filter(enKey => keyMap[enKey] === currentBopomofo);
+                if (possibleEnKeys.length > 0) {
+                    correctAnswerKey = possibleEnKeys[Math.floor(Math.random() * possibleEnKeys.length)]; // 隨機選一個鍵
+                } else {
+                    // 萬一找不到，設置一個預設值或拋出錯誤
+                    correctAnswerKey = 'a'; // 設個預設值
+                    console.error(`Error: Could not find English key for Bopomofo symbol: ${currentBopomofo}`);
+                }
+
+                $('#bopomofoDisplay').text(currentBopomofo);
+
+                // 高亮提示鍵
+                $('.key-pair').removeClass('highlight');
+                // 找到對應的英文鍵並添加 highlight 類別
+                $(`.key-pair[data-en="${correctAnswerKey}"]`).addClass('highlight');
+            }
+
+            // 顯示狀態訊息
+            function showMessage(text, type) {
+                const $message = $('#message');
+                $message.text(text).removeClass('correct wrong').addClass(type).addClass('show');
+
+                // 鎖定輸入，直到訊息消失
+                isInputLocked = true;
+
+                // 設定計時器來隱藏訊息並解鎖輸入
+                setTimeout(() => {
+                    $message.removeClass('show');
+                    if (type === 'correct') {
+                        // 輸入正確，則切換到下一個注音
+                        getRandomBopomofo();
+                        $('#userInput').val('').focus(); // 清空輸入框並重新聚焦
+                        isInputLocked = false; // 解鎖輸入
+                    } else if (type === 'wrong') {
+                        // 輸入錯誤，提示後清空輸入框，但保持鎖定，直到使用者再次嘗試
+                        // 這裡我們選擇讓使用者重試當前注音，所以錯誤後不解鎖，直到用户再次輸入正確
+                        // 為了讓用户知道錯誤，但又能重試，我們清空輸入框，並在下次輸入時重新檢查
+                        $('#userInput').val('').focus();
+                        // 錯誤訊息消失後，解鎖輸入，讓使用者可以重試當前注音
+                        setTimeout(() => {
+                            isInputLocked = false;
+                        }, 500); // 錯誤訊息消失後 0.5秒 解鎖
+                    }
+                }, 1500); // 訊息顯示 1.5 秒
+            }
+
+            // 監聽鍵盤輸入
+            $('#userInput').on('input', function () {
+                if (isInputLocked) {
+                    return; // 如果輸入被鎖定，則不做任何事
+                }
+
+                const inputValue = $(this).val().toLowerCase();
+
+                if (inputValue === correctAnswerKey) {
+                    // 輸入正確
+                    showMessage('✓ 正確！', 'correct');
+                } else if (inputValue.length > 0) {
+                    // 輸入錯誤
+                    showMessage('✕ 錯誤！', 'wrong');
+                    $(this).val(''); // 清空輸入框，讓使用者重試
+                }
+            });
+
+            // 初始化
+            drawKeyboardHint();
+            getRandomBopomofo();
+            $('#userInput').focus();
+        });
+    </script>
+</body>
+
+</html>

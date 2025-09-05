@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國字注音練習</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 生成json這樣的格式 {"char":"乳","zhuyin":"ㄖㄨˇ","pinyin":"rǔ","keyCodeInput":"bj6"}, 對應表如下 const keyMap={ 'a' : 'ㄇ' , 'b'
+    : 'ㄖ' , 'c' : 'ㄏ' , 'd' : 'ㄎ' , 'e' : 'ㄍ' , 'f' : 'ㄑ' , 'g' : 'ㄕ' , 'h' : 'ㄘ' , 'i' : 'ㄛ' , 'j' : 'ㄨ' , 'k' : 'ㄜ'
+    , 'l' : 'ㄠ' , 'm' : 'ㄩ' , 'n' : 'ㄙ' , 'o' : 'ㄟ' , 'p' : 'ㄣ' , 'q' : 'ㄆ' , 'r' : 'ㄐ' , 's' : 'ㄋ' , 't' : 'ㄔ' , 'u'
+    : 'ㄧ' , 'v' : 'ㄒ' , 'w' : 'ㄊ' , 'x' : 'ㄌ' , 'y' : 'ㄗ' , 'z' : 'ㄈ' , '1' : 'ㄅ' , '2' : 'ㄉ' , '3' : 'ˇ' , '4' : 'ˋ'
+    , '5' : 'ㄓ' , '6' : 'ˊ' , '7' : '˙' , '8' : 'ㄚ' , '9' : 'ㄞ' , '0' : 'ㄢ' , '-' : 'ㄦ' , ';' : 'ㄤ' , ',' : 'ㄝ' , '.'
+    : 'ㄡ' , '/' : 'ㄥ' }; 其中zhuyin的長度要跟keyCodeInput長度一樣， 生成10000字給我，可以分批給我 -->
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            /* 優先使用微軟正黑體，或後備字體 */
+            transition: background-color 0.5s;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1000px;
+            /* 稍微加寬容器 */
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #bb86fc;
+            /* 深紫色標題 */
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            /* 允許換行 */
+        }
+
+        .practice-area {
+            flex: 2;
+            /* 題目區域佔較多空間 */
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(187, 134, 252, 0.3);
+        }
+
+        .question-display {
+            font-size: 4rem;
+            /* 題目字體稍小 */
+            text-align: center;
+            font-weight: bold;
+            min-height: 100px;
+            /* 確保有足夠高度 */
+            line-height: 100px;
+            margin-bottom: 30px;
+            color: #ffffff;
+        }
+
+        .input-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #userInput {
+            width: 250px;
+            /* 輸入框寬度 */
+            text-align: center;
+            font-size: 1.8rem;
+            /* 輸入框字體 */
+            background-color: #333;
+            color: #e0e0e0;
+            border: 2px solid #444;
+            caret-color: #bb86fc;
+            /* 游標顏色 */
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .instruction-text {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 10px;
+        }
+
+        .message {
+            font-size: 2.5rem;
+            /* 提示訊息字體 */
+            font-weight: bold;
+            text-align: center;
+            margin-top: 30px;
+            min-height: 80px;
+            /* 確保有足夠空間顯示 */
+            opacity: 0;
+            transition: opacity 0.5s;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .message.show {
+            opacity: 1;
+        }
+
+        .message.correct {
+            color: #4CAF50;
+            /* 綠色 */
+        }
+
+        .message.wrong {
+            color: #F44336;
+            /* 紅色 */
+        }
+
+        .keyboard-area {
+            flex: 1;
+            /* 鍵盤區域 */
+            min-width: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(187, 134, 252, 0.3);
+        }
+
+        .keyboard-hint {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .keyboard-row {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .key-pair {
+            background-color: #333;
+            border: 1px solid #444;
+            border-radius: 5px;
+            padding: 8px 5px;
+            width: 65px;
+            /* 調整鍵盤寬度 */
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+            transition: transform 0.1s ease, background-color 0.2s, border-color 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: default;
+            /* 預設游標，表示不可點擊 */
+        }
+
+        .key-pair .english {
+            font-size: 0.9rem;
+            /* 英文鍵標示小一點 */
+            font-weight: bold;
+            color: #aaa;
+        }
+
+        .key-pair .bopomofo {
+            font-size: 1.1rem;
+            /* 注音標示 */
+            color: #bb86fc;
+            /* 注音符號用紫色 */
+        }
+
+        .key-pair.highlight {
+            background-color: #ffc107;
+            /* 黃色 */
+            border-color: #ffca2c;
+            color: #333;
+            transform: scale(1.08);
+            /* 稍微放大 */
+        }
+
+        .key-pair.highlight .bopomofo {
+            color: #333;
+        }
+
+        .key-pair.correct {
+            background-color: #4CAF50;
+            /* 按對了變綠色 */
+            border-color: #66BB6A;
+        }
+
+        .key-pair.wrong {
+            background-color: #F44336;
+            /* 按錯了變紅色 */
+            border-color: #EF5350;
+        }
+
+        .footer-instructions {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .footer-instructions p {
+            margin-bottom: 5px;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .practice-area,
+            .keyboard-area {
+                width: 95%;
+                flex: none;
+                /* 不再佔據彈性空間 */
+                margin-bottom: 20px;
+            }
+
+            .keyboard-hint {
+                width: 100%;
+            }
+
+            .key-pair {
+                width: 60px;
+                padding: 5px 3px;
+            }
+
+            .key-pair .english {
+                font-size: 0.8rem;
+            }
+
+            .key-pair .bopomofo {
+                font-size: 1.0rem;
+            }
+
+            .display-area {
+                font-size: 5rem;
+                line-height: 100px;
+                min-height: 100px;
+            }
+
+            #userInput {
+                width: 180px;
+                font-size: 1.5rem;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-content">
+        <header class="text-center py-4">
+            <h1>國字注音輸入練習</h1>
+            <p class="text-muted">輸入注音，按下 Enter 鍵檢查。</p>
+        </header>
+
+        <div class="container">
+            <div class="content-wrapper">
+                <div class="practice-area">
+                    <h3 class="mb-3">請輸入注音</h3>
+                    <div class="question-display" id="charDisplay">中</div>
+                    <div class="message" id="message"></div>
+                    <div class="input-section">
+                        <input type="text" id="userInput" maxlength="10" autofocus>
+                        <p class="instruction-text">輸入注音後請按 Enter</p>
+                    </div>
+                </div>
+
+                <div class="keyboard-area">
+                    <h3 class="mb-3">注音鍵盤</h3>
+                    <div class="keyboard-hint" id="keyboardHint"></div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer-instructions mt-auto py-3">
+            <p>提示：按下相對應的按鍵來輸入注音。按下 Enter 鍵進行檢查。</p>
+            <p>如果輸入錯誤，請重新輸入正確的注音。</p>
+        </footer>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // --- Data ---
+            // 使用您提供的鍵盤對應表
+            const keyMap = {
+                'a': 'ㄇ', 'b': 'ㄖ', 'c': 'ㄏ', 'd': 'ㄎ', 'e': 'ㄍ', 'f': 'ㄑ', 'g': 'ㄕ', 'h': 'ㄘ', 'i': 'ㄛ', 'j': 'ㄨ', 'k': 'ㄜ', 'l': 'ㄠ', 'm': 'ㄩ', 'n': 'ㄙ', 'o': 'ㄟ', 'p': 'ㄣ', 'q': 'ㄆ', 'r': 'ㄐ', 's': 'ㄋ', 't': 'ㄔ', 'u': 'ㄧ', 'v': 'ㄒ', 'w': 'ㄊ', 'x': 'ㄌ', 'y': 'ㄗ', 'z': 'ㄈ',
+                '1': 'ㄅ', '2': 'ㄉ', '3': 'ˇ', '4': 'ˋ', '5': 'ㄓ', '6': 'ˊ', '7': '˙', '8': 'ㄚ', '9': 'ㄞ', '0': 'ㄢ',
+                '-': 'ㄦ', ';': 'ㄤ', ',': 'ㄝ', '.': 'ㄡ', '/': 'ㄥ'
+            };
+
+            // 使用您提供的鍵盤佈局
+            const keyboardLayout = [
+                [{ zh: 'ㄅ', en: '1' }, { zh: 'ㄉ', en: '2' }, { zh: 'ˇ', en: '3' }, { zh: 'ˋ', en: '4' }, { zh: 'ㄓ', en: '5' }, { zh: 'ˊ', en: '6' }, { zh: '˙', en: '7' }, { zh: 'ㄚ', en: '8' }, { zh: 'ㄞ', en: '9' }, { zh: 'ㄢ', en: '0' }, { zh: 'ㄦ', en: '-' }],
+                [{ zh: 'ㄆ', en: 'Q' }, { zh: 'ㄊ', en: 'W' }, { zh: 'ㄍ', en: 'E' }, { zh: 'ㄐ', en: 'R' }, { zh: 'ㄔ', en: 'T' }, { zh: 'ㄗ', en: 'Y' }, { zh: 'ㄧ', en: 'U' }, { zh: 'ㄛ', en: 'I' }, { zh: 'ㄟ', en: 'O' }, { zh: 'ㄣ', en: 'P' }],
+                [{ zh: 'ㄇ', en: 'A' }, { zh: 'ㄋ', en: 'S' }, { zh: 'ㄎ', en: 'D' }, { zh: 'ㄑ', en: 'F' }, { zh: 'ㄕ', en: 'G' }, { zh: 'ㄘ', en: 'H' }, { zh: 'ㄨ', en: 'J' }, { zh: 'ㄜ', en: 'K' }, { zh: 'ㄠ', en: 'L' }, { zh: 'ㄤ', en: ';' }],
+                [{ zh: 'ㄈ', en: 'Z' }, { zh: 'ㄌ', en: 'X' }, { zh: 'ㄏ', en: 'C' }, { zh: 'ㄒ', en: 'V' }, { zh: 'ㄖ', en: 'B' }, { zh: 'ㄙ', en: 'N' }, { zh: 'ㄩ', en: 'M' }, { zh: 'ㄝ', en: ',' }, { zh: 'ㄡ', en: '.' }, { zh: 'ㄥ', en: '/' }]
+            ];
+
+            // 載入國字數據 (請替換成您實際的 characters.json 檔案路徑)
+            let characterData = [];
+            let currentQuestion = null; // 目前要練習的題目
+            let currentInputSequence = ''; // 目前使用者輸入的注音序列
+
+            // --- Functions ---
+
+            // 繪製提示鍵盤
+            function drawKeyboardHint() {
+                const $keyboardHint = $('#keyboardHint');
+                $keyboardHint.empty();
+                $.each(keyboardLayout, function (rowIndex, row) {
+                    const $row = $('<div class="keyboard-row"></div>');
+                    $.each(row, function (keyIndex, keyPair) {
+                        // 找到對應的 keyCodeInput
+                        const matchingChar = Object.values(keyMap).find(zhuyin => zhuyin === keyPair.zh);
+                        const keyData = Object.keys(keyMap).find(key => keyMap[key] === keyPair.zh);
+
+                        const keyPairHtml = $(`<div class="key-pair" data-en="${keyPair.en.toLowerCase()}">
+                                                <span class="english">${keyPair.en}</span>
+                                                <span class="bopomofo">${keyPair.zh}</span>
+                                            </div>`);
+                        $row.append(keyPairHtml);
+                    });
+                    $keyboardHint.append($row);
+                });
+            }
+
+            // 顯示提示訊息 (正確/錯誤)
+            function showMessage(text, type) {
+                const $message = $('#message');
+                $message.text(text).removeClass('correct wrong').addClass(type).addClass('show');
+                // 5秒後自動隱藏訊息
+                setTimeout(() => {
+                    $message.removeClass('show');
+                    if (type === 'wrong') {
+                        // 如果是錯誤，需要重置輸入並重新高亮當前題目
+                        $('#userInput').val('');
+                        highlightCurrentKey(currentInputSequence); // 重新高亮已輸入的部分
+                        $('#userInput').focus(); // 重新聚焦輸入框
+                    } else {
+                        // 如果是正確，就準備下一個題目
+                        setTimeout(loadNextQuestion, 800);
+                        $('#userInput').val('').blur(); // 短暫移除焦點
+                    }
+                }, 1500);
+            }
+
+            // 載入下一個國字題目
+            function loadNextQuestion() {
+                if (characterData.length === 0) {
+                    $('#charDisplay').text("練習結束！");
+                    $('#userInput').prop('disabled', true);
+                    return;
+                }
+                // 隨機選取一個題目
+                const randomIndex = Math.floor(Math.random() * characterData.length);
+                currentQuestion = characterData[randomIndex];
+
+                $('#charDisplay').text(currentQuestion.char);
+                $('#userInput').val(''); // 清空輸入框
+                currentInputSequence = ''; // 重置輸入序列
+                $('.key-pair').removeClass('highlight correct wrong'); // 清除所有鍵盤高亮
+                $('#userInput').focus(); // 重新聚焦輸入框
+            }
+
+            // 高亮當前輸入的注音序列對應的鍵
+            function highlightCurrentKey(inputSequence) {
+                // 先移除所有高亮，再重新添加
+                $('.key-pair').removeClass('highlight correct wrong');
+
+                let tempSequence = inputSequence.toLowerCase();
+
+                for (const key in keyMap) {
+                    if (keyMap.hasOwnProperty(key)) {
+                        // 檢查 tempSequence 是否以某個注音開頭
+                        if (tempSequence.startsWith(keyMap[key])) {
+                            const matchedKey = $(`.key-pair[data-en="${key}"]`);
+                            matchedKey.addClass('highlight');
+                            // 移除已匹配的部分，繼續尋找下一個
+                            tempSequence = tempSequence.substring(keyMap[key].length);
+                            if (tempSequence.length === 0) break; // 找到完全匹配就結束
+                        }
+                    }
+                }
+            }
+
+            // 檢查使用者輸入是否正確
+            function checkAnswer() {
+                if (!currentQuestion) return; // 如果沒有題目，則不執行
+
+                const userInputCorrectZhuyin = currentQuestion.keyCodeInput;
+
+                if (currentInputSequence === userInputCorrectZhuyin) {
+                    showMessage('正確！', 'correct');
+                    // 移除正確的題目，避免重複出現 (可選)
+                    characterData = characterData.filter(item => item !== currentQuestion);
+                } else {
+                    showMessage('錯誤！請重試', 'wrong');
+                }
+            }
+
+            // --- Event Listeners ---
+
+            // 載入 JSON 數據
+            $.getJSON('characters.json', function (data) {
+                characterData = data;
+                if (characterData.length > 0) {
+                    loadNextQuestion(); // 載入第一個題目
+                } else {
+                    $('#charDisplay').text("無題目資料！");
+                }
+            }).fail(function () {
+                console.error("載入 characters.json 失敗！請確認路徑及檔案格式。");
+                $('#charDisplay').text("無法載入資料！");
+            });
+
+            // 監聽鍵盤輸入
+            $('#userInput').on('input', function () {
+                const inputValue = $(this).val().toLowerCase();
+                currentInputSequence = inputValue; // 更新目前輸入序列
+
+                highlightCurrentKey(currentInputSequence); // 高亮對應的鍵
+            });
+
+            // 監聽 Enter 鍵
+            $('#userInput').on('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // 阻止表單提交
+                    checkAnswer();
+                }
+            });
+
+            // --- Initialization ---
+            drawKeyboardHint(); // 繪製提示鍵盤
+            // loadNextQuestion() 會在 JSON 載入完成後自動呼叫
+        });
+    </script>
+</body>
+
+</html>

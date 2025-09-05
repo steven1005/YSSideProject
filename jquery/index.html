@@ -7,29 +7,96 @@
   <title>jQuery 詳盡入門與進階教學</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <style>
-    body {
-      padding: 1.5rem;
-    }
-
-    h1 {
-      border-bottom: 1px solid #555;
-      padding-bottom: 5px;
-      margin-top: 2rem;
-    }
-
-    pre,
-    code {
-      border-radius: 5px;
-      height: 100%;
-      color: #eee;
-    }
-  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="p-3 bg-dark text-white">
   <h1 class="mb-4">jQuery 詳盡入門與進階教學</h1>
   <p>本教學旨在為初學者提供一個全面而詳細的 jQuery 入門指引，並逐步深入到更進階的應用。</p>
+
+  <h1 class="SideTabs mt-4 pb-1">常用 jQuery 方法總覽</h1>
+  <div class="table-responsive mb-5">
+      <table class="table table-dark table-striped table-bordered" style="--bs-table-striped-bg: rgba(255, 255, 255, 0.03);">
+          <thead class="thead-light">
+              <tr>
+                  <th style="width: 15%;">大項目</th>
+                  <th style="width: 25%;">功能 (方法)</th>
+                  <th>描述</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td rowspan="3" class="align-middle">屬性操作</td>
+                  <td><code>.attr()</code></td>
+                  <td>獲取或設定 HTML 屬性 (如 href, src, class)。</td>
+              </tr>
+              <tr>
+                  <td><code>.prop()</code></td>
+                  <td>獲取或設定元素的布林屬性 (如 checked, disabled)。</td>
+              </tr>
+              <tr>
+                  <td><code>.val()</code></td>
+                  <td>獲取或設定表單元素的值。</td>
+              </tr>
+              <tr>
+                  <td class="align-middle">CSS 操作</td>
+                  <td><code>.css()</code></td>
+                  <td>獲取或設定元素的 CSS 樣式。</td>
+              </tr>
+              <tr>
+                  <td rowspan="3" class="align-middle">DOM 操作</td>
+                  <td><code>.append(), .prepend()</code></td>
+                  <td>在元素的內部開頭或結尾插入內容。</td>
+              </tr>
+              <tr>
+                  <td><code>.after(), .before()</code></td>
+                  <td>在元素的外部之前或之後插入內容。</td>
+              </tr>
+              <tr>
+                  <td><code>.remove(), .empty(), .replaceWith()</code></td>
+                  <td>移除、清空或替換元素。</td>
+              </tr>
+              <tr>
+                  <td rowspan="2" class="align-middle">事件處理</td>
+                  <td><code>.on(), .click()</code></td>
+                  <td>綁定事件監聽器，.click() 是點擊事件的簡寫。</td>
+              </tr>
+              <tr>
+                  <td><code>.hover()</code></td>
+                  <td>滑鼠懸停進入和離開時觸發。</td>
+              </tr>
+              <tr>
+                  <td rowspan="2" class="align-middle">效果與動畫</td>
+                  <td><code>.fadeIn(), .fadeOut(), .fadeToggle()</code></td>
+                  <td>淡入、淡出、切換淡入淡出效果。</td>
+              </tr>
+              <tr>
+                  <td><code>.show(), .hide(), .toggle(), .slideUp(), .slideDown(), .slideToggle(), .animate()</code></td>
+                  <td>顯示、隱藏、滑動及自定義動畫。</td>
+              </tr>
+              <tr>
+                  <td rowspan="2" class="align-middle">類別操作</td>
+                  <td><code>.addClass(), .removeClass(), .toggleClass()</code></td>
+                  <td>新增、移除或切換元素的 CSS 類別。</td>
+              </tr>
+              <tr>
+                  <td><code>.hasClass()</code></td>
+                  <td>檢查元素是否包含指定的 class。</td>
+              </tr>
+              <tr>
+                  <td class="align-middle">內容操作</td>
+                  <td><code>.html(), .text()</code></td>
+                  <td>獲取或設定元素的 HTML 或純文字內容。</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
 
   <!-- 1: 什麼是 jQuery？ - 快速入門與引入 -->
   <h1 class="SideTabs mt-4 pb-1">1: 什麼是 jQuery？ - 快速入門與引入</h1>
@@ -38,24 +105,8 @@
   <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <h4 class="text-white mb-3">HTML 範例：引入 jQuery</h4>
     <div class="html-code">
-      <pre class="bg-secondary rounded text-light"><code>&lt;!DOCTYPE html&gt;
-&lt;html lang="zh-TW"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;我的第一個 jQuery 頁面&lt;/title&gt;
-    &lt;!-- 使用 Google CDN 引入 jQuery --&gt;
-    &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;歡迎使用 jQuery!&lt;/h1&gt;
-    &lt;script&gt;
-        // 確保 DOM 載入完成後執行
-        $(document).ready(function() {
-            alert("jQuery 載入成功！");
-        });
-    &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+      <p>&lt;!-- 使用 Google CDN 引入 jQuery --&gt;</p>
+      <p>&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"&gt;&lt;/script&gt;</p>
     </div>
   </div>
 
@@ -105,8 +156,9 @@ $([class]).css("padding", "5px");</code></pre>
     <div class="col-md-6">
       <h4 class="text-white mb-3">HTML 範例：事件綁定</h4>
       <div class="html-code">
-        <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;button id="myButton"&gt;點擊我&lt;/button&gt;
-&lt;div id="hoverBox" style="width:100px; height:50px; background-color:lightgray;"&gt;滑鼠移入這裡&lt;/div&gt;
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;button id="myButton"&gt;點擊我 (.on)&lt;/button&gt;
+&lt;button id="clickButton"&gt;點擊我 (.click)&lt;/button&gt;
+&lt;div id="hoverBox" style="width:150px; height:50px; background-color:lightgray; margin-top: 10px;"&gt;滑鼠移入這裡 (.hover)&lt;/div&gt;
 &lt;input type="text" id="myInput" placeholder="在這裡輸入文字"&gt;</code></pre>
       </div>
     </div>
@@ -193,7 +245,8 @@ $("#myBox").on("dblclick", function() {
 
   <!-- 5: DOM 內容與屬性操作 - 讀寫元素資訊 -->
   <h1 class="SideTabs mt-4 pb-1">5: DOM 內容與屬性操作 - 讀寫元素資訊</h1>
-  <p>DOM (Document Object Model) 是 HTML 和 XML 文件的程式介面。它將頁面解析為一個樹狀結構，讓程式語言可以存取和修改頁面內容。jQuery 提供了簡潔的方法來操作 DOM 元素的內容和屬性。
+  <p>DOM (Document Object Model) 是 HTML 和 XML 文件的程式介面。它將頁面解析為一個樹狀結構，讓程式語言可以存取和修改頁面內容。jQuery 提供了簡潔的方法來操作 DOM 元素的內容和屬性。對於
+    <code>checked</code>, <code>selected</code>, <code>disabled</code> 這類布林屬性，建議使用 <code>.prop()</code> 方法。
   </p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
@@ -202,7 +255,9 @@ $("#myBox").on("dblclick", function() {
         <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;p id="myParagraph"&gt;這是一段原始文字。&lt;/p&gt;
 &lt;div id="myDiv"&gt;這是 &lt;strong&gt;HTML&lt;/strong&gt; 內容。&lt;/div&gt;
 &lt;input type="text" id="myInput" value="預設值"&gt;
-&lt;a id="myLink" href="#"&gt;點擊這裡&lt;/a&gt;</code></pre>
+&lt;a id="myLink" href="#"&gt;點擊這裡&lt;/a&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;input type="checkbox" id="myCheckbox"&gt; &lt;label for="myCheckbox"&gt;同意條款&lt;/label&gt;</code></pre>
       </div>
     </div>
     <div class="col-md-6">
@@ -231,7 +286,14 @@ $("#myLink").attr({
   "href": "https://www.google.com",
   "target": "_blank", // 設定多個屬性
   "title": "前往 Google"
-});</code></pre>
+});
+
+// .prop() - 取得或設定屬性 (Properties)
+// .prop() 用於布林值的屬性，如 checked, selected, disabled
+let isChecked = $("#myCheckbox").prop("checked"); // 取得 checked 狀態 (true/false)
+console.log("Checkbox 初始狀態: " + isChecked);
+$("#myCheckbox").prop("checked", true); // 勾選 checkbox
+console.log("Checkbox 更新後狀態: " + $("#myCheckbox").prop("checked"));</code></pre>
       </div>
 
     </div>
@@ -905,6 +967,8 @@ $("#draggable").draggable();
     </div>
   </div>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="js/script.js"></script>
 </body>
 
 </html>

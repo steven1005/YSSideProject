@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模擬井字遊戲</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 50px;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 5px;
+            margin: 20px auto;
+            width: 315px;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            cursor: pointer;
+            background-color: #eee;
+        }
+
+        .cell:hover {
+            background-color: #ddd;
+        }
+
+        .cell.X {
+            color: #007bff;
+        }
+
+        .cell.O {
+            color: #dc3545;
+        }
+
+        .disabled-cell {
+            cursor: not-allowed;
+            background-color: #ccc;
+        }
+
+        #gameStatus {
+            margin-top: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .loading {
+            color: blue;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="mb-4 text-center">模擬井字遊戲</h1>
+
+        <div class="board" id="gameBoard">
+        </div>
+
+        <div id="gameStatus" class="text-center"></div>
+        <div id="loadingIndicator" class="loading text-center mt-3"></div>
+
+        <div class="text-center mt-3">
+            <button id="resetGameBtn" class="btn btn-secondary">重新開始</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            let board = ['', '', '', '', '', '', '', '', '']; // 遊戲棋盤狀態
+            let currentPlayer = 'X'; // 當前輪到誰下棋
+            let gameActive = true; // 遊戲是否正在進行
+            const winningCombos = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+                [0, 4, 8], [2, 4, 6]             // Diagonals
+            ];
+
+            // 創建棋盤格
+            function createBoard() {
+                for (let i = 0; i < 9; i++) {
+                    const cell = $('<div>').addClass('cell').attr('data-index', i);
+                    $('#gameBoard').append(cell);
+                }
+            }
+
+            // 更新棋盤格顯示
+            function updateBoardDisplay() {
+                $('.cell').each(function () {
+                    const index = $(this).data('index');
+                    $(this).text(board[index]);
+                    if (board[index] === 'X') {
+                        $(this).addClass('X').removeClass('O disabled-cell');
+                    } else if (board[index] === 'O') {
+                        $(this).addClass('O').removeClass('X disabled-cell');
+                    } else {
+                        $(this).removeClass('X O');
+                        if (gameActive) {
+                            $(this).removeClass('disabled-cell');
+                        } else {
+                            $(this).addClass('disabled-cell');
+                        }
+                    }
+                });
+            }
+
+            // 檢查是否有獲勝者
+            function checkWinner() {
+                for (const combo of winningCombos) {
+                    const [a, b, c] = combo;
+                    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                        return board[a]; // 返回獲勝者 'X' 或 'O'
+                    }
+                }
+                // 檢查是否平局
+                if (!board.includes('')) {
+                    return 'draw'; // 平局
+                }
+                return null; // 遊戲未結束
+            }
+
+            // 處理玩家下棋
+            function handleCellClick(event) {
+                const cell = $(event.target);
+                const index = cell.data('index');
+
+                if (board[index] === '' && gameActive && currentPlayer === 'X') {
+                    $('#loadingIndicator').text('輪到電腦思考...');
+                    cell.text(currentPlayer);
+                    board[index] = currentPlayer;
+                    cell.addClass(currentPlayer); // 增加 X 或 O 的 class
+                    cell.addClass('disabled-cell'); // 點擊後禁用
+
+                    const winner = checkWinner();
+                    if (winner) {
+                        endGame(winner);
+                        return;
+                    }
+
+                    currentPlayer = 'O'; // 切換到電腦（O）
+                    updateStatus();
+
+                    // --- 模擬電腦 Ajax 回應 ---
+                    // 延遲一段時間讓電腦「思考」
+                    setTimeout(function () {
+                        simulateComputerMove();
+                    }, 1200); // 模擬 1.2 秒延遲
+                }
+            }
+
+            // 模擬電腦移動 (簡化：隨機找一個空格下棋)
+            function simulateComputerMove() {
+                const emptyCells = [];
+                $('.cell').each(function () {
+                    const index = $(this).data('index');
+                    if (board[index] === '') {
+                        emptyCells.push(index);
+                    }
+                });
+
+                if (emptyCells.length > 0 && gameActive) {
+                    const randomIndex = Math.floor(Math.random() * emptyCells.length);
+                    const computerMoveIndex = emptyCells[randomIndex];
+
+                    // 模擬 Ajax 成功回應
+                    var mockResponse = {
+                        move_index: computerMoveIndex,
+                        player: 'O'
+                    };
+                    $('#gameBoard').trigger('computerMoveSuccess', [mockResponse]);
+                } else {
+                    // 如果沒有空位，可能已經平局
+                    if (gameActive) {
+                        endGame('draw');
+                    }
+                }
+                $('#loadingIndicator').text(''); // 隱藏載入指示器
+            }
+
+            // 綁定自訂的 computerMoveSuccess 事件
+            $(document).on('computerMoveSuccess', function (event, mockData) {
+                const computerIndex = mockData.move_index;
+                const player = mockData.player;
+
+                if (board[computerIndex] === '' && gameActive) {
+                    board[computerIndex] = player;
+                    updateBoardDisplay();
+
+                    const winner = checkWinner();
+                    if (winner) {
+                        endGame(winner);
+                    } else {
+                        currentPlayer = 'X'; // 切換回玩家 (X)
+                        updateStatus();
+                    }
+                }
+            });
+
+
+            // 更新遊戲狀態文字
+            function updateStatus() {
+                if (!gameActive) return;
+                if (currentPlayer === 'X') {
+                    $('#gameStatus').text("輪到您 (X)");
+                } else {
+                    $('#gameStatus').text("輪到電腦 (O)...");
+                }
+            }
+
+            // 結束遊戲
+            function endGame(winner) {
+                gameActive = false;
+                let statusText = '';
+                if (winner === 'X') {
+                    statusText = "您贏了！🎉";
+                    $('#gameStatus').text(statusText).addClass('alert alert-success');
+                } else if (winner === 'O') {
+                    statusText = "電腦贏了！😭";
+                    $('#gameStatus').text(statusText).addClass('alert alert-danger');
+                } else if (winner === 'draw') {
+                    statusText = "平局！🤝";
+                    $('#gameStatus').text(statusText).addClass('alert alert-secondary');
+                }
+                // 禁用所有棋盤格
+                $('.cell').addClass('disabled-cell');
+            }
+
+            // 重設遊戲
+            function resetGame() {
+                board = ['', '', '', '', '', '', '', '', ''];
+                currentPlayer = 'X';
+                gameActive = true;
+                $('#gameStatus').text("遊戲開始！").removeClass().addClass('');
+                updateBoardDisplay();
+                $('#loadingIndicator').text('');
+            }
+
+            // 初始化
+            createBoard();
+            updateBoardDisplay();
+            updateStatus();
+
+            // 事件綁定
+            $('#gameBoard').on('click', '.cell', handleCellClick);
+            $('#resetGameBtn').on('click', resetGame);
+        });
+    </script>
+</body>
+
+</html>
