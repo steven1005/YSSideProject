@@ -21,6 +21,7 @@
     pre,
     code {
       border-radius: 5px;
+      height: 100%;
       color: #eee;
     }
   </style>
@@ -30,7 +31,8 @@
   <h1 class="mb-4">jQuery 詳盡入門與進階教學</h1>
   <p>本教學旨在為初學者提供一個全面而詳細的 jQuery 入門指引，並逐步深入到更進階的應用。</p>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">1: 什麼是 jQuery？ - 快速入門與引入</h1>
+  <!-- 1: 什麼是 jQuery？ - 快速入門與引入 -->
+  <h1 class="SideTabs mt-4 pb-1">1: 什麼是 jQuery？ - 快速入門與引入</h1>
   <p>jQuery 是一個快速、小巧且功能豐富的 JavaScript 函式庫。它使得 HTML 文件遍歷和操作、事件處理、動畫和 Ajax 等操作變得更加簡單。它的設計理念是 "write less, do
     more"（寫得更少，做得更多）。要使用它，您需要先在您的 HTML 頁面中引入 jQuery 檔案，通常是透過 CDN 或下載到本地。</p>
   <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
@@ -57,7 +59,8 @@
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">2: 核心語法與強大選擇器 - 精準定位元素</h1>
+  <!-- 2: 核心語法與強大選擇器 - 精準定位元素 -->
+  <h1 class="SideTabs mt-4 pb-1">2: 核心語法與強大選擇器 - 精準定位元素</h1>
   <p>jQuery 的核心語法是 <code>$(selector).action()</code>。<code>$</code> 符號是 jQuery 的別名，<code>selector</code> 用來查詢 HTML 元素，而
     <code>action()</code> 則是對選中的元素執行的操作。選擇器是 jQuery 最強大的部分之一，它基於 CSS 選擇器，讓您可以非常精準地定位到頁面上的任何元素。
   </p>
@@ -66,11 +69,11 @@
       <h4 class="text-white mb-3">HTML 範例：多種選擇器應用</h4>
       <div class="html-code">
         <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;div id="container"&gt;
-    &lt;p class="text-item"&gt;這是一個段落。&lt;/p&gt;
-    &lt;span class="text-item"&gt;這是一個 span。&lt;/span&gt;
-    &lt;button&gt;點擊我&lt;/button&gt;
-&lt;/div&gt;
-&lt;p&gt;另一個段落。&lt;/p&gt;</code></pre>
+        &lt;p class="text-item"&gt;這是一個段落。&lt;/p&gt;
+        &lt;span class="text-item"&gt;這是一個 span。&lt;/span&gt;
+        &lt;button&gt;點擊我&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;p&gt;另一個段落。&lt;/p&gt;</code></pre>
       </div>
     </div>
     <div class="col-md-6">
@@ -95,7 +98,8 @@ $([class]).css("padding", "5px");</code></pre>
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">3: 事件處理 - 響應使用者互動</h1>
+  <!-- 3: 事件處理 - 響應使用者互動 -->
+  <h1 class="SideTabs mt-4 pb-1">3: 事件處理 - 響應使用者互動</h1>
   <p>事件是使用者在網頁上的行為，例如點擊、滑鼠移入、鍵盤輸入等。jQuery 提供了簡潔且跨瀏覽器兼容的方式來處理這些事件。<code>.on()</code> 是最推薦的事件綁定方法，它功能強大且靈活。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
@@ -133,7 +137,8 @@ $("#myInput").on("keyup", function() {
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">4: 動態特效與動畫 - 讓網頁生動起來</h1>
+  <!-- 4: 動態特效與動畫 - 讓網頁生動起來 -->
+  <h1 class="SideTabs mt-4 pb-1">4: 動態特效與動畫 - 讓網頁生動起來</h1>
   <p>jQuery 內建了多種常用特效，讓您可以輕易地為網頁加入動畫，提升使用者體驗。這些特效通常都支援速度參數（如 'slow', 'fast', 或毫秒數）和回調函數。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
@@ -186,7 +191,8 @@ $("#myBox").on("dblclick", function() {
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">5: DOM 內容與屬性操作 - 讀寫元素資訊</h1>
+  <!-- 5: DOM 內容與屬性操作 - 讀寫元素資訊 -->
+  <h1 class="SideTabs mt-4 pb-1">5: DOM 內容與屬性操作 - 讀寫元素資訊</h1>
   <p>DOM (Document Object Model) 是 HTML 和 XML 文件的程式介面。它將頁面解析為一個樹狀結構，讓程式語言可以存取和修改頁面內容。jQuery 提供了簡潔的方法來操作 DOM 元素的內容和屬性。
   </p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
@@ -231,7 +237,8 @@ $("#myLink").attr({
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">6: DOM 元素的新增、移除與替換</h1>
+  <!-- 6: DOM 元素的新增、移除與替換 - 動態操作內容 -->
+  <h1 class="SideTabs mt-4 pb-1">6: DOM 元素的新增、移除與替換</h1>
   <p>jQuery 提供了多種方法來動態地在文件中新增、移除或替換 HTML 元素，這對於建立動態內容非常有用。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
@@ -278,7 +285,8 @@ $("#oldElement").replaceWith("&lt;div id=\"newElement\"&gt;新的元素&lt;/div&
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">7: CSS 與樣式操作 - 動態控制外觀</h1>
+  <!-- 7: CSS 與樣式操作 - 動態控制外觀 -->
+  <h1 class="SideTabs mt-4 pb-1">7: CSS 與樣式操作 - 動態控制外觀</h1>
   <p>jQuery 提供了多種方法來動態地新增、移除、切換或直接設定 CSS 樣式，讓您可以根據使用者互動或資料變化來改變網頁的外觀。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
@@ -318,7 +326,8 @@ console.log("背景顏色: " + bgColor);</code></pre>
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">8: DOM 遍歷 (Traversing) - 探索元素關係</h1>
+  <!-- 8: DOM 遍歷 - 探索元素關係 -->
+  <h1 class="SideTabs mt-4 pb-1">8: DOM 遍歷 (Traversing) - 探索元素關係</h1>
   <p>DOM 遍歷是指在 DOM 樹中移動，從一個選定的元素開始，尋找其父、子、兄弟或其他相關的元素。這對於複雜的頁面操作至關重要。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
@@ -362,7 +371,8 @@ $("span").closest(".container").css("background-color", "#eee");</code></pre>
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">9: Chaining (鏈式操作) - 提升程式碼可讀性與效率</h1>
+  <!-- 9: 鏈式操作 (Chaining) - 提升程式碼可讀性與效率 -->
+  <h1 class="SideTabs mt-4 pb-1">9: Chaining (鏈式操作) - 提升程式碼可讀性與效率</h1>
   <p>鏈式操作是 jQuery 的一個強大特性，它允許您在一個 jQuery 物件上連續呼叫多個方法，而無需重複選取元素。這使得程式碼更簡潔、可讀性更高，並且由於減少了 DOM 查詢次數，也能提升效率。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
@@ -387,7 +397,8 @@ $("#chainedElement")
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">10: AJAX 簡介 - 非同步資料載入</h1>
+  <!-- 10: AJAX 簡介 - 非同步資料載入 -->
+  <h1 class="SideTabs mt-4 pb-1">10: AJAX 簡介 - 非同步資料載入</h1>
   <p>AJAX (Asynchronous JavaScript and XML) 是一種在不重新整理整個頁面的情況下，與伺服器交換資料並更新部分網頁的技術。jQuery 的 <code>$.ajax()</code> 方法是處理
     AJAX 的主要方式，它簡化了複雜的 XMLHttpRequest 物件操作。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
@@ -430,7 +441,8 @@ $("#loadDataBtn").on("click", function() {
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">11: AJAX - 常用簡寫方法與錯誤處理</h1>
+  <!-- 11: AJAX - 常用簡寫方法與錯誤處理 -->
+  <h1 class="SideTabs mt-4 pb-1">11: AJAX - 常用簡寫方法與錯誤處理</h1>
   <p>除了功能完整的 <code>$.ajax()</code>，jQuery 也提供了一些常用的簡寫方法，讓常見的 AJAX 請求更為簡潔。同時，良好的錯誤處理是任何網路請求的關鍵。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
@@ -476,7 +488,8 @@ $("#jsonBtn").on("click", function() {
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">12: 表單處理 - 收集與提交資料</h1>
+  <!-- 12: 表單處理 - 收集與提交資料 -->
+  <h1 class="SideTabs mt-4 pb-1">12: 表單處理 - 收集與提交資料</h1>
   <p>jQuery 簡化了表單資料的收集、驗證和提交。<code>.serialize()</code> 和 <code>.serializeArray()</code> 是處理表單資料的常用方法。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
@@ -522,7 +535,8 @@ $("#myForm").on("submit", function(event) {
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">13: 工具方法 (Utility Methods) - 輔助開發</h1>
+  <!-- 13: 工具方法 - 輔助開發 -->
+  <h1 class="SideTabs mt-4 pb-1">13: 工具方法 (Utility Methods) - 輔助開發</h1>
   <p>jQuery 提供了一系列實用的工具方法，這些方法不直接操作 DOM，而是提供通用的功能，輔助 JavaScript 開發。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
@@ -572,7 +586,8 @@ output.append(`&lt;p&gt;$.extend() 結果: ${JSON.stringify(mergedObj)}&lt;/p&gt
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">14: 撰寫 jQuery 外掛 (Plugins) - 擴展功能</h1>
+  <!-- 14: 撰寫 jQuery 外掛 - 擴展功能 -->
+  <h1 class="SideTabs mt-4 pb-1">14: 撰寫 jQuery 外掛 (Plugins) - 擴展功能</h1>
   <p>您可以撰寫自己的 jQuery 外掛來擴展 jQuery 的功能，將重複的程式碼封裝成可重用的模組。這通常是透過擴展 <code>$.fn</code> 物件來實現的。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
@@ -623,7 +638,8 @@ $("#myPluginDiv").myHighlighter({ color: "white", backgroundColor: "green" });
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">15: Data 屬性 (Data Attributes) - HTML 與 JS 互動
+  <!-- 15: Data 屬性 (Data Attributes) - HTML 與 JS 互動 -->
+  <h1 class="SideTabs mt-4 pb-1">15: Data 屬性 (Data Attributes) - HTML 與 JS 互動
   </h1>
   <p>HTML5 引入了 <code>data-*</code> 屬性，允許您在 HTML 元素上儲存自定義資料，而無需使用非標準屬性或 DOM 屬性。jQuery 的 <code>.data()</code>
     方法簡化了這些資料的存取。</p>
@@ -670,7 +686,8 @@ $("#showProductBtn").on("click", function() {
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">16: 事件委派 (Event Delegation) - 處理動態內容</h1>
+  <!-- 16: 事件委派 (Event Delegation) - 處理動態內容 -->
+  <h1 class="SideTabs mt-4 pb-1">16: 事件委派 (Event Delegation) - 處理動態內容</h1>
   <p>事件委派是一種高效的事件處理模式，特別適用於動態新增的元素或大量相似元素。它透過將事件監聽器附加到父元素，而不是每個子元素來實現。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
@@ -707,7 +724,8 @@ $("#addListItemBtn").on("click", function() {
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">17: Deferred Objects / Promises - 處理非同步操作</h1>
+  <!-- 17: Deferred 物件 / Promises - 處理非同步操作 -->
+  <h1 class="SideTabs mt-4 pb-1">17: Deferred Objects / Promises - 處理非同步操作</h1>
   <p>jQuery 的 Deferred 物件提供了一種強大的方式來管理非同步操作（如 AJAX 請求、動畫完成等）的狀態和回調。它類似於 ES6 的 Promise。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
@@ -764,7 +782,8 @@ $.when(d1, d2).done(function(result1, result2) {
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">18: 自定義事件 (Custom Events) - 模組間通訊</h1>
+  <!-- 18: 自定義事件 (Custom Events) - 模組間通訊 -->
+  <h1 class="SideTabs mt-4 pb-1">18: 自定義事件 (Custom Events) - 模組間通訊</h1>
   <p>除了瀏覽器內建的事件（如 click, mouseover），您也可以建立和觸發自己的自定義事件。這對於模組化開發和組件之間的通訊非常有用。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
@@ -805,7 +824,8 @@ $("#eventReceiver").on("anotherCustomEvent", function(event) {
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">19: 效能優化技巧 - 讓 jQuery 跑得更快</h1>
+  <!-- 19: 效能優化技巧 - 讓 jQuery 跑得更快 -->
+  <h1 class="SideTabs mt-4 pb-1">19: 效能優化技巧 - 讓 jQuery 跑得更快</h1>
   <p>雖然 jQuery 已經很高效，但在處理大型應用程式或頻繁的 DOM 操作時，了解一些優化技巧可以顯著提升效能。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
@@ -848,7 +868,8 @@ $("#performanceList").append(newItems.join("")); // 一次性添加到 DOM
     </div>
   </div>
 
-  <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">20: jQuery UI 與其他相關函式庫 - 擴展 UI 能力</h1>
+  <!-- 20: jQuery UI 與其他相關函式庫 - 擴展 UI 能力 -->
+  <h1 class="SideTabs mt-4 pb-1">20: jQuery UI 與其他相關函式庫 - 擴展 UI 能力</h1>
   <p>雖然 jQuery 本身不提供複雜的 UI 元件，但它有強大的生態系統。jQuery UI 是官方提供的 UI 函式庫，基於 jQuery 構建，提供了豐富的互動式元件和特效。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
