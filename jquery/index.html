@@ -4,98 +4,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>jQuery 詳盡入門與進階教學</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <title>jQuery 教學</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="p-3 bg-dark text-white">
-  <h1 class="mb-4">jQuery 詳盡入門與進階教學</h1>
+  <h1 class="mb-4">jQuery 教學</h1>
   <p>本教學旨在為初學者提供一個全面而詳細的 jQuery 入門指引，並逐步深入到更進階的應用。</p>
 
   <h1 class="SideTabs mt-4 pb-1">常用 jQuery 方法總覽</h1>
   <div class="table-responsive mb-5">
-      <table class="table table-dark table-striped table-bordered" style="--bs-table-striped-bg: rgba(255, 255, 255, 0.03);">
-          <thead class="thead-light">
-              <tr>
-                  <th style="width: 15%;">大項目</th>
-                  <th style="width: 25%;">功能 (方法)</th>
-                  <th>描述</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr>
-                  <td rowspan="3" class="align-middle">屬性操作</td>
-                  <td><code>.attr()</code></td>
-                  <td>獲取或設定 HTML 屬性 (如 href, src, class)。</td>
-              </tr>
-              <tr>
-                  <td><code>.prop()</code></td>
-                  <td>獲取或設定元素的布林屬性 (如 checked, disabled)。</td>
-              </tr>
-              <tr>
-                  <td><code>.val()</code></td>
-                  <td>獲取或設定表單元素的值。</td>
-              </tr>
-              <tr>
-                  <td class="align-middle">CSS 操作</td>
-                  <td><code>.css()</code></td>
-                  <td>獲取或設定元素的 CSS 樣式。</td>
-              </tr>
-              <tr>
-                  <td rowspan="3" class="align-middle">DOM 操作</td>
-                  <td><code>.append(), .prepend()</code></td>
-                  <td>在元素的內部開頭或結尾插入內容。</td>
-              </tr>
-              <tr>
-                  <td><code>.after(), .before()</code></td>
-                  <td>在元素的外部之前或之後插入內容。</td>
-              </tr>
-              <tr>
-                  <td><code>.remove(), .empty(), .replaceWith()</code></td>
-                  <td>移除、清空或替換元素。</td>
-              </tr>
-              <tr>
-                  <td rowspan="2" class="align-middle">事件處理</td>
-                  <td><code>.on(), .click()</code></td>
-                  <td>綁定事件監聽器，.click() 是點擊事件的簡寫。</td>
-              </tr>
-              <tr>
-                  <td><code>.hover()</code></td>
-                  <td>滑鼠懸停進入和離開時觸發。</td>
-              </tr>
-              <tr>
-                  <td rowspan="2" class="align-middle">效果與動畫</td>
-                  <td><code>.fadeIn(), .fadeOut(), .fadeToggle()</code></td>
-                  <td>淡入、淡出、切換淡入淡出效果。</td>
-              </tr>
-              <tr>
-                  <td><code>.show(), .hide(), .toggle(), .slideUp(), .slideDown(), .slideToggle(), .animate()</code></td>
-                  <td>顯示、隱藏、滑動及自定義動畫。</td>
-              </tr>
-              <tr>
-                  <td rowspan="2" class="align-middle">類別操作</td>
-                  <td><code>.addClass(), .removeClass(), .toggleClass()</code></td>
-                  <td>新增、移除或切換元素的 CSS 類別。</td>
-              </tr>
-              <tr>
-                  <td><code>.hasClass()</code></td>
-                  <td>檢查元素是否包含指定的 class。</td>
-              </tr>
-              <tr>
-                  <td class="align-middle">內容操作</td>
-                  <td><code>.html(), .text()</code></td>
-                  <td>獲取或設定元素的 HTML 或純文字內容。</td>
-              </tr>
-          </tbody>
-      </table>
+    <table class="table table-dark table-striped table-bordered"
+      style="--bs-table-striped-bg: rgba(255, 255, 255, 0.03);">
+      <thead class="thead-light">
+        <tr>
+          <th style="width: 15%;">大項目</th>
+          <th style="width: 25%;">功能 (方法)</th>
+          <th>描述</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="3" class="align-middle">屬性操作</td>
+          <td><code>.attr()</code></td>
+          <td>獲取或設定 HTML 屬性 (如 href, src, class)。</td>
+        </tr>
+        <tr>
+          <td><code>.prop()</code></td>
+          <td>獲取或設定元素的布林屬性 (如 checked, disabled)。</td>
+        </tr>
+        <tr>
+          <td><code>.val()</code></td>
+          <td>獲取或設定表單元素的值。</td>
+        </tr>
+        <tr>
+          <td class="align-middle">CSS 操作</td>
+          <td><code>.css()</code></td>
+          <td>獲取或設定元素的 CSS 樣式。</td>
+        </tr>
+        <tr>
+          <td rowspan="3" class="align-middle">DOM 操作</td>
+          <td><code>.append(), .prepend()</code></td>
+          <td>在元素的內部開頭或結尾插入內容。</td>
+        </tr>
+        <tr>
+          <td><code>.after(), .before()</code></td>
+          <td>在元素的外部之前或之後插入內容。</td>
+        </tr>
+        <tr>
+          <td><code>.remove(), .empty(), .replaceWith()</code></td>
+          <td>移除、清空或替換元素。</td>
+        </tr>
+        <tr>
+          <td rowspan="2" class="align-middle">事件處理</td>
+          <td><code>.on(), .click()</code></td>
+          <td>綁定事件監聽器，.click() 是點擊事件的簡寫。</td>
+        </tr>
+        <tr>
+          <td><code>.hover()</code></td>
+          <td>滑鼠懸停進入和離開時觸發。</td>
+        </tr>
+        <tr>
+          <td rowspan="2" class="align-middle">效果與動畫</td>
+          <td><code>.fadeIn(), .fadeOut(), .fadeToggle()</code></td>
+          <td>淡入、淡出、切換淡入淡出效果。</td>
+        </tr>
+        <tr>
+          <td><code>.show(), .hide(), .toggle(), .slideUp(), .slideDown(), .slideToggle(), .animate()</code></td>
+          <td>顯示、隱藏、滑動及自定義動畫。</td>
+        </tr>
+        <tr>
+          <td rowspan="2" class="align-middle">類別操作</td>
+          <td><code>.addClass(), .removeClass(), .toggleClass()</code></td>
+          <td>新增、移除或切換元素的 CSS 類別。</td>
+        </tr>
+        <tr>
+          <td><code>.hasClass()</code></td>
+          <td>檢查元素是否包含指定的 class。</td>
+        </tr>
+        <tr>
+          <td class="align-middle">內容操作</td>
+          <td><code>.html(), .text()</code></td>
+          <td>獲取或設定元素的 HTML 或純文字內容。</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <!-- 1: 什麼是 jQuery？ - 快速入門與引入 -->
@@ -475,30 +476,45 @@ $("#chainedElement")
       <h4 class="text-white mb-3">jQuery 範例：基本 AJAX 請求</h4>
       <div class="jquery-code">
         <pre class="bg-secondary p-3 rounded text-light overflow-auto">
-$("#loadDataBtn").on("click", function() {
-  $.ajax({
-    url: "https://jsonplaceholder.typicode.com/users/1", // 範例 API
-    method: "GET",
-    dataType: "json", // 預期回傳 JSON 格式
-    success: function(data) {
-      // 請求成功時執行
-      $("#userData").html(`
-        &lt;h3&gt;使用者資訊&lt;/h3&gt;
-        &lt;p&gt;姓名: ${data.name}&lt;/p&gt;
-        &lt;p&gt;Email: ${data.email}&lt;/p&gt;
-      `);
-    },
-    error: function(xhr, status, error) {
-      // 請求失敗時執行
-      $("#userData").html(`&lt;p style="color:red;"&gt;載入資料失敗: ${status}&lt;/p&gt;`);
-      console.error("AJAX 錯誤: ", status, error);
-    },
-    complete: function() {
-      // 請求完成 (無論成功或失敗) 時執行
-      console.log("AJAX 請求完成。");
+let isShown = false;
+  let dataHtml = '';
+
+  $("#loadDataBtn").on("click", function() {
+    if (!isShown) {
+      // 載入資料
+      $.ajax({
+        url: "https://jsonplaceholder.typicode.com/users/1", // 範例 API
+        method: "GET",
+        dataType: "json", // 預期回傳 JSON 格式
+        success: function(data) {
+          // 請求成功時執行
+          dataHtml = `
+            &lt;h3&gt;使用者資訊&lt;/h3&gt;
+            &lt;p&gt;姓名: ${data.name}&lt;/p&gt;
+            &lt;p&gt;Email: ${data.email}&lt;/p&gt;
+          `;
+          $("#userData").html(dataHtml);
+          $("#loadDataBtn").text("隱藏使用者資料");
+          isShown = true;
+        },
+        error: function(xhr, status, error) {
+          // 請求失敗時執行
+          $("#userData").html(`&lt;p style="color:red;"&gt;載入資料失敗: ${status}&lt;/p&gt;`);
+          console.error("AJAX 錯誤: ", status, error);
+          // 錯誤時不改變 isShown，允許重試
+        },
+        complete: function() {
+          // 請求完成 (無論成功或失敗) 時執行
+          console.log("AJAX 請求完成。");
+        }
+      });
+    } else {
+      // 隱藏資料
+      $("#userData").html("資料將顯示在這裡...");
+      $("#loadDataBtn").text("載入使用者資料");
+      isShown = false;
     }
-  });
-});</code></pre>
+  });</code></pre>
       </div>
     </div>
   </div>
@@ -827,19 +843,6 @@ $("#fetchDataBtn").on("click", function() {
   });
 });
 
-// 結合多個 Deferred 物件 ($.when)
-let d1 = $.Deferred();
-let d2 = $.Deferred();
-
-$.when(d1, d2).done(function(result1, result2) {
-  console.log("所有非同步操作都成功了！", result1, result2);
-}).fail(function() {
-  console.log("至少一個非同步操作失敗了。");
-});
-
-// 模擬觸發
-// d1.resolve("任務 1 完成");
-// d2.reject("任務 2 失敗");</code></pre>
       </div>
     </div>
   </div>
@@ -932,42 +935,988 @@ $("#performanceList").append(newItems.join("")); // 一次性添加到 DOM
 
   <!-- 20: jQuery UI 與其他相關函式庫 - 擴展 UI 能力 -->
   <h1 class="SideTabs mt-4 pb-1">20: jQuery UI 與其他相關函式庫 - 擴展 UI 能力</h1>
-  <p>雖然 jQuery 本身不提供複雜的 UI 元件，但它有強大的生態系統。jQuery UI 是官方提供的 UI 函式庫，基於 jQuery 構建，提供了豐富的互動式元件和特效。</p>
+  <p>雖然 jQuery 本身不提供複雜的 UI 元件，但它有強大的生態系統。jQuery UI 是官方提供的 UI 函式庫，基於 jQuery 構建，提供了豐富的互動式元件和特效。以下分為
+    <strong>Interactions</strong>（互動功能）和 <strong>Widgets</strong>（元件）兩大類，每個功能單獨成章，提供簡易範例。
+  </p>
+
+  <!-- Interactions 部分 -->
+  <h2 class="mt-5">Interactions（互動功能）</h2>
+  <p>Interactions 提供基本的互動行為，如拖曳、調整大小等，可應用於自訂 UI 元素。</p>
+
+  <!-- Draggable -->
+  <h3 class="mt-4">20.1: Draggable（拖曳）</h3>
+  <p>讓元素可被滑鼠拖動，並可追蹤位置變化。</p>
   <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
     <div class="col-md-6">
-      <h4 class="text-white mb-3">HTML 範例：jQuery UI 元件佔位符</h4>
+      <h4 class="text-white mb-3">HTML 範例</h4>
       <div class="html-code">
-        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
-<code>&lt;!-- 引入 jQuery UI CSS --&gt;
-&lt;link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"&gt;
-
-&lt;p&gt;日期選擇器: &lt;input type="text" id="datepicker"&gt;&lt;/p&gt;
-&lt;div id="draggable" style="width: 100px; height: 100px; background: #ccc; border: 1px solid #333;"&gt;拖曳我&lt;/div&gt;
-
-&lt;!-- 引入 jQuery UI JS (必須在 jQuery 之後) --&gt;
-&lt;script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"&gt;&lt;/script&gt;</code></pre>
+        <textarea class="form-control bg-secondary text-light" rows="6" id="html-editor-1">
+&lt;div id="draggable1" style="width: 100px; height: 100px; background: #ccc; border: 1px solid #333; position: relative;"&gt;拖曳我&lt;/div&gt;
+&lt;p&gt;目前位置: &lt;span id="coords"&gt;0, 0&lt;/span&gt;&lt;/p&gt;
+                </textarea>
       </div>
     </div>
     <div class="col-md-6">
-      <h4 class="text-white mb-3">jQuery 範例：使用 jQuery UI</h4>
+      <h4 class="text-white mb-3">jQuery 範例</h4>
       <div class="jquery-code">
-        <pre class="bg-secondary p-3 rounded text-light overflow-auto">
-// 初始化日期選擇器
-$("#datepicker").datepicker();
+        <textarea class="form-control bg-secondary text-light" rows="10" id="jquery-editor-1">
+$(document).ready(function() {
+  $("#draggable1").draggable({
+    drag: function(event, ui) {
+      $("#coords").text(Math.round(ui.position.left) + ", " + Math.round(ui.position.top));
+    },
+    stop: function(event, ui) {
+      console.log("拖曳結束位置: ", ui.position);
+    }
+  });
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
 
-// 使元素可拖曳
-$("#draggable").draggable();
+  <!-- Droppable -->
+  <h3 class="mt-4">20.2: Droppable（放置區）</h3>
+  <p>定義一個放置區，當拖曳元素釋放時觸發事件。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="6" id="html-editor-2">
+&lt;div name = "divDraggable2" id="draggable2" style="width: 80px; height: 80px; background: #f90; position: relative;"&gt;拖曳2&lt;/div&gt;
+&lt;div name = "divDraggable3" id="draggable3" class="special-class" style="width: 80px; height: 80px; background: #3A0; position: relative;"&gt;拖曳3&lt;/div&gt;
+&lt;div id="droppable" style="width: 150px; height: 150px; border: 2px dashed #000; margin-top: 20px;"&gt;放置這裡&lt;/div&gt;
+&lt;p id="status"&gt;狀態: 空&lt;/p&gt;
+                </textarea>
+      </div>
+    </div>
+    <!--
+          jQuery UI 有系列 ui-state-* 類別，用於不同狀態：
+          ui-state-highlight  高亮/選中/成功     淺黃背景，金黃邊框
+          ui-state-default    預設/非活躍狀態    灰白背景
+          ui-state-hover      懸停（hover）     稍亮背景
+          ui-state-active     活躍/按下狀態     藍色背景
+          ui-state-error      錯誤狀態          紅色背景
+          ui-state-focus      焦點狀態          藍色邊框
+          -->
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="12" id="jquery-editor-2">
 
-// 其他常用 jQuery UI 元件:
-// - Dialog (對話框)
-// - Tabs (分頁)
-// - Autocomplete (自動完成)
-// - Slider (滑塊)</code></pre>
+$(document).ready(function() {
+  $("#draggable2").draggable();
+  $("#draggable3").draggable();
+  $("#droppable").droppable({
+    accept: "#draggable1, #draggable2, .special-class",
+    drop: function(event, ui) {
+      $(this).addClass("ui-state-focus");
+      $(this).find("p").html("已放置！<br>來源 ID: " + ui.draggable.attr("id"));
+      $("#status").text("狀態: 已放置 (" + ui.draggable.attr("name") + ")");
+    },
+    out: function(event, ui) {
+      $(this).removeClass("ui-state-focus").find("p").html("放置這裡");
+      $("#status").text("狀態: 空");
+    }
+  });
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resizable -->
+  <h3 class="mt-4">20.3: Resizable（調整大小）</h3>
+  <p>讓元素可透過手柄調整寬高。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="4" id="html-editor-3">
+&lt;div id="resizable" style="width: 200px; height: 200px; background: #ddd; border: 1px solid #999;"&gt;調整大小&lt;/div&gt;
+&lt;p&gt;目前尺寸: &lt;span id="size-display"&gt;寬: 200px, 高: 200px&lt;/span&gt;&lt;/p&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="6" id="jquery-editor-3">
+$(document).ready(function() {
+  $("#resizable").resizable({
+    handles: "se"  // 僅南東手柄
+  });
+  // 初始設定尺寸顯示
+            const initialWidth = $("#resizable").width();
+            const initialHeight = $("#resizable").height();
+            $("#size-display").text(`寬: ${initialWidth}px, 高: ${initialHeight}px`);
+
+            // 調整大小事件：即時更新尺寸顯示
+            $("#resizable").on("resize", function(event, ui) {
+                $("#size-display").text(`寬: ${ui.size.width}px, 高: ${ui.size.height}px`);
+            });
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selectable -->
+  <h3 class="mt-4">20.4: Selectable（可選取）</h3>
+  <p>允許使用者拖曳選取多個元素。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="8" id="html-editor-4">
+&lt;ol id="selectable"&gt;
+  &lt;li class="ui-widget-content bg-dark text-center" id="SelectableID1" name="SelectableItem1"&gt;項目 1&lt;/li&gt;
+  &lt;li class="ui-widget-content bg-dark text-center" id="SelectableID2" name="SelectableItem2"&gt;項目 2&lt;/li&gt;
+  &lt;li class="ui-widget-content bg-dark text-center" id="SelectableID3" name="SelectableItem3"&gt;項目 3&lt;/li&gt;
+  &lt;li class="ui-widget-content bg-dark text-center" id="SelectableID4" name="SelectableItem4"&gt;項目 4&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;選中項目資訊: &lt;span id="selected-info"&gt;無選擇&lt;/span>&lt;/p&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="8" id="jquery-editor-4">
+$(document).ready(function() {
+  // 通用函數：收集並顯示所有選中項目
+  function updateSelectedInfo() {
+      const selectedItems = $("#selectable .ui-selected");
+      if (selectedItems.length === 0) {
+          $("#selected-info").text("無選擇");
+          return;
+      }
+      
+      let infoText = "";
+      selectedItems.each(function() {
+          const itemId = this.id || "無 ID";
+          const itemName = this.getAttribute("name") || "無 Name";
+          infoText += `ID: ${itemId}, Name: ${itemName}\n`;
+      });
+      $("#selected-info").text(infoText.trim());
+  }
+
+  $("#selectable").selectable({
+      selected: function(event, ui) {
+          // 高亮選中項目
+          $(ui.selected).addClass("bg-light")  // 添加淺藍背景類別（Bootstrap）
+                        .removeClass("bg-black")
+          // 更新顯示（支援多選）
+          updateSelectedInfo();
+      },
+      unselected: function(event, ui) {
+          // 取消高亮
+          $(ui.unselected).removeClass("bg-light")  // 移除淺藍背景
+                        .addClass("bg-black")
+          // 更新顯示（檢查剩餘選中）
+          updateSelectedInfo();
+      }
+  });
+
+  // 初始狀態
+  updateSelectedInfo();
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sortable -->
+  <h3 class="mt-4">20.5: Sortable（可排序） - 垂直清單</h3>
+  <p>讓清單項目可拖曳排序。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="8" id="html-editor-5">
+&lt;ul id="sortable_vertical"&gt;
+  &lt;li class="ui-state-default bg-dark text-center"&gt;項目 1&lt;/li&gt;
+  &lt;li class="ui-state-default bg-dark text-center"&gt;項目 2&lt;/li&gt;
+  &lt;li class="ui-state-default bg-dark text-center"&gt;項目 3&lt;/li&gt;
+  &lt;li class="ui-state-default bg-dark text-center"&gt;項目 4&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;目前順序: &lt;span id="order-info-vertical"&gt;項目 1, 項目 2, 項目 3, 項目 4&lt;/span&gt;&lt;/p&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="6" id="jquery-editor-5">
+$(document).ready(function() {
+  $("#sortable_vertical").sortable({
+    update: function(event, ui) {
+      // 排序更新時顯示目前順序
+      const items = $("#sortable_vertical li").map(function() {
+        return $(this).text().trim();
+      }).get().join(", ");
+      $("#order-info-vertical").text(items);
+    }
+  }).disableSelection();  // 禁用文字選取，避免干擾拖曳
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 新增：左右排 Sortable 範例 -->
+  <h3 class="mt-4">20.5: Sortable（可排序） - 左右排版本</h3>
+  <p>兩個並排清單，可拖曳項目在左右之間交換，並即時顯示排序順序。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="12" id="html-editor-20">
+&lt;div class="row"&gt;
+  &lt;div class="col-md-5"&gt;
+    &lt;h5&gt;左側清單&lt;/h5&gt;
+    &lt;ul id="sortable-left" class="sortable-list"&gt;
+      &lt;li class="ui-state-default bg-dark text-center"&gt;左項目 1&lt;/li&gt;
+      &lt;li class="ui-state-default bg-dark text-center"&gt;左項目 2&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;div class="col-md-2 text-center"&gt;
+    &lt;p&gt;&amp;crarr;&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="col-md-5"&gt;
+    &lt;h5&gt;右側清單&lt;/h5&gt;
+    &lt;ul id="sortable-right" class="sortable-list"&gt;
+      &lt;li class="ui-state-default bg-dark text-center"&gt;右項目 1&lt;/li&gt;
+      &lt;li class="ui-state-default bg-dark text-center"&gt;右項目 2&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;目前順序: &lt;span id="order-info"&gt;左: 左項目 1, 左項目 2 | 右: 右項目 1, 右項目 2&lt;/span&gt;&lt;/p&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="15" id="jquery-editor-20">
+$(document).ready(function() {
+  // 初始化兩個 Sortable 清單，並連接以允許跨清單拖曳
+  $("#sortable-left, #sortable-right").sortable({
+    connectWith: "#sortable-right, #sortable-left",  // 允許項目在兩個清單間移動
+    update: function(event, ui) {
+      // 排序更新時顯示目前順序
+      const leftItems = $("#sortable-left li").map(function() {
+        return $(this).text().trim();
+      }).get().join(", ");
+      const rightItems = $("#sortable-right li").map(function() {
+        return $(this).text().trim();
+      }).get().join(", ");
+      $("#order-info").text(`左: ${leftItems} | 右: ${rightItems}`);
+    }
+  }).disableSelection();  // 禁用文字選取，避免干擾拖曳
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Widgets 部分 -->
+  <h2 class="mt-5">Widgets（元件）</h2>
+  <p>Widgets 提供預設樣式的 UI 元件，如按鈕、滑塊等，內建樣式和行為。</p>
+
+  <!-- Accordion -->
+  <h3 class="mt-4">20.6: Accordion（折疊面板）</h3>
+  <p>可展開/收合的多面板內容。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="10" id="html-editor-6">
+&lt;div id="accordion"&gt;
+  &lt;h3&gt;面板 1&lt;/h3&gt;
+  &lt;div class="bg-dark"&gt;
+    &lt;p&gt;這是第一個面板的內容。&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;h3&gt;面板 2&lt;/h3&gt;
+  &lt;div class="bg-dark"&gt;
+    &lt;p&gt;這是第二個面板的內容。&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="5" id="jquery-editor-6">
+$(document).ready(function() {
+  $("#accordion").accordion();
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Autocomplete -->
+  <h3 class="mt-4">20.7: Autocomplete（自動完成）</h3>
+  <p>輸入時提供建議清單。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="3" id="html-editor-7">
+&lt;label for="autocomplete"&gt;選擇水果: &lt;/label&gt;
+&lt;input type="text" id="autocomplete" value="水果"&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="10" id="jquery-editor-7">
+$(document).ready(function() {
+  const fruits = ["水果1：蘋果", "水果2：香蕉", "水果3：橘子", "水果4：葡萄", "水果5：草莓"];
+  $("#autocomplete").autocomplete({
+    source: fruits
+  });
+});
+                
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Button -->
+  <h3 class="mt-4">20.8: Button（按鈕）</h3>
+  <p>增強按鈕樣式和行為。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="3" id="html-editor-8">
+&lt;button id="jqButton"&gt;我的按鈕&lt;/button&gt;
+&lt;button id="jqIconButton"&gt;&lt;span class="ui-icon ui-icon-gear"&gt;&lt;/span&gt;我的ICON按鈕&lt;/button&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="8" id="jquery-editor-8">
+$(document).ready(function() {
+  $("#jqButton").button().click(function() {
+    alert("按鈕被點擊！");
+  });
+  $("#jqIconButton").button().click(function() {
+    alert("ICON按鈕被點擊！");
+  });
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkboxradio -->
+  <h3 class="mt-4">20.9: Checkboxradio（複選框/單選框）</h3>
+  <p>美化複選框和單選框。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="6" id="html-editor-9">
+&lt;fieldset&gt;
+  &lt;legend&gt;選擇顏色:&lt;/legend&gt;
+  &lt;input type="checkbox" id="red"&gt;&lt;label for="red"&gt;紅&lt;/label&gt;
+  &lt;input type="checkbox" id="blue"&gt;&lt;label for="blue"&gt;藍&lt;/label&gt;
+  &lt;input type="checkbox" id="green"&gt;&lt;label for="green"&gt;綠&lt;/label&gt;
+&lt;/fieldset&gt;
+<div id="color-div" style="width: 100px; height: 100px; background-color: rgb(255, 255, 255); border: 1px solid #333;"&></div>
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="5" id="jquery-editor-9">
+$(document).ready(function() {// 初始化 Checkboxradio
+            $("input[type='checkbox']").checkboxradio();
+
+            // 顏色映射：RGB 值
+            const colors = {
+                red: [255, 0, 0],
+                blue: [0, 0, 255],
+                green: [0, 255, 0]
+            };
+
+            // 監聽變化事件
+            $("input[type='checkbox']").on("change", function() {
+                let r = 0, g = 0, b = 0;
+                let count = 0;
+
+                // 計算選中顏色的 RGB 平均值
+                $.each(["red", "blue", "green"], function(index, colorKey) {
+                    if ($("#" + colorKey).is(":checked")) {
+                        const rgb = colors[colorKey];
+                        r += rgb[0];
+                        g += rgb[1];
+                        b += rgb[2];
+                        count++;
+                    }
+                });
+
+                // 如果無選中，重置為白色；否則平均
+                let bgColor;
+                if (count === 0) {
+                    bgColor = "rgb(255, 255, 255)";  // 白色
+                } else {
+                    r = Math.floor(r / count);
+                    g = Math.floor(g / count);
+                    b = Math.floor(b / count);
+                    bgColor = `rgb(${r}, ${g}, ${b})`;
+                }
+
+                // 更新 DIV 背景色
+                $("#color-div").css("background-color", bgColor);
+            });
+
+            // 初始狀態：無顏色
+            $("#color-div").css("background-color", "rgb(255, 255, 255)");
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controlgroup -->
+  <h3 class="mt-4">20.10: Controlgroup（控制群組）</h3>
+  <p>將按鈕或輸入框群組成工具列。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="6" id="html-editor-10">
+&lt;div id="controlgroup"&gt;
+  &lt;label for="radio1"&gt;選項 1&lt;/label&gt;
+  &lt;input type="radio" name="radio" id="radio1"&gt;
+  &lt;label for="radio2"&gt;選項 2&lt;/label&gt;
+  &lt;input type="radio" name="radio" id="radio2"&gt;
+&lt;/div&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="6" id="jquery-editor-10">
+$(document).ready(function() {
+  $("#controlgroup").controlgroup();
+  $("input[type='radio']").checkboxradio();
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+  <!-- 新 Demo 1: Checkbox Controlgroup -->
+  <h3 class="mt-4">20.10.1: Controlgroup - Checkbox 群組</h3>
+  <p>使用 Checkbox 建立多選控制群組，適合多重選項。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="7" id="html-editor-10-1">
+&lt;div id="checkbox-group"&gt;
+  &lt;input type="checkbox" id="check1"&gt;&lt;label for="check1"&gt;選項 A&lt;/label&gt;
+  &lt;input type="checkbox" id="check2"&gt;&lt;label for="check2"&gt;選項 B&lt;/label&gt;
+  &lt;input type="checkbox" id="check3"&gt;&lt;label for="check3"&gt;選項 C&lt;/label&gt;
+&lt;/div&gt;
+&lt;p&gt;選中: &lt;span id="check-status"&gt;無&lt;/span&gt;&lt;/p&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="10" id="jquery-editor-10-1">
+$(document).ready(function() {
+  $("#checkbox-group").controlgroup();
+  $("input[type='checkbox']").checkboxradio();
+
+  // 監聽變化更新狀態
+  $("#checkbox-group input").on("change", function() {
+    const selected = $("#checkbox-group input:checked").map(function() {
+      return $(this).next("label").text();
+    }).get().join(", ");
+    $("#check-status").text(selected || "無");
+  });
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 新 Demo 2: Buttonset Controlgroup -->
+  <h3 class="mt-4">20.10.2: Controlgroup - Button 工具列</h3>
+  <p>使用 Button 建立工具列群組，適合導航或動作按鈕。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="6" id="html-editor-10-2">
+&lt;div id="button-group"&gt;
+  &lt;button id="btn1"&gt;按鈕 1&lt;/button&gt;
+  &lt;button id="btn2"&gt;按鈕 2&lt;/button&gt;
+  &lt;button id="btn3"&gt;按鈕 3&lt;/button&gt;
+&lt;/div&gt;
+&lt;p&gt;點擊: &lt;span id="btn-status"&gt;無&lt;/span&gt;&lt;/p&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="10" id="jquery-editor-10-2">
+$(document).ready(function() {
+  $("#button-group").controlgroup();
+  $("#button-group button").button();
+
+  // 監聽點擊更新狀態
+  $("#button-group button").on("click", function() {
+    $("#btn-status").text($(this).text());
+  });
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 新 Demo 3: Mixed Controlgroup -->
+  <h3 class="mt-4">20.10.3: Controlgroup - 混合群組</h3>
+  <p>混合 Radio 和 Checkbox，建立複雜控制面板。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="9" id="html-editor-10-3">
+&lt;div id="mixed-group"&gt;
+  &lt;input type="radio" name="mode" id="mode1"&gt;&lt;label for="mode1"&gt;模式 A&lt;/label&gt;
+  &lt;input type="radio" name="mode" id="mode2"&gt;&lt;label for="mode2"&gt;模式 B&lt;/label&gt;
+  &lt;input type="checkbox" id="option1"&gt;&lt;label for="option1"&gt;額外選項 1&lt;/label&gt;
+  &lt;input type="checkbox" id="option2"&gt;&lt;label for="option2"&gt;額外選項 2&lt;/label&gt;
+&lt;/div&gt;
+&lt;p&gt;狀態: &lt;span id="mixed-status"&gt;模式 A, 無額外&lt;/span&gt;&lt;/p&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="12" id="jquery-editor-10-3">
+$(document).ready(function() {
+  $("#mixed-group").controlgroup();
+  $("input[type='radio'], input[type='checkbox']").checkboxradio();
+
+  // 監聽變化更新狀態
+  $("#mixed-group input").on("change", function() {
+    const mode = $("input[name='mode']:checked").next("label").text() || "無模式";
+    const options = $("#mixed-group input[type='checkbox']:checked").map(function() {
+      return $(this).next("label").text();
+    }).get().join(", ");
+    $("#mixed-status").text(mode + ", " + (options || "無額外"));
+  });
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Datepicker -->
+  <h3 class="mt-4">20.11: Datepicker（日期選擇器）</h3>
+  <p>彈出日曆選擇日期。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="3" id="html-editor-11">
+&lt;p&gt;選擇日期: &lt;input type="text" id="datepicker"&gt;&lt;/p&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="5" id="jquery-editor-11">
+$(document).ready(function() {
+  $("#datepicker").datepicker();
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialog -->
+  <h3 class="mt-4">20.12: Dialog（對話框）</h3>
+  <p>模態彈出視窗。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="5" id="html-editor-12">
+&lt;button id="opener"&gt;開啟對話框&lt;/button&gt;
+&lt;div id="dialog" title="對話框" style="display:none;"&gt;這是對話框內容。&lt;/div&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="10" id="jquery-editor-12">
+$(document).ready(function() {
+  $("#dialog").dialog({ autoOpen: false });
+  $("#opener").click(function() {
+    $("#dialog").dialog("open");
+  });
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu -->
+  <h3 class="mt-4">20.13: Menu（選單）</h3>
+  <p>建立下拉或工具列選單。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="8" id="html-editor-13">
+&lt;ul id="menu"&gt;
+  &lt;li&gt;&lt;a href="#"&gt;選項 1&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="#"&gt;選項 2&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="#"&gt;子選項 1&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;子選項 2&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="5" id="jquery-editor-13">
+$(document).ready(function() {
+  $("#menu").menu();
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+  <!-- 新 Demo 1: 直式垂直選單（強調子選單） -->
+  <h3 class="mt-4">20.13.1: Menu - 直式垂直選單</h3>
+  <p>垂直展開的多層子選單，適合側邊導航，子選單從父項右邊緣展開（非最右側）。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="12" id="html-editor-13-1">
+&lt;ul id="vertical-menu" &gt;
+
+  &lt;li&gt;&lt;a href="#" style="width: 150px;"&gt;檔案&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="#"&gt;新增&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;開啟&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;儲存&lt;/a&gt;&lt;/li&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="#"&gt;子選項 1&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;子選項 2&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+    &lt;/ul&gt;
+
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href="#"&gt;編輯&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="#"&gt;複製&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;貼上&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="8" id="jquery-editor-13-1">
+$(document).ready(function() {
+  $("#vertical-menu").menu({
+    position: { my: "right top", at: "right top" }  // 子選單從父項右邊緣展開
+  });
+  
+  // 點擊選項事件
+  $("#vertical-menu a").on("click", function() {
+    console.log("選取: " + $(this).text());
+  });
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 新 Demo 2: 橫式工具列選單（修正：純 JS 樣式） -->
+  <h3 class="mt-4">20.13.2: Menu - 橫式工具列選單</h3>
+  <p>水平排列的工具列選單，適合頂部導航。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="10" id="html-editor-13-2">
+&lt;ul id="horizontal-menu"&gt;
+  &lt;li&gt;&lt;a href="#"&gt;首頁&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="#"&gt;產品&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="#"&gt;產品 A&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;產品 B&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href="#"&gt;關於&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="#"&gt;聯絡&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="15" id="jquery-editor-13-2">
+$(document).ready(function() {
+  // 初始化 Menu
+  $("#horizontal-menu").menu({
+    position: { 
+      my: "left top", 
+      at: "left bottom"  // 子選單從父項下方展開
+    }
+  });
+
+  // 純 JS 設定橫式樣式（無 CSS）
+  $("#horizontal-menu").css({
+    "display": "inline-block",
+    "listStyle": "none",
+    "margin": "0",
+    "padding": "0",
+    "position": "relative"
+  });
+  $("#horizontal-menu > li").css({
+    "display": "inline-block",
+    "marginRight": "5px"
+  });
+  $("#horizontal-menu a").css({
+    "padding": "8px 12px",
+    "display": "block",
+    "textDecoration": "none"
+  });
+  $("#horizontal-menu ul").css({
+    "position": "absolute",
+    "top": "100%",
+    "left": "0",
+    "display": "none",
+    "listStyle": "none",
+    "margin": "0",
+    "padding": "0",
+    "background": "#fff",
+    "border": "1px solid #ccc",
+    "zIndex": "1000"
+  });
+  $("#horizontal-menu ul li").css({
+    "display": "block"
+  });
+
+  // 點擊選項事件
+  $("#horizontal-menu a").on("click", function(e) {
+    console.log("選取: " + $(this).text());
+  });
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progressbar -->
+  <h3 class="mt-4">20.14: Progressbar（進度條）</h3>
+  <p>顯示進度百分比。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="4" id="html-editor-14">
+&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;p&gt;進度: &lt;span id="percent"&gt;0%&lt;/span&gt;&lt;/p&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="10" id="jquery-editor-14">
+$(document).ready(function() {
+  $("#progressbar").progressbar({ value: 0 });
+  setInterval(function() {
+    let val = $("#progressbar").progressbar("value") + 10;
+    if (val > 100) val = 0;
+    $("#progressbar").progressbar("value", val);
+    $("#percent").text(val + "%");
+  }, 1000);
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selectmenu -->
+  <h3 class="mt-4">20.15: Selectmenu（下拉選單）</h3>
+  <p>美化 select 下拉選單。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="5" id="html-editor-15">
+&lt;select id="selectmenu"&gt;
+  &lt;option value="1"&gt;選項 1&lt;/option&gt;
+  &lt;option value="2"&gt;選項 2&lt;/option&gt;
+  &lt;option value="3"&gt;選項 3&lt;/option&gt;
+&lt;/select&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="5" id="jquery-editor-15">
+$(document).ready(function() {
+  $("#selectmenu").selectmenu();
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slider -->
+  <h3 class="mt-4">20.16: Slider（滑塊）</h3>
+  <p>滑動選擇數值。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="4" id="html-editor-16">
+&lt;p&gt;數值: &lt;input type="text" id="amount" readonly&gt;&lt;/p&gt;
+&lt;div id="slider"&gt;&lt;/div&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="10" id="jquery-editor-16">
+$(document).ready(function() {
+  $("#slider").slider({
+    value: 50,
+    slide: function(event, ui) {
+      $("#amount").val(ui.value);
+    }
+  });
+  $("#amount").val($("#slider").slider("value"));
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spinner -->
+  <h3 class="mt-4">20.17: Spinner（數字旋鈕）</h3>
+  <p>數字輸入框，可上下調整值。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="3" id="html-editor-17">
+&lt;p&gt;數字: &lt;input id="spinner" value="0"&gt;&lt;/p&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="8" id="jquery-editor-17">
+$(document).ready(function() {
+  $("#spinner").spinner({
+    min: 0,
+    max: 100,
+    step: 1
+  });
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <h3 class="mt-4">20.18: Tabs（分頁）</h3>
+  <p>標籤式內容切換。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="12" id="html-editor-18">
+&lt;div id="tabs"&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="#tabs-1"&gt;標籤 1&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#tabs-2"&gt;標籤 2&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;div id="tabs-1"&gt;&lt;p&gt;內容 1&lt;/p&gt;&lt;/div&gt;
+  &lt;div id="tabs-2"&gt;&lt;p&gt;內容 2&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="5" id="jquery-editor-18">
+$(document).ready(function() {
+  $("#tabs").tabs();
+});
+                </textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tooltip -->
+  <h3 class="mt-4">20.19: Tooltip（提示框）</h3>
+  <p>元素懸停時顯示提示文字。</p>
+  <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">HTML 範例</h4>
+      <div class="html-code">
+        <textarea class="form-control bg-secondary text-light" rows="4" id="html-editor-19">
+&lt;p title="這是提示文字"&gt;懸停我&lt;/p&gt;
+                </textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4 class="text-white mb-3">jQuery 範例</h4>
+      <div class="jquery-code">
+        <textarea class="form-control bg-secondary text-light" rows="5" id="jquery-editor-19">
+$(document).ready(function() {
+  $("p").tooltip();
+});
+                </textarea>
       </div>
     </div>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
   <script src="js/script.js"></script>
 </body>
 
