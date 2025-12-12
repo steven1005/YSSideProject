@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flutter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="p-3 bg-dark text-white">
+    <h1 class="SideTabs mb-4 pb-1">Flutter 教學</h1>
+
+    <h1 class="SideTabs mt-4 pb-1">Flutter SDK</h1>
+    <p><a href="https://docs.flutter.dev/install/manual">下載SDK</a></p>
+    <P>新增環境變數在path內加上flutter/bin資料夾路徑</P>
+    <p>測試安裝版本：flutter --version</p>
+
+    <h1 class="SideTabs mt-4 pb-1">檢查Flutter安裝</h1>
+    <p>幫助：flutter --help</p>
+    <p>檢查安裝配置：flutter doctor</p>
+
+    <pre class="bg-secondary text-white p-3 rounded text-left">
+        PS D:\SOURCE\flutter\HelloWorld> flutter doctor
+        Doctor summary (to see all details, run flutter doctor -v):
+        [√] Flutter (Channel stable, 3.38.4, on Microsoft Windows [版本 10.0.19045.6456], locale zh-TW)
+        [√] Windows Version (10 專業版 64 位元, 22H2, 2009)
+        [√] Android toolchain - develop for Android devices (Android SDK version 35.0.1)
+        [√] Chrome - develop for the web
+        [√] Visual Studio - develop Windows apps (Visual Studio Build Tools 2019 16.11.45)
+        [√] Connected device (4 available)
+        [√] Network resources
+
+        • No issues found!
+        PS D:\SOURCE\flutter\HelloWorld>
+        </pre>
+
+    <p>檢查更新：flutter upgrade</p>
+
+    <h1 class="SideTabs mt-4 pb-1">Dart SDK</h1>
+    <p>choco install dart-sdk</p>
+    <p>刷新環境變數：refreshenv</p>
+    <p>測試安裝版本：dart --version</p>
+    <p>檢查安裝配置：flutter doctor</p>
+
+    <h1 class="SideTabs mt-4 pb-1">flutter command</h1>
+    <p>flutter devices</p>
+
+    <pre class="bg-secondary text-white p-3 rounded text-left">
+        PS D:\SOURCE\flutter\HelloWorld> flutter devices
+        Found 4 connected devices:
+        PA768 (mobile)    • A20832230698 • android-arm64  • Android 12 (API 32)
+        Windows (desktop) • windows      • windows-x64    • Microsoft Windows [版本 10.0.19045.6456]
+        Chrome (web)      • chrome       • web-javascript • Google Chrome 142.0.7444.176
+        Edge (web)        • edge         • web-javascript • Microsoft Edge 143.0.3650.75
+
+        Run "flutter emulators" to list and start any available device emulators.
+
+        If you expected another device to be detected, please run "flutter doctor" to diagnose potential issues. You may also
+        try increasing the time to wait for connected devices with the "--device-timeout" flag. Visit https://flutter.dev/setup/
+        for troubleshooting tips.
+        PS D:\SOURCE\flutter\HelloWorld>
+        </pre>
+    <p>產生環境：flutter create .</p>
+    <p>列出並確認模擬器名稱：flutter emulators</p>
+    <p>啟動模擬器：flutter emulators --launch PA768</p>
+
+    <h1 class="SideTabs mt-4 pb-1">建立hello專案</h1>
+
+    <table class="table table-dark text-white">
+        <thead>
+            <tr>
+                <th scope="col">步驟</th>
+                <th scope="col">說明</th>
+                <th scope="col">指令</th>
+                <th scope="col">備註</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>新的 Flutter 專案</td>
+                <td>flutter create my_hello_world_app --project-name my_hello_world_app</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>切換目錄</td>
+                <td>cd my_hello_world_app</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>執行</td>
+                <td>flutter run -d chrome</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>1.建立的應用結構</h3>
+
+    <pre class="bg-secondary text-white p-3 rounded text-left">
+        hello_world/
+        ├── lib/
+        │   └── main.dart          ← 你的應用代碼
+        ├── pubspec.yaml           ← 配置文件（依賴、版本等）
+        ├── android/               ← Android 平台代碼
+        ├── ios/                   ← iOS 平台代碼
+        ├── web/                   ← Web 平台代碼
+        └── test/                  ← 單元測試
+    </pre>
+
+    <h3>2.理解 main.dart</h3>
+    <p>打開 lib/main.dart，逐行解釋：</p>
+
+    <pre class="bg-secondary text-white p-3 rounded text-left">
+        import 'package:flutter/material.dart';  // ← 導入 Flutter UI 組件
+
+        void main() {
+        runApp(const MyApp());  // ← 應用程式的入口點，運行 MyApp
+        }
+    </pre>
+
+    <p>概念：Widget</p>
+    <p>Flutter 中一切都是 Widget（組件）</p>
+    <p>Widget 是構建 UI 的基本單位</p>
+
+    <pre class="bg-secondary text-white p-3 rounded text-left">
+        class MyApp extends StatelessWidget {
+        const MyApp({super.key});
+
+        @override
+        Widget build(BuildContext context) {
+            return MaterialApp(
+            title: 'Hello World',
+            theme: ThemeData(primarySwatch: Colors.blue),  // ← 藍色主題
+            home: const HelloWorldPage(),  // ← 首頁
+            );
+        }
+        }
+    </pre>
+    <p>StatelessWidget：無狀態（不變化的 UI）</p>
+    <p>MaterialApp：包裝了應用的主框架</p>
+    <p>home：定義應用打開時顯示的頁面</p>
+
+    <pre class="bg-secondary text-white p-3 rounded text-left">
+        class HelloWorldPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Hello World')),  // ← 頂部欄
+      body: const Center(
+        child: Text(
+          'Hello, World!',
+          style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+}
+    </pre>
+
+    <p>Scaffold：提供 Material Design 的佈局（appBar + body）</p>
+    <p>Center：把內容居中</p>
+    <p>Text：文本組件</p>
+
+    <h3>3.邊學邊實驗</h3>
+    <p>讓我們改一個簡單的東西。把文字改成紅色：</p>
+
+    <pre class="bg-secondary text-white p-3 rounded text-left">
+        child: Text(
+  'Hello, World!',
+  style: TextStyle(
+    fontSize: 48,
+    fontWeight: FontWeight.bold,
+    color: Colors.red,  // ← 加入這一行
+  ),
+),
+    </pre>
+    <p>儲存文件，在 Chrome 運行的終端按 r（Hot Reload），你會立即看到變化！</p>
+
+    <h3>重要概念：StatelessWidget vs StatefulWidget</h3>
+    <table class="table table-dark text-white">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">StatelessWidget</th>
+                <th scope="col">StatefulWidget</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">用途</th>
+                <td>靜態 UI（不變化）</td>
+                <td>動態 UI（會改變）</td>
+            </tr>
+
+            <tr>
+                <th scope="row">例子</th>
+                <td>文本、圖片、按鈕</td>
+                <td>計數器、表單輸入</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>加入一個計數按鈕</h3>
+    <p>試試替換 HelloWorldPage 為 StatefulWidget：</p>
+
+    <pre class="bg-secondary text-white p-3 rounded text-left">
+        class HelloWorldPage extends StatefulWidget {
+  const HelloWorldPage({super.key});
+
+  @override
+  State<HelloWorldPage> createState() => _HelloWorldPageState();
+}
+
+class _HelloWorldPageState extends State<HelloWorldPage> {
+  int counter = 0;  // ← 狀態（會變化）
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Hello World')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Hello, World!',
+              style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            Text('計數: $counter', style: const TextStyle(fontSize: 24)),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  counter++;  // ← 更新狀態，自動重繪 UI
+                });
+              },
+              child: const Text('點擊'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+    </pre>
+
+    <p>關鍵點：</p>
+    <p>setState(() { ... })：告訴 Flutter「我改變了狀態，請重新繪製」</p>
+
+    <p>常用 Widget：</p>
+    <table class="table table-dark text-white">
+        <thead>
+            <tr>
+                <th scope="col">Widget</th>
+                <th scope="col">用途</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Text</th>
+                <td>顯示文字</td>
+            </tr>
+
+            <tr>
+                <th scope="row">Button(ElevatedButton)</th>
+                <td>按鍵</td>
+            </tr>
+
+            <tr>
+                <th scope="row">Column</th>
+                <td>垂直排列</td>
+            </tr>
+
+            <tr>
+                <th scope="row">Row</th>
+                <td>水平排列</td>
+            </tr>
+
+            <tr>
+                <th scope="row">Stack</th>
+                <td>疊放</td>
+            </tr>
+            <tr>
+                <th scope="row">Image</th>
+                <td>圖片</td>
+            </tr>
+            <tr>
+                <th scope="row">TextField</th>
+                <td>文字輸入</td>
+            </tr>
+            <tr>
+                <th scope="row">ListView</th>
+                <td>滾動列表</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>
