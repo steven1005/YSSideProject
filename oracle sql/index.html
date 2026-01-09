@@ -1,424 +1,973 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oracle SQL 詳盡入門與進階教學</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <style>body{padding:1.5rem;} h1{border-bottom: 1px solid #555; padding-bottom: 5px; margin-top: 2rem;} pre, code{font-size: 1.1em !important; background-color: #333; padding: 1rem; border-radius: 5px; color: #eee; overflow-x: auto; line-height: 1.5; white-space: pre-wrap; word-break: break-all;}</style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        h1 {
+            border-bottom: 1px solid #555;
+            padding-bottom: 5px;
+            margin-top: 2rem;
+        }
+
+        pre {
+            font-size: 1.1em !important;
+            background-color: #333;
+            color: #eee;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        code {
+            font-size: 1.1em !important;
+            background-color: #333;
+            color: #eee;
+            display: inline-block;
+        }
+    </style>
 </head>
+
 <body class="p-3 bg-dark text-white">
     <h1 class="mb-4">Oracle SQL 詳盡入門與進階教學</h1>
     <p>本教學旨在為初學者提供一個全面而詳細的 Oracle SQL 入門指引，並逐步深入到更進階的應用。</p>
 
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">1: SELECT - 資料查詢的基礎與進階</h1>
-    <p><code>SELECT</code> 是 SQL 中最基本也最重要的指令，用於從資料庫中擷取資料。您可以選擇所有欄位 (<code>*</code>) 或指定特定欄位。進階應用包括使用 <code>DISTINCT</code> 移除重複值，以及使用算術運算子。</p>
+    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">0: 建立範例資料庫 - 準備教學資料</h1>
+    <p>在開始學習 SQL 查詢之前，我們先建立一個範例資料庫，包括建立資料表和插入基本資料。這樣後續的教學範例都能使用這些資料進行演示。</p>
     <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：基本與進階 SELECT</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 選取 employees 資料表的所有欄位
-SELECT * FROM employees;
-
--- 只選取員工的名字、薪水，並使用 AS 為欄位取別名
-SELECT first_name AS 員工姓名, salary AS 員工薪水 FROM employees;
-
--- 選取不重複的部門 ID
-SELECT DISTINCT department_id FROM employees;
-
--- 計算年薪 (假設薪水是月薪)
-SELECT first_name, salary, salary * 12 AS annual_salary FROM employees;</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">2: WHERE - 條件過濾與多重條件</h1>
-    <p><code>WHERE</code> 子句用於過濾記錄，只回傳符合特定條件的資料。您可以使用各種比較運算子 (<code>=, &gt;, &lt;, &lt;=, &gt;=, &lt;&gt;</code>) 和邏輯運算子 (<code>AND, OR, NOT</code>) 來組合多重條件。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：WHERE 子句應用</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 尋找薪水大於 10000 且部門 ID 為 90 的員工
-SELECT * FROM employees WHERE salary &gt; 10000 AND department_id = 90;
-
--- 尋找薪水在 5000 到 8000 之間的員工
-SELECT first_name, salary FROM employees WHERE salary BETWEEN 5000 AND 8000;
-
--- 尋找部門 ID 為 60, 90, 100 的員工
-SELECT first_name, department_id FROM employees WHERE department_id IN (60, 90, 100);
-
--- 尋找名字以 'S' 開頭的員工 (大小寫敏感，取決於資料庫設定)
-SELECT first_name FROM employees WHERE first_name LIKE 'S%';
-
--- 尋找 commission_pct 為 NULL 的員工
-SELECT first_name, commission_pct FROM employees WHERE commission_pct IS NULL;</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">3: ORDER BY - 結果排序與多欄位排序</h1>
-    <p><code>ORDER BY</code> 子句用於對查詢結果進行排序。預設為升冪 (<code>ASC</code>)，您也可以指定為降冪 (<code>DESC</code>)。您可以根據一個或多個欄位進行排序。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：ORDER BY 子句應用</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 依薪水由高到低排序
-SELECT first_name, salary FROM employees ORDER BY salary DESC;
-
--- 先依部門 ID 升冪排序，再依薪水降冪排序
-SELECT first_name, department_id, salary FROM employees ORDER BY department_id ASC, salary DESC;</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">4: JOIN - 關聯資料表與不同 JOIN 類型</h1>
-    <p>在關聯式資料庫中，資料通常分散在多個資料表中。<code>JOIN</code> 用於將這些資料表根據共通欄位結合起來。主要有 <code>INNER JOIN</code>, <code>LEFT JOIN</code>, <code>RIGHT JOIN</code>, <code>FULL OUTER JOIN</code>。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：不同 JOIN 類型</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- INNER JOIN: 只回傳兩個資料表中都有匹配的記錄
-SELECT e.first_name, d.department_name
-FROM employees e
-INNER JOIN departments d ON e.department_id = d.department_id;
-
--- LEFT JOIN: 回傳左表所有記錄，以及右表匹配的記錄。如果右表沒有匹配，則右表欄位為 NULL
-SELECT e.first_name, d.department_name
-FROM employees e
-LEFT JOIN departments d ON e.department_id = d.department_id;
-
--- RIGHT JOIN: 回傳右表所有記錄，以及左表匹配的記錄。如果左表沒有匹配，則左表欄位為 NULL
-SELECT e.first_name, d.department_name
-FROM employees e
-RIGHT JOIN departments d ON e.department_id = d.department_id;
-
--- FULL OUTER JOIN: 回傳左表和右表所有記錄。如果沒有匹配，則另一邊的欄位為 NULL
--- 注意：Oracle 12c 之前可能需要使用 UNION ALL 模擬
-SELECT e.first_name, d.department_name
-FROM employees e
-FULL OUTER JOIN departments d ON e.department_id = d.department_id;</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">5: GROUP BY 與 HAVING - 資料分組與過濾</h1>
-    <p><code>GROUP BY</code> 將具有相同值的資料列分組，並常與彙總函式 (Aggregate Functions) 一起使用。<code>HAVING</code> 則用於過濾分組後的結果，它類似於 <code>WHERE</code>，但作用於分組後的結果。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：GROUP BY 與 HAVING 應用</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 計算每個部門的平均薪水，且只顯示平均薪水大於 8000 的部門
-SELECT department_id, AVG(salary) AS avg_salary
-FROM employees
-GROUP BY department_id
-HAVING AVG(salary) &gt; 8000
-ORDER BY avg_salary DESC;</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">6: INSERT - 新增資料與多種方式</h1>
-    <p><code>INSERT INTO</code> 語句用於向資料表中新增一筆或多筆新的記錄。您可以指定欄位，也可以不指定（但必須按順序提供所有欄位的值）。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：INSERT 語句應用</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 插入單筆記錄，指定欄位
-INSERT INTO employees (employee_id, first_name, last_name, email, hire_date, job_id, salary)
-VALUES (207, 'John', 'Doe', 'JDOE', SYSDATE, 'IT_PROG', 6000);
-
--- 插入單筆記錄，不指定欄位 (必須提供所有欄位的值，且順序正確)
--- 假設 employees 表的欄位順序為：employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct, manager_id, department_id
--- INSERT INTO employees VALUES (208, 'Jane', 'Smith', 'JSMITH', NULL, SYSDATE, 'SA_REP', 7000, NULL, 145, 80);
-
--- 透過 SELECT 語句插入多筆記錄
-INSERT INTO employees_archive (employee_id, first_name, last_name)
-SELECT employee_id, first_name, last_name FROM employees WHERE hire_date &lt; TO_DATE('2000-01-01', 'YYYY-MM-DD');</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">7: UPDATE - 更新資料與多欄位更新</h1>
-    <p><code>UPDATE</code> 語句用於修改資料表中的現有記錄。請務必搭配 <code>WHERE</code> 子句使用，否則會更新整個資料表！您可以一次更新一個或多個欄位。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：UPDATE 語句應用</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 更新員工 ID 為 101 的薪水和電子郵件
-UPDATE employees
-SET salary = 50000, email = 'NEW_EMAIL'
-WHERE employee_id = 101;
-
--- 根據另一個資料表的資料來更新
-UPDATE employees e
-SET e.salary = (SELECT j.max_salary FROM jobs j WHERE e.job_id = j.job_id)
-WHERE e.salary &lt; (SELECT j.max_salary FROM jobs j WHERE e.job_id = j.job_id);</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">8: DELETE - 刪除資料與 TRUNCATE</h1>
-    <p><code>DELETE</code> 語句用於刪除資料表中的記錄。同樣地，請務必搭配 <code>WHERE</code> 子句使用。<code>TRUNCATE TABLE</code> 則用於快速刪除資料表中的所有記錄，但它是一個 DDL (Data Definition Language) 操作，不能回滾。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：DELETE 與 TRUNCATE</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 刪除部門 ID 為 110 的所有員工
-DELETE FROM employees WHERE department_id = 110;
-
--- 刪除所有員工 (非常危險，無 WHERE 子句)
--- DELETE FROM employees;
-
--- 快速刪除資料表所有資料 (不能回滾)
--- TRUNCATE TABLE employees_temp;</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">9: CREATE TABLE - 建立資料表與約束</h1>
-    <p><code>CREATE TABLE</code> 用於在資料庫中建立新的資料表。您需要定義欄位名稱、資料型別以及約束 (Constraints)，如 <code>PRIMARY KEY</code>, <code>FOREIGN KEY</code>, <code>NOT NULL</code>, <code>UNIQUE</code>, <code>CHECK</code>。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：CREATE TABLE 語句應用</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>CREATE TABLE products (
-    product_id NUMBER(6) PRIMARY KEY, -- 主鍵
-    product_name VARCHAR2(100) NOT NULL UNIQUE, -- 非空且唯一
-    price NUMBER(8, 2) CHECK (price &gt; 0), -- 價格必須大於 0
-    category_id NUMBER(4),
-    CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES categories(category_id) -- 外鍵
-);
-
-CREATE TABLE categories (
-    category_id NUMBER(4) PRIMARY KEY,
-    category_name VARCHAR2(50) NOT NULL
-);</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">10: Oracle 常用函式</h1>
-    <p>Oracle 提供了豐富的內建函式來處理資料。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：常用函式</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 字串函式: 將名字轉為大寫，並連接姓氏
-SELECT UPPER(first_name) || ' ' || UPPER(last_name) AS full_name FROM employees;
-
--- 數值函式: 將薪水四捨五入到千位
-SELECT salary, ROUND(salary, -3) FROM employees;
-
--- 日期函式: 取得目前系統日期，並格式化顯示
-SELECT SYSDATE, TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS') AS current_time FROM dual;
-
--- 轉換函式: 將字串轉為日期
-SELECT TO_DATE('2023-01-15', 'YYYY-MM-DD') FROM dual;
-
--- 條件表達式: CASE 語句
-SELECT first_name, salary,
-       CASE
-           WHEN salary &lt; 5000 THEN '低薪'
-           WHEN salary BETWEEN 5000 AND 10000 THEN '中薪'
-           ELSE '高薪'
-       END AS salary_level
-FROM employees;</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">11: 子查詢 (Subqueries) - 巢狀查詢</h1>
-    <p>子查詢是嵌套在另一個 SQL 查詢中的查詢。它可以用於 <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>HAVING</code> 子句中，提供資料給主查詢。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：子查詢應用</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 尋找薪水高於平均薪水的員工
-SELECT first_name, salary
-FROM employees
-WHERE salary &gt; (SELECT AVG(salary) FROM employees);
-
--- 尋找在 'IT' 部門工作的員工
-SELECT first_name, department_id
-FROM employees
-WHERE department_id IN (SELECT department_id FROM departments WHERE department_name = 'IT');
-
--- 在 FROM 子句中使用子查詢 (內聯視圖)
-SELECT a.department_name, a.avg_salary
-FROM (
-    SELECT department_id, AVG(salary) AS avg_salary
-    FROM employees
-    GROUP BY department_id
-) a
-JOIN departments d ON a.department_id = d.department_id
-WHERE a.avg_salary &gt; 7000;</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">12: 集合運算子 (Set Operators) - 合併查詢結果</h1>
-    <p>集合運算子用於合併兩個或多個 <code>SELECT</code> 語句的結果。主要有 <code>UNION</code>, <code>UNION ALL</code>, <code>INTERSECT</code>, <code>MINUS</code>。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：集合運算子應用</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- UNION: 合併結果並移除重複行
-SELECT employee_id, first_name FROM employees WHERE department_id = 60
-UNION
-SELECT employee_id, first_name FROM employees WHERE job_id = 'IT_PROG';
-
--- UNION ALL: 合併結果並保留所有重複行
-SELECT employee_id, first_name FROM employees WHERE department_id = 60
-UNION ALL
-SELECT employee_id, first_name FROM employees WHERE job_id = 'IT_PROG';
-
--- INTERSECT: 回傳兩個查詢結果的共同行
-SELECT employee_id, first_name FROM employees WHERE department_id = 60
-INTERSECT
-SELECT employee_id, first_name FROM employees WHERE job_id = 'IT_PROG';
-
--- MINUS: 回傳第一個查詢結果中存在，但第二個查詢結果中不存在的行
-SELECT employee_id, first_name FROM employees WHERE department_id = 60
-MINUS
-SELECT employee_id, first_name FROM employees WHERE job_id = 'IT_PROG';</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">13: 序列 (Sequences) - 自動生成唯一數字</h1>
-    <p>序列是 Oracle 資料庫物件，用於自動生成唯一的數字序列。常用於主鍵的自動增長。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：序列應用</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 建立一個序列
-CREATE SEQUENCE employee_seq
-START WITH 207 -- 從 207 開始
-INCREMENT BY 1 -- 每次增加 1
-NOMAXVALUE -- 沒有最大值
-NOCYCLE; -- 不循環
-
--- 使用序列插入資料
-INSERT INTO employees (employee_id, first_name, last_name, email, hire_date, job_id, salary)
-VALUES (employee_seq.NEXTVAL, 'New', 'Employee', 'NEMP', SYSDATE, 'SA_REP', 5000);
-
--- 查詢序列的當前值
-SELECT employee_seq.CURRVAL FROM dual;
-
--- 刪除序列
-DROP SEQUENCE employee_seq;</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">14: 索引 (Indexes) - 提升查詢效能</h1>
-    <p>索引是資料庫物件，用於提高資料檢索的速度。它們類似於書本的目錄。雖然可以加速查詢，但會增加資料修改（INSERT, UPDATE, DELETE）的開銷。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：索引應用</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 建立單一欄位索引
-CREATE INDEX emp_last_name_idx ON employees (last_name);
-
--- 建立複合索引 (多個欄位)
-CREATE INDEX emp_dept_job_idx ON employees (department_id, job_id);
-
--- 建立唯一索引 (確保欄位值唯一)
-CREATE UNIQUE INDEX emp_email_uk ON employees (email);
-
--- 刪除索引
-DROP INDEX emp_last_name_idx;</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">15: 視圖 (Views) - 簡化複雜查詢</h1>
-    <p>視圖是基於 SQL 查詢結果的虛擬資料表。它不儲存實際資料，而是儲存查詢定義。視圖可以簡化複雜查詢，限制資料存取，並提供資料獨立性。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：視圖應用</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 建立一個視圖，顯示高薪員工
-CREATE VIEW high_salary_employees AS
-SELECT employee_id, first_name, salary
-FROM employees
-WHERE salary &gt; 10000;
-
--- 查詢視圖 (像查詢普通資料表一樣)
-SELECT * FROM high_salary_employees;
-
--- 刪除視圖
-DROP VIEW high_salary_employees;</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">16: 同義詞 (Synonyms) - 簡化物件名稱</h1>
-    <p>同義詞是資料庫物件的別名。它們可以簡化對遠端資料庫物件或長物件名稱的引用，提高程式碼的可讀性和可維護性。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：同義詞應用</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 建立一個公共同義詞 (所有使用者都可以存取)
-CREATE PUBLIC SYNONYM emp FOR employees;
-
--- 使用同義詞查詢資料
-SELECT * FROM emp;
-
--- 刪除同義詞
-DROP PUBLIC SYNONYM emp;</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">17: PL/SQL 基礎 - 程式化 SQL</h1>
-    <p>PL/SQL (Procedural Language/SQL) 是 Oracle 對 SQL 的擴展，它結合了 SQL 的資料操作能力和程式語言的流程控制能力，用於撰寫儲存程序、函數、觸發器等。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：PL/SQL 區塊</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 匿名 PL/SQL 區塊
-DECLARE
-    v_employee_name employees.first_name%TYPE;
-    v_employee_salary employees.salary%TYPE;
-BEGIN
-    SELECT first_name, salary
-    INTO v_employee_name, v_employee_salary
-    FROM employees
-    WHERE employee_id = 100;
-
-    DBMS_OUTPUT.PUT_LINE('員工姓名: ' || v_employee_name || ', 薪水: ' || v_employee_salary);
-EXCEPTION
-    WHEN NO_DATA_FOUND THEN
-        DBMS_OUTPUT.PUT_LINE('找不到員工。');
-END;
-/ -- 在 SQL*Plus 或 SQL Developer 中執行需要 /</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">18: 儲存程序 (Stored Procedures) - 可重用程式碼</h1>
-    <p>儲存程序是儲存在資料庫中的命名 PL/SQL 區塊，可以接受參數並執行一系列 SQL 語句和 PL/SQL 邏輯。它們提高了效能、安全性和可重用性。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：儲存程序應用</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 建立一個儲存程序，根據員工 ID 增加薪水
-CREATE OR REPLACE PROCEDURE increase_salary (
-    p_employee_id IN employees.employee_id%TYPE,
-    p_increase_amount IN NUMBER
-) AS
-BEGIN
-    UPDATE employees
-    SET salary = salary + p_increase_amount
-    WHERE employee_id = p_employee_id;
-
-    COMMIT; -- 提交事務
-EXCEPTION
-    WHEN OTHERS THEN
-        ROLLBACK; -- 回滾事務
-        RAISE_APPLICATION_ERROR(-20001, '更新薪水時發生錯誤: ' || SQLERRM);
-END;
-/
-
--- 執行儲存程序
-EXEC increase_salary(100, 500);
-
--- 或者在 PL/SQL 區塊中執行
-BEGIN
-    increase_salary(101, 700);
-END;
-/</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">19: 函數 (Functions) - 返回單一值</h1>
-    <p>函數是儲存在資料庫中的命名 PL/SQL 區塊，與儲存程序類似，但函數必須返回一個單一值。它們常用於計算或資料轉換。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：函數應用</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 建立一個函數，計算員工的年薪
-CREATE OR REPLACE FUNCTION calculate_annual_salary (
-    p_employee_id IN employees.employee_id%TYPE
-) RETURN NUMBER IS
-    v_annual_salary NUMBER;
-BEGIN
-    SELECT salary * 12
-    INTO v_annual_salary
-    FROM employees
-    WHERE employee_id = p_employee_id;
-
-    RETURN v_annual_salary;
-EXCEPTION
-    WHEN NO_DATA_FOUND THEN
-        RETURN NULL;
-END;
-/
-
--- 在 SELECT 語句中使用函數
-SELECT first_name, salary, calculate_annual_salary(employee_id) AS annual_salary
-FROM employees
-WHERE employee_id IN (100, 101);</code></pre></div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">20: 觸發器 (Triggers) - 自動化資料庫操作</h1>
-    <p>觸發器是與資料表或視圖相關聯的 PL/SQL 區塊，當資料庫中發生特定事件（如 INSERT, UPDATE, DELETE）時會自動執行。它們常用於實施業務規則、資料稽核或維護資料完整性。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">SQL 範例：觸發器應用</h4>
-        <div class="sql-code"><pre class="bg-secondary p-3 rounded text-light overflow-auto" style="font-size: 1.1em; line-height: 1.5; white-space: pre-wrap; word-break: break-all;"><code>-- 建立一個觸發器，在每次更新員工薪水前記錄舊薪水
-CREATE TABLE salary_audit (
-    audit_id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    employee_id NUMBER,
-    old_salary NUMBER,
-    new_salary NUMBER,
-    change_date DATE
-);
-
-CREATE OR REPLACE TRIGGER trg_salary_update
-BEFORE UPDATE OF salary ON employees
-FOR EACH ROW
-BEGIN
-    INSERT INTO salary_audit (employee_id, old_salary, new_salary, change_date)
-    VALUES (:OLD.employee_id, :OLD.salary, :NEW.salary, SYSDATE);
-END;
-/
-
--- 測試觸發器 (更新薪水)
-UPDATE employees
-SET salary = salary + 100
-WHERE employee_id = 100;
-
--- 查詢稽核表
-SELECT * FROM salary_audit;</code></pre></div>
-    </div>
-
+        <h4 class="text-white mb-3">建立 employees 資料表</h4>
+        <div class="html-code">
+            CREATE TABLE employees (<br>
+            employee_id NUMBER(6) PRIMARY KEY,<br>
+            first_name VARCHAR2(20),<br>
+            last_name VARCHAR2(25) NOT NULL,<br>
+            email VARCHAR2(25) UNIQUE,<br>
+            phone_number VARCHAR2(20),<br>
+            hire_date DATE NOT NULL,<br>
+            job_id VARCHAR2(10) NOT NULL,<br>
+            salary NUMBER(8,2),<br>
+            commission_pct NUMBER(2,2),<br>
+            manager_id NUMBER(6),<br>
+            department_id NUMBER(4)<br>
+            );<br>
+
+            --插入範例資料到 employees 表<br>
+            INSERT INTO employees VALUES (100, 'Steven', 'King', 'SKING', '515.123.4567',
+            '1987-06-17', 'AD_PRES', 24000, NULL, NULL, 90);<br>
+            INSERT INTO employees VALUES (101, 'Neena', 'Kochhar', 'NKOCHHAR', '515.123.4568', '1989-09-21',
+            'AD_VP', 17000, NULL, 100, 90);<br>
+            INSERT INTO employees VALUES (102, 'Lex', 'De Haan', 'LDEHAAN', '515.123.4569', '1993-01-13',
+            'AD_VP', 17000, NULL, 100, 90);<br>
+            INSERT INTO employees VALUES (103, 'Alexander', 'Hunold', 'AHUNOLD', '590.423.4567',
+            '1990-01-03', 'IT_PROG', 9000, NULL, 102, 60);<br>
+            INSERT INTO employees VALUES (104, 'Bruce', 'Ernst', 'BERNST', '590.423.4568', '1991-05-21',
+            'IT_PROG', 6000, NULL, 103, 60);<br>
+            INSERT INTO employees VALUES (105, 'David', 'Austin', 'DAUSTIN', '590.423.4569', '1997-06-25',
+            'IT_PROG', 4800, NULL, 103, 60);<br>
+            INSERT INTO employees VALUES (106, 'Valli', 'Pataballa', 'VPATABAL', '590.423.4560',
+            '1998-02-05', 'IT_PROG', 4800, NULL, 103, 60);<br>
+            INSERT INTO employees VALUES (107, 'Diana', 'Lorentz', 'DLORENTZ', '590.423.5567', '1999-02-07',
+            'IT_PROG', 4200, NULL, 103, 60);<br>
+            INSERT INTO employees VALUES (108, 'Nancy', 'Greenberg', 'NGREENBE', '515.124.4569',
+            '1994-08-17', 'FI_MGR', 12008, NULL, 101, 100);<br>
+            INSERT INTO employees VALUES (109, 'Daniel', 'Faviet', 'DFAVIET', '515.124.4169', '1994-08-16',
+            'FI_ACCOUNT', 9000, NULL, 108, 100);<br>
+
+            --建立 departments 資料表<br>
+            CREATE TABLE departments (<br>
+            department_id NUMBER(4) PRIMARY KEY,<br>
+            department_name VARCHAR2(30) NOT NULL,<br>
+            manager_id NUMBER(6),<br>
+            location_id NUMBER(4)<br>
+            );
+            --插入範例資料到 departments 表<br>
+            INSERT INTO departments VALUES (10, 'Administration', 200, 1700);<br>
+            INSERT INTO departments VALUES (20, 'Marketing', 201, 1800);<br>
+            INSERT INTO departments VALUES (30, 'Purchasing', 114, 1700);<br>
+            INSERT INTO departments VALUES (40, 'Human Resources', 203, 2400);<br>
+            INSERT INTO departments VALUES (50, 'Shipping', 121, 1500);<br>
+            INSERT INTO departments VALUES (60, 'IT', 103, 1400);<br>
+            INSERT INTO departments VALUES (70, 'Public Relations', 204, 2700);<br>
+            INSERT INTO departments VALUES (80, 'Sales', 145, 2500);<br>
+            INSERT INTO departments VALUES (90, 'Executive', 100, 1700);<br>
+            INSERT INTO departments VALUES (100, 'Finance', 108, 1700);<br>
+            INSERT INTO departments VALUES (110, 'Accounting', 205, 1700);<br>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">2: SELECT - 資料查詢的基礎與進階</h1>
+        <p><code>SELECT</code> 是 SQL 中最基本也最重要的指令，用於從資料庫中擷取資料。您可以選擇所有欄位 (<code>*</code>) 或指定特定欄位。進階應用包括使用
+            <code>DISTINCT</code> 移除重複值，以及使用算術運算子。
+        </p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：基本與進階 SELECT</h4>
+            <div class="html-code">
+                -- 選取 employees 資料表的所有欄位<br>
+                SELECT * FROM employees;<br>
+                <br>
+                -- 只選取員工的名字、薪水，並使用 AS 為欄位取別名<br>
+                SELECT first_name AS 員工姓名, salary AS 員工薪水 FROM employees;<br>
+                <br>
+                -- 選取不重複的部門 ID<br>
+                SELECT DISTINCT department_id FROM employees;<br>
+                <br>
+                -- 計算年薪 (假設薪水是月薪)<br>
+                SELECT first_name, salary, salary * 12 AS annual_salary FROM employees;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">3: WHERE - 條件過濾與多重條件</h1>
+        <p><code>WHERE</code> 子句用於過濾記錄，只回傳符合特定條件的資料。您可以使用各種比較運算子
+            (<code>=, &gt;, &lt;, &lt;=, &gt;=, &lt;&gt;</code>) 和邏輯運算子
+            (<code>AND, OR, NOT</code>) 來組合多重條件。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：WHERE 子句應用</h4>
+            <div class="html-code">
+                -- 尋找薪水大於 10000 且部門 ID 為 90 的員工<br>
+                SELECT * FROM employees WHERE salary &gt; 10000 AND department_id = 90;<br>
+                <br>
+                -- 尋找薪水在 5000 到 8000 之間的員工<br>
+                SELECT first_name, salary FROM employees WHERE salary BETWEEN 5000 AND 8000;<br>
+                <br>
+                -- 尋找部門 ID 為 60, 90, 100 的員工<br>
+                SELECT first_name, department_id FROM employees WHERE department_id IN (60, 90, 100);<br>
+                <br>
+                -- 尋找名字以 'S' 開頭的員工 (大小寫敏感，取決於資料庫設定)<br>
+                SELECT first_name FROM employees WHERE first_name LIKE 'S%';<br>
+                <br>
+                -- _：匹配單一個字元開頭的abc<br>
+                SELECT first_name FROM employees WHERE first_name LIKE '_abc';<br>
+                <br>
+                -- 尋找 commission_pct 為 NULL 的員工<br>
+                SELECT first_name, commission_pct FROM employees WHERE commission_pct IS NULL;<br>
+            </div>
+        </div>
+
+
+        <h1 class="SideTabs mt-4 pb-1">3.1: <code>ILIKE</code> 是 PostgreSQL
+            中的模式匹配操作符，主要用於不區分大小寫的字串搜尋。</h1>
+        <p>注意：ILIKE 並非標準 SQL，而是 PostgreSQL 的擴展功能。在其他資料庫（如 Oracle）中，<br>沒有直接的 ILIKE，但可以用 <code>UPPER()</code> 或
+            <code>LOWER()</code>函數來模擬。
+        </p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL ILIKE 子句應用</h4>
+            <div class="html-code">
+                -- 使用 UPPER() 函數<br>
+                SELECT * FROM employees WHERE UPPER(first_name) LIKE UPPER('%steven%');<br>
+                <br>
+                -- 或使用 LOWER()<br>
+                SELECT * FROM employees WHERE LOWER(first_name) LIKE LOWER('%steven%');<br>
+            </div>
+        </div>
+
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">4: ORDER BY - 結果排序與多欄位排序</h1>
+        <p><code>ORDER BY</code> 子句用於對查詢結果進行排序。預設為升冪 (<code>ASC</code>)，您也可以指定為降冪
+            (<code>DESC</code>)。您可以根據一個或多個欄位進行排序。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：ORDER BY 子句應用</h4>
+            <div class="html-code">
+                -- 依薪水由高到低排序<br>
+                SELECT first_name, salary FROM employees ORDER BY salary DESC;<br>
+                <br>
+                -- 先依部門 ID 升冪排序，再依薪水降冪排序<br>
+                SELECT first_name, department_id, salary FROM employees ORDER BY department_id ASC, salary DESC;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">5: JOIN - 關聯資料表與不同 JOIN 類型</h1>
+        <p>在關聯式資料庫中，資料通常分散在多個資料表中。<code>JOIN</code> 用於將這些資料表根據共通欄位結合起來。主要有 <code>INNER JOIN</code>,
+            <code>LEFT JOIN</code>,
+            <code>RIGHT JOIN</code>, <code>FULL OUTER JOIN</code>。
+        </p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：不同 JOIN 類型</h4>
+            <div class="html-code">
+                -- INNER JOIN: 只回傳兩個資料表中都有匹配的記錄<br>
+                SELECT e.first_name, d.department_name<br>
+                FROM employees e<br>
+                INNER JOIN departments d ON e.department_id = d.department_id;<br>
+                <br>
+                -- LEFT JOIN: 回傳左表所有記錄，以及右表匹配的記錄。如果右表沒有匹配，則右表欄位為 NULL<br>
+                SELECT e.first_name, d.department_name<br>
+                FROM employees e<br>
+                LEFT JOIN departments d ON e.department_id = d.department_id;<br>
+                <br>
+                -- RIGHT JOIN: 回傳右表所有記錄，以及左表匹配的記錄。如果左表沒有匹配，則左表欄位為 NULL<br>
+                SELECT e.first_name, d.department_name<br>
+                FROM employees e<br>
+                RIGHT JOIN departments d ON e.department_id = d.department_id;<br>
+                <br>
+                -- FULL OUTER JOIN: 回傳左表和右表所有記錄。如果沒有匹配，則另一邊的欄位為 NULL<br>
+                -- 注意：Oracle 12c 之前可能需要使用 UNION ALL 模擬<br>
+                SELECT e.first_name, d.department_name<br>
+                FROM employees e<br>
+                FULL OUTER JOIN departments d ON e.department_id = d.department_id;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">6: GROUP BY 與 HAVING - 資料分組與過濾</h1>
+        <p><code>GROUP BY</code> 將具有相同值的資料列分組，並常與彙總函式 (Aggregate Functions) 一起使用。<code>HAVING</code>
+            則用於過濾分組後的結果，它類似於
+            <code>WHERE</code>，但作用於分組後的結果。
+        </p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：GROUP BY 與 HAVING 應用</h4>
+            <div class="html-code">
+                -- 計算每個部門的平均薪水，且只顯示平均薪水大於 8000 的部門<br>
+                SELECT department_id, AVG(salary) AS avg_salary<br>
+                FROM employees<br>
+                GROUP BY department_id<br>
+                HAVING AVG(salary) &gt; 8000<br>
+                ORDER BY avg_salary DESC;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">7: INSERT - 新增資料與多種方式</h1>
+        <p><code>INSERT INTO</code> 語句用於向資料表中新增一筆或多筆新的記錄。您可以指定欄位，也可以不指定（但必須按順序提供所有欄位的值）。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：INSERT 語句應用</h4>
+            <div class="html-code">
+                -- 插入單筆記錄，指定欄位<br>
+                INSERT INTO employees (employee_id, first_name, last_name, email, hire_date, job_id, salary)<br>
+                VALUES (207, 'John', 'Doe', 'JDOE', SYSDATE, 'IT_PROG', 6000);<br>
+                <br>
+                -- 插入單筆記錄，不指定欄位 (必須提供所有欄位的值，且順序正確)<br>
+                -- 假設 employees 表的欄位順序為：employee_id, first_name, last_name, email, phone_number, hire_date, job_id,
+                salary,<br>
+                commission_pct, manager_id, department_id<br>
+                INSERT INTO employees VALUES (208, 'Jane', 'Smith', 'JSMITH', NULL, SYSDATE, 'SA_REP', 7000, NULL,
+                145,80);<br>
+                <br>
+                -- 透過 SELECT 語句插入多筆記錄<br>
+                INSERT INTO employees_archive (employee_id, first_name, last_name)<br>
+                SELECT employee_id, first_name, last_name FROM employees WHERE hire_date &lt; TO_DATE('2000-01-01',
+                'YYYY-MM-DD');<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">8: UPDATE - 更新資料與多欄位更新</h1>
+        <p><code>UPDATE</code> 語句用於修改資料表中的現有記錄。請務必搭配 <code>WHERE</code> 子句使用，否則會更新整個資料表！您可以一次更新一個或多個欄位。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：UPDATE 語句應用</h4>
+            <div class="html-code">
+                -- 更新員工 ID 為 101 的薪水和電子郵件<br>
+                UPDATE employees<br>
+                SET salary = 50000, email = 'NEW_EMAIL'<br>
+                WHERE employee_id = 101;<br>
+                <br>
+                -- 根據另一個資料表的資料來更新<br>
+                UPDATE employees e<br>
+                SET e.salary = (SELECT j.max_salary FROM jobs j WHERE e.job_id = j.job_id)<br>
+                WHERE e.salary &lt; (SELECT j.max_salary FROM jobs j WHERE e.job_id = j.job_id);<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">9: DELETE - 刪除資料與 TRUNCATE</h1>
+        <p><code>DELETE</code> 語句用於刪除資料表中的記錄。同樣地，請務必搭配 <code>WHERE</code> 子句使用。<code>TRUNCATE TABLE</code>
+            則用於快速刪除資料表中的所有記錄，但它是一個 DDL (Data Definition Language) 操作，不能回滾。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：DELETE 與 TRUNCATE</h4>
+            <div class="html-code">
+                -- 刪除部門 ID 為 110 的所有員工<br>
+                DELETE FROM employees WHERE department_id = 110;<br>
+                <br>
+                -- 刪除所有員工 (非常危險，無 WHERE 子句)<br>
+                -- DELETE FROM employees;<br>
+                <br>
+                -- 快速刪除資料表所有資料 (不能回滾)<br>
+                -- TRUNCATE TABLE employees_temp;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">10: CREATE TABLE - 建立資料表與約束</h1>
+        <p><code>CREATE TABLE</code> 用於在資料庫中建立新的資料表。您需要定義欄位名稱、資料型別以及約束 (Constraints)，如 <code>PRIMARY KEY</code>,
+            <code>FOREIGN KEY</code>, <code>NOT NULL</code>, <code>UNIQUE</code>, <code>CHECK</code>。
+        </p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：CREATE TABLE 語句應用</h4>
+            <div class="html-code">
+                CREATE TABLE products (<br>
+                product_id NUMBER(6) PRIMARY KEY, -- 主鍵<br>
+                product_name VARCHAR2(100) NOT NULL UNIQUE, -- 非空且唯一<br>
+                price NUMBER(8, 2) CHECK (price > 0), -- 價格必須大於 0<br>
+                category_id NUMBER(4),<br>
+                CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES categories(category_id) -- 外鍵<br>
+                );<br>
+                <br>
+                CREATE TABLE categories (<br>
+                category_id NUMBER(4) PRIMARY KEY,<br>
+                category_name VARCHAR2(50) NOT NULL<br>
+                );<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">11: Oracle 常用函式</h1>
+        <p>Oracle 提供了豐富的內建函式來處理資料。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：常用函式</h4>
+            <div class="html-code">
+                -- 字串函式: 將名字轉為大寫，並連接姓氏<br>
+                SELECT UPPER(first_name) || ' ' || UPPER(last_name) AS full_name FROM employees;<br>
+                <br>
+                -- 數值函式: 將薪水四捨五入到千位<br>
+                SELECT salary, ROUND(salary, -3) FROM employees;<br>
+                <br>
+                -- 日期函式: 取得目前系統日期，並格式化顯示<br>
+                SELECT SYSDATE, TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS') AS current_time FROM dual;<br>
+                <br>
+                -- 轉換函式: 將字串轉為日期<br>
+                SELECT TO_DATE('2023-01-15', 'YYYY-MM-DD') FROM dual;<br>
+                <br>
+                -- 條件表達式: CASE 語句<br>
+                SELECT first_name, salary,<br>
+                CASE<br>
+                WHEN salary &lt; 5000 THEN '低薪'<br>
+                WHEN salary BETWEEN 5000 AND 10000 THEN '中薪'<br>
+                ELSE '高薪'<br>
+                END AS salary_level<br>
+                FROM employees;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">12: 子查詢 (Subqueries) - 巢狀查詢</h1>
+        <p>子查詢是嵌套在另一個 SQL 查詢中的查詢。它可以用於 <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>,
+            <code>HAVING</code>
+            子句中，提供資料給主查詢。
+        </p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：子查詢應用</h4>
+            <div class="html-code">
+                -- 尋找薪水高於平均薪水的員工<br>
+                SELECT first_name, salary<br>
+                FROM employees<br>
+                WHERE salary &gt; (SELECT AVG(salary) FROM employees);<br>
+                <br>
+                -- 尋找在 'IT' 部門工作的員工<br>
+                SELECT first_name, department_id<br>
+                FROM employees<br>
+                WHERE department_id IN (SELECT department_id FROM departments WHERE department_name = 'IT');<br>
+                <br>
+                -- 在 FROM 子句中使用子查詢 (內聯視圖)<br>
+                SELECT a.department_name, a.avg_salary<br>
+                FROM (<br>
+                SELECT department_id, AVG(salary) AS avg_salary<br>
+                FROM employees<br>
+                GROUP BY department_id<br>
+                ) a<br>
+                JOIN departments d ON a.department_id = d.department_id<br>
+                WHERE a.avg_salary &gt; 7000;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">12: 集合運算子 (Set Operators) - 合併查詢結果
+        </h1>
+        <p>集合運算子用於合併兩個或多個 <code>SELECT</code> 語句的結果。主要有 <code>UNION</code>, <code>UNION ALL</code>,
+            <code>INTERSECT</code>,
+            <code>MINUS</code>。
+        </p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：集合運算子應用</h4>
+            <div class="html-code">
+                -- UNION: 合併結果並移除重複行<br>
+                SELECT employee_id, first_name FROM employees WHERE department_id = 60<br>
+                UNION<br>
+                SELECT employee_id, first_name FROM employees WHERE job_id = 'IT_PROG';<br>
+                <br>
+                -- UNION ALL: 合併結果並保留所有重複行<br>
+                SELECT employee_id, first_name FROM employees WHERE department_id = 60<br>
+                UNION ALL<br>
+                SELECT employee_id, first_name FROM employees WHERE job_id = 'IT_PROG';<br>
+                <br>
+                -- INTERSECT: 回傳兩個查詢結果的共同行<br>
+                SELECT employee_id, first_name FROM employees WHERE department_id = 60<br>
+                INTERSECT<br>
+                SELECT employee_id, first_name FROM employees WHERE job_id = 'IT_PROG';<br>
+                <br>
+                -- MINUS: 回傳第一個查詢結果中存在，但第二個查詢結果中不存在的行<br>
+                SELECT employee_id, first_name FROM employees WHERE department_id = 60<br>
+                MINUS<br>
+                SELECT employee_id, first_name FROM employees WHERE job_id = 'IT_PROG';<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">13: 序列 (Sequences) - 自動生成唯一數字</h1>
+        <p>序列是 Oracle 資料庫物件，用於自動生成唯一的數字序列。常用於主鍵的自動增長。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：序列應用</h4>
+            <div class="html-code">
+                -- 建立一個序列<br>
+                CREATE SEQUENCE employee_seq<br>
+                START WITH 207 -- 從 207 開始<br>
+                INCREMENT BY 1 -- 每次增加 1<br>
+                NOMAXVALUE -- 沒有最大值<br>
+                NOCYCLE; -- 不循環<br>
+                <br>
+                -- 使用序列插入資料<br>
+                INSERT INTO employees (employee_id, first_name, last_name, email, hire_date, job_id, salary)<br>
+                VALUES (employee_seq.NEXTVAL, 'New', 'Employee', 'NEMP', SYSDATE, 'SA_REP', 5000);<br>
+                <br>
+                -- 查詢序列的當前值<br>
+                SELECT employee_seq.CURRVAL FROM dual;<br>
+                <br>
+                -- 刪除序列<br>
+                DROP SEQUENCE employee_seq;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">14: 索引 (Indexes) - 提升查詢效能</h1>
+        <p>索引是資料庫物件，用於提高資料檢索的速度。它們類似於書本的目錄。雖然可以加速查詢，但會增加資料修改（INSERT, UPDATE, DELETE）的開銷。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：索引應用</h4>
+            <div class="html-code">
+                -- 建立單一欄位索引<br>
+                CREATE INDEX emp_last_name_idx ON employees (last_name);<br>
+                <br>
+                -- 建立複合索引 (多個欄位)<br>
+                CREATE INDEX emp_dept_job_idx ON employees (department_id, job_id);<br>
+                <br>
+                -- 建立唯一索引 (確保欄位值唯一)<br>
+                CREATE UNIQUE INDEX emp_email_uk ON employees (email);<br>
+                <br>
+                -- 刪除索引<br>
+                DROP INDEX emp_last_name_idx;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">15: 視圖 (Views) - 簡化複雜查詢</h1>
+        <p>視圖是基於 SQL 查詢結果的虛擬資料表。它不儲存實際資料，而是儲存查詢定義。視圖可以簡化複雜查詢，限制資料存取，並提供資料獨立性。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：視圖應用</h4>
+            <div class="html-code">
+                -- 建立一個視圖，顯示高薪員工<br>
+                CREATE VIEW high_salary_employees AS<br>
+                SELECT employee_id, first_name, salary<br>
+                FROM employees<br>
+                WHERE salary &gt; 10000;<br>
+                <br>
+                -- 查詢視圖 (像查詢普通資料表一樣)<br>
+                SELECT * FROM high_salary_employees;<br>
+                <br>
+                -- 刪除視圖<br>
+                DROP VIEW high_salary_employees;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">16: 同義詞 (Synonyms) - 簡化物件名稱</h1>
+        <p>同義詞是資料庫物件的別名。它們可以簡化對遠端資料庫物件或長物件名稱的引用，提高程式碼的可讀性和可維護性。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：同義詞應用</h4>
+            <div class="html-code">
+                -- 建立一個公共同義詞 (所有使用者都可以存取)<br>
+                CREATE PUBLIC SYNONYM emp FOR employees;<br>
+                <br>
+                -- 使用同義詞查詢資料<br>
+                SELECT * FROM emp;<br>
+                <br>
+                -- 刪除同義詞<br>
+                DROP PUBLIC SYNONYM emp;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">17: PL/SQL 基礎 - 程式化 SQL</h1>
+        <p>PL/SQL (Procedural Language/SQL) 是 Oracle 對 SQL 的擴展，它結合了 SQL 的資料操作能力和程式語言的流程控制能力，用於撰寫儲存程序、函數、觸發器等。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：PL/SQL 區塊</h4>
+            <div class="html-code">
+                -- 匿名 PL/SQL 區塊<br>
+                DECLARE<br>
+                v_employee_name employees.first_name%TYPE;<br>
+                v_employee_salary employees.salary%TYPE;<br>
+                BEGIN<br>
+                SELECT first_name, salary<br>
+                INTO v_employee_name, v_employee_salary<br>
+                FROM employees<br>
+                WHERE employee_id = 100;<br>
+                <br>
+                DBMS_OUTPUT.PUT_LINE('員工姓名: ' || v_employee_name || ', 薪水: ' || v_employee_salary);<br>
+                EXCEPTION<br>
+                WHEN NO_DATA_FOUND THEN<br>
+                DBMS_OUTPUT.PUT_LINE('找不到員工。');<br>
+                END;<br>
+                / -- 在 SQL*Plus 或 SQL Developer 中執行需要 /<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">18: 儲存程序 (Stored Procedures) - 可重用程式碼
+        </h1>
+        <p>儲存程序是儲存在資料庫中的命名 PL/SQL 區塊，可以接受參數並執行一系列 SQL 語句和 PL/SQL 邏輯。它們提高了效能、安全性和可重用性。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：儲存程序應用</h4>
+            <div class="html-code">
+                -- 建立一個儲存程序，根據員工 ID 增加薪水<br>
+                CREATE OR REPLACE PROCEDURE increase_salary (<br>
+                p_employee_id IN employees.employee_id%TYPE,<br>
+                p_increase_amount IN NUMBER<br>
+                ) AS<br>
+                BEGIN<br>
+                UPDATE employees<br>
+                SET salary = salary + p_increase_amount<br>
+                WHERE employee_id = p_employee_id;<br>
+                <br>
+                COMMIT; -- 提交事務<br>
+                EXCEPTION<br>
+                WHEN OTHERS THEN<br>
+                ROLLBACK; -- 回滾事務<br>
+                RAISE_APPLICATION_ERROR(-20001, '更新薪水時發生錯誤: ' || SQLERRM);<br>
+                END;<br>
+                /<br>
+                <br>
+                -- 執行儲存程序<br>
+                EXEC increase_salary(100, 500);<br>
+                <br>
+                -- 或者在 PL/SQL 區塊中執行<br>
+                BEGIN<br>
+                increase_salary(101, 700);<br>
+                END;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">19: 函數 (Functions) - 返回單一值</h1>
+        <p>函數是儲存在資料庫中的命名 PL/SQL 區塊，與儲存程序類似，但函數必須返回一個單一值。它們常用於計算或資料轉換。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：函數應用</h4>
+            <div class="html-code">
+                -- 建立一個函數，計算員工的年薪<br>
+                CREATE OR REPLACE FUNCTION calculate_annual_salary (<br>
+                p_employee_id IN employees.employee_id%TYPE<br>
+                ) RETURN NUMBER IS<br>
+                v_annual_salary NUMBER;<br>
+                BEGIN<br>
+                SELECT salary * 12<br>
+                INTO v_annual_salary<br>
+                FROM employees<br>
+                WHERE employee_id = p_employee_id;<br>
+                <br>
+                RETURN v_annual_salary;<br>
+                EXCEPTION<br>
+                WHEN NO_DATA_FOUND THEN<br>
+                RETURN NULL;<br>
+                END;<br>
+                /<br>
+                <br>
+                -- 在 SELECT 語句中使用函數<br>
+                SELECT first_name, salary, calculate_annual_salary(employee_id) AS annual_salary<br>
+                FROM employees<br>
+                WHERE employee_id IN (100, 101);<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">20: 觸發器 (Triggers) - 自動化資料庫操作</h1>
+        <p>觸發器是與資料表或視圖相關聯的 PL/SQL 區塊，當資料庫中發生特定事件（如 INSERT, UPDATE, DELETE）時會自動執行。它們常用於實施業務規則、資料稽核或維護資料完整性。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：觸發器應用</h4>
+            <div class="html-code">
+                -- 建立一個觸發器，在每次更新員工薪水前記錄舊薪水<br>
+                CREATE TABLE salary_audit (<br>
+                audit_id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,<br>
+                employee_id NUMBER,<br>
+                old_salary NUMBER,<br>
+                new_salary NUMBER,<br>
+                change_date DATE<br>
+                );<br>
+                <br>
+                CREATE OR REPLACE TRIGGER trg_salary_update<br>
+                BEFORE UPDATE OF salary ON employees<br>
+                FOR EACH ROW<br>
+                BEGIN<br>
+                INSERT INTO salary_audit (employee_id, old_salary, new_salary, change_date)<br>
+                VALUES (:OLD.employee_id, :OLD.salary, :NEW.salary, SYSDATE);<br>
+                END;<br>
+                /<br>
+                <br>
+                -- 測試觸發器 (更新薪水)<br>
+                UPDATE employees<br>
+                SET salary = salary + 100<br>
+                WHERE employee_id = 100;<br>
+                <br>
+                -- 查詢稽核表<br>
+                SELECT * FROM salary_audit;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">21: 事務管理 (Transaction Management) -
+            確保資料一致性</h1>
+        <p>事務是一組 SQL 語句的邏輯單元，要麼全部執行成功，要麼全部失敗回滾。Oracle 使用 <code>COMMIT</code> 提交事務，<code>ROLLBACK</code>
+            回滾事務，<code>SAVEPOINT</code> 設定保存點。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：事務管理應用</h4>
+            <div class="html-code">-- 開始事務，更新員工薪水並記錄<br>
+                SAVEPOINT sp1;<br>
+                UPDATE employees SET salary = salary + 500 WHERE employee_id = 100;<br>
+                INSERT INTO salary_history (employee_id, old_salary, new_salary, change_date)<br>
+                VALUES (100, 24000, 24500, SYSDATE);<br>
+                <br>
+                -- 如果一切正常，提交事務<br>
+                COMMIT;<br>
+                <br>
+                -- 如果出錯，回滾到保存點<br>
+                -- ROLLBACK TO sp1;<br>
+                <br>
+                -- 或者完全回滾<br>
+                -- ROLLBACK;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">22: 權限與安全性 (Privileges and Security) -
+            控制資料存取</h1>
+        <p>Oracle 使用權限控制使用者對資料庫物件的存取。系統權限允許執行特定動作，物件權限允許對特定物件的操作。角色可以簡化權限管理。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：權限與安全性應用</h4>
+            <div class="html-code">-- 授與使用者查詢 employees 表的權限<br>
+                GRANT SELECT ON employees TO user1;<br>
+                <br>
+                -- 授與更新薪水的權限<br>
+                GRANT UPDATE (salary) ON employees TO user1;<br>
+                <br>
+                -- 建立角色並授與權限<br>
+                CREATE ROLE hr_role;<br>
+                GRANT SELECT, INSERT, UPDATE ON employees TO hr_role;<br>
+                GRANT hr_role TO user1;<br>
+                <br>
+                -- 撤銷權限<br>
+                REVOKE SELECT ON employees FROM user1;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">23: 資料型別與轉換 (Data Types and Conversions) -
+            正確儲存資料</h1>
+        <p>Oracle 支援多種資料型別，包括字串、數值、日期等。使用 <code>TO_CHAR</code>, <code>TO_NUMBER</code>, <code>TO_DATE</code>
+            等函數進行資料型別轉換。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：資料型別與轉換應用</h4>
+            <div class="html-code">-- 將薪水轉為字串並格式化<br>
+                SELECT first_name, TO_CHAR(salary, '$999,999.99') AS formatted_salary FROM employees;<br>
+                <br>
+                -- 將字串轉為數值<br>
+                SELECT TO_NUMBER('12345.67') + 100 FROM dual;<br>
+                <br>
+                -- 日期格式化<br>
+                SELECT first_name, TO_CHAR(hire_date, 'YYYY-MM-DD') AS hire_date_formatted FROM employees;<br>
+                <br>
+                -- 將字串轉為日期<br>
+                SELECT TO_DATE('2023-01-15', 'YYYY-MM-DD') FROM dual;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">24: 窗口函數 (Window Functions) - 進階分析查詢</h1>
+        <p>窗口函數在結果集中定義一個窗口（資料子集），並在該窗口上執行計算。常用於排名、累計、移動平均等。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：窗口函數應用</h4>
+            <div class="html-code">-- 依部門排名薪水<br>
+                SELECT first_name, department_id, salary,<br>
+                ROW_NUMBER() OVER (PARTITION BY department_id ORDER BY salary DESC) AS rank_in_dept<br>
+                FROM employees;<br>
+                <br>
+                -- 計算累計薪水<br>
+                SELECT first_name, salary,<br>
+                SUM(salary) OVER (ORDER BY salary DESC) AS cumulative_salary<br>
+                FROM employees;<br>
+                <br>
+                -- 移動平均薪水<br>
+                SELECT first_name, salary,<br>
+                AVG(salary) OVER (ORDER BY hire_date ROWS BETWEEN 2 PRECEDING AND 2 FOLLOWING) AS moving_avg<br>
+                FROM employees;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">25: 遞歸查詢 (Recursive Queries) - 處理階層資料</h1>
+        <p>使用 <code>WITH RECURSIVE</code> 或 <code>CONNECT BY</code> 處理階層或樹狀結構資料，如組織架構或物料清單。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：遞歸查詢應用</h4>
+            <div class="html-code">-- 使用 CONNECT BY 查詢員工階層<br>
+                SELECT LPAD(' ', 2 * (LEVEL - 1)) || first_name AS indented_name, employee_id, manager_id<br>
+                FROM employees<br>
+                START WITH manager_id IS NULL<br>
+                CONNECT BY PRIOR employee_id = manager_id<br>
+                ORDER BY employee_id;<br>
+                <br>
+                -- 使用 WITH RECURSIVE 查詢階層<br>
+                WITH RECURSIVE emp_hierarchy AS (<br>
+                SELECT employee_id, first_name, manager_id, 0 AS level<br>
+                FROM employees<br>
+                WHERE manager_id IS NULL<br>
+                UNION ALL<br>
+                SELECT e.employee_id, e.first_name, e.manager_id, eh.level + 1<br>
+                FROM employees e<br>
+                JOIN emp_hierarchy eh ON e.manager_id = eh.employee_id<br>
+                )<br>
+                SELECT * FROM emp_hierarchy ORDER BY level, employee_id;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">26: 外部表 (External Tables) - 存取外部資料</h1>
+        <p>外部表允許 Oracle 直接查詢外部檔案（如 CSV）中的資料，而無需將資料載入資料庫。適合大量資料的臨時分析。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：外部表應用</h4>
+            <div class="html-code">-- 建立目錄物件<br>
+                CREATE OR REPLACE DIRECTORY ext_data_dir AS '/path/to/external/data';<br>
+                <br>
+                -- 建立外部表<br>
+                CREATE TABLE ext_employees (<br>
+                employee_id NUMBER,<br>
+                first_name VARCHAR2(20),<br>
+                last_name VARCHAR2(25),<br>
+                salary NUMBER<br>
+                )<br>
+                ORGANIZATION EXTERNAL (<br>
+                TYPE ORACLE_LOADER<br>
+                DEFAULT DIRECTORY ext_data_dir<br>
+                ACCESS PARAMETERS (<br>
+                RECORDS DELIMITED BY NEWLINE<br>
+                FIELDS TERMINATED BY ','<br>
+                )<br>
+                LOCATION ('employees.csv')<br>
+                );<br>
+                <br>
+                -- 查詢外部表<br>
+                SELECT * FROM ext_employees WHERE salary > 5000;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">27: 分區表 (Partitioned Tables) - 大資料表效能優化
+        </h1>
+        <p>分區將大資料表分割成更小的、可管理的部分，提高查詢效能和維護效率。支援範圍、列表、雜湊分區等。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：分區表應用</h4>
+            <div class="html-code">-- 建立範圍分區表<br>
+                CREATE TABLE sales (<br>
+                sale_id NUMBER PRIMARY KEY,<br>
+                sale_date DATE,<br>
+                amount NUMBER<br>
+                )<br>
+                PARTITION BY RANGE (sale_date) (<br>
+                PARTITION p2020 VALUES LESS THAN (TO_DATE('2021-01-01', 'YYYY-MM-DD')),<br>
+                PARTITION p2021 VALUES LESS THAN (TO_DATE('2022-01-01', 'YYYY-MM-DD')),<br>
+                PARTITION p2022 VALUES LESS THAN (TO_DATE('2023-01-01', 'YYYY-MM-DD'))<br>
+                );<br>
+                <br>
+                -- 插入資料到特定分區<br>
+                INSERT INTO sales PARTITION (p2021) VALUES (1, '2021-06-15', 1000);<br>
+                <br>
+                -- 查詢特定分區<br>
+                SELECT * FROM sales PARTITION (p2021);<br>
+                <br>
+                -- 分區修剪：只掃描相關分區<br>
+                SELECT * FROM sales WHERE sale_date BETWEEN '2021-01-01' AND '2021-12-31';<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">28: 快閃回 (Flashback) - 資料恢復與查詢歷史</h1>
+        <p>快閃回功能允許查詢過去的資料狀態或恢復意外刪除的資料，而無需從備份恢復。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：快閃回應用</h4>
+            <div class="html-code">-- 查詢一小時前的資料<br>
+                SELECT * FROM employees AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '1' HOUR;<br>
+                <br>
+                -- 查詢特定時間點的資料<br>
+                SELECT * FROM employees AS OF TIMESTAMP TO_TIMESTAMP('2023-01-01 10:00:00', 'YYYY-MM-DD
+                HH24:MI:SS');<br>
+                <br>
+                -- 快閃回刪除：恢復意外刪除的表<br>
+                FLASHBACK TABLE employees TO BEFORE DROP;<br>
+                <br>
+                -- 快閃回查詢：查詢刪除的資料<br>
+                SELECT * FROM employees AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '5' MINUTE;<br>
+                <br>
+                -- 恢復到特定 SCN<br>
+                SELECT * FROM employees AS OF SCN 123456;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">29: 執行計劃與優化 (Execution Plans and
+            Optimization) - 提升查詢效能</h1>
+        <p>執行計劃顯示 Oracle 如何執行查詢。使用 EXPLAIN PLAN 分析計劃，並使用提示 (Hints) 優化效能。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：執行計劃與優化應用</h4>
+            <div class="html-code">-- 產生執行計劃<br>
+                EXPLAIN PLAN FOR<br>
+                SELECT e.first_name, d.department_name<br>
+                FROM employees e<br>
+                JOIN departments d ON e.department_id = d.department_id<br>
+                WHERE e.salary > 5000;<br>
+                <br>
+                -- 查看執行計劃<br>
+                SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY());<br>
+                <br>
+                -- 使用索引提示<br>
+                SELECT /*+ INDEX(e emp_salary_idx) */ e.first_name, e.salary<br>
+                FROM employees e<br>
+                WHERE e.salary > 5000;<br>
+                <br>
+                -- 使用全表掃描提示<br>
+                SELECT /*+ FULL(e) */ e.first_name, e.salary<br>
+                FROM employees e<br>
+                WHERE e.salary > 5000;<br>
+                <br>
+                -- 收集統計資訊<br>
+                EXEC DBMS_STATS.GATHER_TABLE_STATS('HR', 'EMPLOYEES');<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">30: 物化視圖 (Materialized Views) - 預計算結果集
+        </h1>
+        <p>物化視圖儲存查詢結果的物理副本，可以定期重新整理。適合複雜查詢的效能優化，特別是資料倉儲環境。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：物化視圖應用</h4>
+            <div class="html-code">-- 建立物化視圖<br>
+                CREATE MATERIALIZED VIEW mv_dept_salary<br>
+                BUILD IMMEDIATE<br>
+                REFRESH COMPLETE ON DEMAND<br>
+                AS<br>
+                SELECT d.department_name, AVG(e.salary) AS avg_salary, COUNT(*) AS emp_count<br>
+                FROM employees e<br>
+                JOIN departments d ON e.department_id = d.department_id<br>
+                GROUP BY d.department_name;<br>
+                <br>
+                -- 查詢物化視圖（快速）<br>
+                SELECT * FROM mv_dept_salary WHERE avg_salary > 8000;<br>
+                <br>
+                -- 手動重新整理物化視圖<br>
+                EXEC DBMS_MVIEW.REFRESH('MV_DEPT_SALARY');<br>
+                <br>
+                -- 建立帶有重新整理間隔的物化視圖<br>
+                CREATE MATERIALIZED VIEW mv_monthly_sales<br>
+                BUILD IMMEDIATE<br>
+                REFRESH FAST ON COMMIT<br>
+                AS<br>
+                SELECT TRUNC(sale_date, 'MM') AS month, SUM(amount) AS total_sales<br>
+                FROM sales<br>
+                GROUP BY TRUNC(sale_date, 'MM');<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">31: 資料庫鏈接 (Database Links) - 跨資料庫存取</h1>
+        <p>資料庫鏈接允許從一個資料庫查詢另一個遠端資料庫的資料。適合分散式資料庫環境。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：資料庫鏈接應用</h4>
+            <div class="html-code">-- 建立資料庫鏈接<br>
+                CREATE DATABASE LINK remote_db<br>
+                CONNECT TO remote_user IDENTIFIED BY remote_password<br>
+                USING 'remote_db_tns';<br>
+                <br>
+                -- 透過鏈接查詢遠端資料<br>
+                SELECT e.first_name, r.remote_data<br>
+                FROM employees e<br>
+                JOIN remote_table@remote_db r ON e.employee_id = r.employee_id;<br>
+                <br>
+                -- 插入資料到遠端資料庫<br>
+                INSERT INTO remote_employees@remote_db<br>
+                SELECT * FROM employees WHERE department_id = 60;<br>
+                <br>
+                -- 檢查鏈接狀態<br>
+                SELECT * FROM DBA_DB_LINKS WHERE DB_LINK = 'REMOTE_DB';<br>
+                <br>
+                -- 刪除資料庫鏈接<br>
+                DROP DATABASE LINK remote_db;<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">32: 作業排程 (Job Scheduler) - 自動化任務</h1>
+        <p>Oracle Scheduler 允許排程和自動執行PL/SQL程式、作業等。適合定期維護、報表生成等任務。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：作業排程應用</h4>
+            <div class="html-code">-- 建立一個程式（可重用程式碼區塊）<br>
+                BEGIN<br>
+                DBMS_SCHEDULER.CREATE_PROGRAM (<br>
+                program_name => 'cleanup_old_data',<br>
+                program_type => 'PLSQL_BLOCK',<br>
+                program_action => 'BEGIN DELETE FROM temp_data WHERE created_date < SYSDATE - 30; COMMIT; END;',<br>
+                    enabled => TRUE<br>
+                    );<br>
+                    END;<br>
+                    /<br>
+                    <br>
+                    -- 建立作業<br>
+                    BEGIN<br>
+                    DBMS_SCHEDULER.CREATE_JOB (<br>
+                    job_name => 'weekly_cleanup',<br>
+                    program_name => 'cleanup_old_data',<br>
+                    schedule_name => 'SYS.WEEKLY',<br>
+                    enabled => TRUE<br>
+                    );<br>
+                    END;<br>
+                    /<br>
+                    <br>
+                    -- 建立自訂排程<br>
+                    BEGIN<br>
+                    DBMS_SCHEDULER.CREATE_SCHEDULE (<br>
+                    schedule_name => 'daily_at_2am',<br>
+                    start_date => SYSTIMESTAMP,<br>
+                    repeat_interval => 'FREQ=DAILY; BYHOUR=2'<br>
+                    );<br>
+                    END;<br>
+                    /<br>
+                    <br>
+                    -- 手動執行作業<br>
+                    EXEC DBMS_SCHEDULER.RUN_JOB('WEEKLY_CLEANUP');<br>
+                    <br>
+                    -- 查看作業狀態<br>
+                    SELECT job_name, state, next_run_date FROM DBA_SCHEDULER_JOBS WHERE job_name = 'WEEKLY_CLEANUP';<br>
+            </div>
+        </div>
+
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">33: 資料泵 (Data Pump) - 大量資料遷移</h1>
+        <p>Data Pump 是 Oracle 的高性能資料匯出/匯入工具，適合大量資料的備份、遷移和複製。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">SQL 範例：資料泵應用</h4>
+            <div class="html-code">-- 匯出整個 schema<br>
+                expdp hr/hr DIRECTORY=data_pump_dir DUMPFILE=hr_schema.dmp SCHEMAS=HR<br>
+                <br>
+                -- 匯出特定表<br>
+                expdp hr/hr DIRECTORY=data_pump_dir DUMPFILE=employees.dmp TABLES=EMPLOYEES<br>
+                <br>
+                -- 匯入資料<br>
+                impdp hr/hr DIRECTORY=data_pump_dir DUMPFILE=hr_schema.dmp<br>
+                <br>
+                -- 匯入到不同 schema<br>
+                impdp system/manager DIRECTORY=data_pump_dir DUMPFILE=hr_schema.dmp REMAP_SCHEMA=HR:HR_BACKUP<br>
+                <br>
+                -- 建立目錄<br>
+                CREATE DIRECTORY data_pump_dir AS '/oracle/data_pump';<br>
+                <br>
+                -- 授與權限<br>
+                GRANT READ, WRITE ON DIRECTORY data_pump_dir TO hr;<br>
+                <br>
+                -- 查看匯出/匯入作業<br>
+                SELECT * FROM DBA_DATAPUMP_JOBS;<br>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const codeBlocks = document.querySelectorAll('.html-code');
+                codeBlocks.forEach(block => {
+                    const text = block.innerHTML.replace(/<br\s*\/?>/gi, '\n');
+                    const pre = document.createElement('pre');
+                    const code = document.createElement('code');
+                    code.className = 'language-sql';
+                    code.innerHTML = text;
+                    pre.appendChild(code);
+                    block.parentNode.replaceChild(pre, block);
+                });
+                Prism.highlightAll();
+            });
+        </script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+        <script src="js/script.js"></script>
 </body>
+
+
 </html>
