@@ -129,6 +129,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateHighlight();
     });
+
+    const chipSet = document.getElementById('chip-set-demo');
+    const display = document.getElementById('status-content');
+
+    if (chipSet && display) {
+        // 監聽點擊事件
+        chipSet.addEventListener('click', (e) => {
+            const chip = e.target.closest('md-filter-chip');
+            if (!chip) return;
+
+            // 使用 setTimeout 確保在元件屬性切換完成後才抓取數值
+            setTimeout(() => {
+                const selectedList = Array.from(chipSet.querySelectorAll('md-filter-chip[selected]'))
+                    .map(c => c.label);
+
+                display.innerHTML = `
+                    <span style="color: #64ffda;">> 最後點擊:</span> "${chip.label}" <br>
+                    <span style="color: #64ffda;">> 該標籤狀態:</span> ${chip.selected ? 'Selected (已選)' : 'Unselected (未選)'} <br>
+                    <span style="color: #ffb86c;">> 目前所有選中:</span> [ ${selectedList.join(', ')} ]
+                `;
+            }, 50);
+        });
+
+        // 監聽移除事件
+        chipSet.addEventListener('remove', (e) => {
+            display.innerHTML = `<span style="color: #ff5555;">> 事件: 標籤 "${e.target.label}" 已從集合中移除</span>`;
+        });
+    }
 });
 
 // 加入 script.js

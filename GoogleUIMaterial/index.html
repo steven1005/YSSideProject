@@ -535,34 +535,11 @@
         </div>
     </div>
 
-    <!-- 章節 7: Chip 元件 -->
     <h1 class="SideTabs mt-4 pb-1">7: Chip 元件 - Chips</h1>
-    <p class="subtitle">Chips 可用於篩選、輸入或動作建議。</p>
-    <div class="demo-container">
-        <md-chip-set>
-            <md-filter-chip label="已選擇" selected></md-filter-chip>
-            <md-filter-chip label="未選擇"></md-filter-chip>
-            <md-input-chip label="可移除標籤" removable></md-input-chip>
-        </md-chip-set>
-    </div>
-
-    <div class="code-section">
-        <div class="editor-wrapper" style="grid-column: span 2;">
-            <div class="editor-label">HTML</div>
-            <div class="editor-container">
-                <textarea class="code-textarea" data-type="html"></textarea>
-                <pre class="prism-highlight language-html"><code>&lt;md-chip-set&gt;
-    &lt;md-filter-chip label="篩選標籤" selected&gt;&lt;/md-filter-chip&gt;
-    &lt;md-input-chip label="可移除" removable&gt;&lt;/md-input-chip&gt;
-&lt;/md-chip-set&gt;</code></pre>
-            </div>
-            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
-        </div>
-    </div>
-
+    <p class="subtitle">Chips 可用於篩選、輸入或動作建議。下方區域會即時顯示 JS 抓取的狀態。</p>
 
     <div class="demo-container">
-        <md-chip-set>
+        <md-chip-set id="chip-set-demo">
             <md-filter-chip label="音樂" selected>
                 <md-icon slot="icon">music_note</md-icon>
             </md-filter-chip>
@@ -575,30 +552,39 @@
                 <md-icon slot="icon">event</md-icon>
             </md-filter-chip>
         </md-chip-set>
+
+        <div class="mt-4 p-3 border rounded-3 bg-dark text-info" id="chip-status-display"
+            style="font-family: 'Roboto Mono', monospace; min-height: 80px;">
+            <div>// 點擊上方標籤查看數據變化...</div>
+            <div id="status-content">等待操作中...</div>
+        </div>
     </div>
 
-
     <div class="code-section">
-        <div class="editor-wrapper" style="grid-column: span 2;">
+        <div class="editor-wrapper">
             <div class="editor-label">HTML</div>
             <div class="editor-container">
                 <textarea class="code-textarea" data-type="html"></textarea>
-                <pre class="prism-highlight language-html"><code>
-        &lt;md-chip-set&gt;
-            &lt;md-filter-chip label="音樂" selected&gt;
-            &lt;md-icon slot="icon"&gt;music_note&lt;/md-icon&gt;
-            &lt;/md-filter-chip&gt;
-
-            &lt;md-filter-chip label="王小明" removable&gt;
-            &lt;md-icon slot="icon"&gt;account_circle&lt;/md-icon&gt;
-            &lt;/md-filter-chip&gt;
-
-            &lt;md-filter-chip label="加到行事曆"&gt;
-            &lt;md-icon slot="icon"&gt;event&lt;/md-icon&gt;
-            &lt;/md-filter-chip&gt;
-        &lt;/md-chip-set&gt;</code></pre>
+                <pre class="prism-highlight language-html"><code>&lt;md-chip-set&gt;
+    &lt;md-filter-chip label="音樂" selected&gt;
+        &lt;md-icon slot="icon"&gt;music_note&lt;/md-icon&gt;
+    &lt;/md-filter-chip&gt;
+&lt;/md-chip-set&gt;</code></pre>
             </div>
-            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+        </div>
+
+        <div class="editor-wrapper">
+            <div class="editor-label">JavaScript</div>
+            <div class="editor-container">
+                <textarea class="code-textarea" data-type="javascript"></textarea>
+                <pre class="prism-highlight language-javascript"><code>const chipSet = document.querySelector('md-chip-set');
+chipSet.addEventListener('click', (e) => {
+    // 監聽選中狀態
+    const selected = Array.from(chipSet.querySelectorAll('[selected]'))
+                          .map(chip => chip.label);
+    console.log('當前選中:', selected);
+});</code></pre>
+            </div>
         </div>
     </div>
 
