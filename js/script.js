@@ -11,32 +11,32 @@ function loadCourse(coursePath, courseName) {
     const sidebarNav = $('#sidebar-nav-list');
     const sidebarTitle = $('#sidebar-title');
 
-    sidebarTitle.text(courseName); 
-    sidebarNav.empty().append('<li class="nav-item"><span class="nav-link text-muted">載入中...</span></li>'); 
+    sidebarTitle.text(courseName);
+    sidebarNav.empty().append('<li class="nav-item"><span class="nav-link text-muted">載入中...</span></li>');
 
-    iframe.off('load'); 
+    iframe.off('load');
     iframe.attr('src', coursePath);
 
-    iframe.on('load', function() {
+    iframe.on('load', function () {
         try {
-            sidebarNav.empty(); 
+            sidebarNav.empty();
             const iframeDoc = this.contentWindow.document;
 
             $(iframeDoc.body).css({
                 'background-color': '#212529',
                 'color': 'white',
                 'margin': 0,
-                'padding': '1.5rem' 
+                'padding': '1.5rem'
             });
 
-            $(this.contentWindow).on('scroll', function() {
+            $(this.contentWindow).on('scroll', function () {
                 if ($(this).scrollTop() > 100) {
                     $('#back-to-top-btn').fadeIn();
                 } else {
                     $('#back-to-top-btn').fadeOut();
                 }
             });
-            
+
             const headings = $(iframeDoc).find('h1.SideTabs');
 
             if (headings.length === 0) {
@@ -44,7 +44,7 @@ function loadCourse(coursePath, courseName) {
                 return;
             }
 
-            headings.each(function(index) {
+            headings.each(function (index) {
                 const heading = $(this);
                 const text = heading.text();
                 let id = heading.attr('id');
@@ -56,8 +56,8 @@ function loadCourse(coursePath, courseName) {
 
                 const listItem = $('<li>').addClass('nav-item');
                 const link = $('<a>').addClass('nav-link text-white').attr('href', '#').text(text);
-                
-                link.on('click', function(e) {
+
+                link.on('click', function (e) {
                     e.preventDefault();
                     scrollToSection(id);
                     sidebarNav.find('a').removeClass('active');

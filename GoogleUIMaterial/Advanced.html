@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material 3 進階教學 - Google UI 風格</title>
+
+    <!-- Google Fonts: Roboto (Material 3 預設字體) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Material Icons (選用，如果你想加 icon) -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="p-3 bg-dark text-white">
+    <!-- 進階從 11 開始編號，延續事務管理風格 -->
+
+    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">11: 動態色彩 (Dynamic Color) - Material You 核心功能
+    </h1>
+    <p>Android 12+ 可從桌布自動產生配色方案。</p>
+
+    <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+        <div class="col-md-6">
+            <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>@Composable
+fun DynamicColorDemo() {
+    val context = LocalContext.current
+    val colors = when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            dynamicLightColorScheme(context)
+        }
+        else -> lightColorScheme()
+    }
+
+    MaterialTheme(colorScheme = colors) {
+        // 您的 UI
+    }
+}</code></pre>
+        </div>
+        <div class="col-md-6">
+            <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>// 需要依賴 androidx.compose.material3:material3-dynamic
+// 動態色彩是 Material 3 最具代表性的進階功能</code></pre>
+        </div>
+    </div>
+    <button class="btn btn-primary">執行</button>
+    <hr>
+
+    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">12: 自訂 ColorScheme 進階 - 色調高度 (Tonal Elevation)
+    </h1>
+    <!-- ... 使用 surfaceColorAtElevation() ... -->
+
+    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">13: 自訂 Typography - 建立完整字體階層</h1>
+    <!-- ... 使用 Typography() 定義 displayLarge ~ labelSmall ... -->
+
+    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">14: 自訂 Shapes - RoundedCornerShape /
+        CutCornerShape</h1>
+    <!-- ... -->
+
+    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">15: 深色模式完整實現與自動切換</h1>
+    <!-- 使用 isSystemInDarkTheme() + darkColorScheme() -->
+
+    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">16: 進階按鈕 - SegmentedButton / 多選按鈕組</h1>
+    <!-- ... -->
+
+    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">17: SearchBar / SearchBar 展開收合動畫</h1>
+    <!-- Material 3 新增的全螢幕搜尋列 -->
+
+    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">18: 進階 ListItem 與 Headline / Supporting /
+        Trailing</h1>
+    <!-- ... -->
+
+    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">19: 自訂 Ripple 效果與 InteractionSource</h1>
+    <!-- 控制按下波紋顏色、形狀 -->
+
+    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">20: 進階佈局 - ModalBottomSheet / Dismissible
+        Navigation Drawer</h1>
+    <!-- ... -->
+
+    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">21: 事務管理 (Transaction Management) - 確保資料一致性
+    </h1>
+    <p>在 Compose 中使用 ViewModel + StateFlow + Repository 實現事務性更新，確保 UI 與資料一致。</p>
+
+    <div class="row code-example bg-dark border border-secondary p-4 mb-4 rounded">
+        <div class="col-md-6">
+            <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>@Composable
+fun TransactionScreen(viewModel: TransactionViewModel = viewModel()) {
+    val state by viewModel.uiState.collectAsState()
+
+    Column {
+        Text("餘額: ${state.balance}")
+        Button(onClick = { viewModel.transfer(100) }) {
+            Text("轉帳 100 元")
+        }
+    }
+}</code></pre>
+        </div>
+        <div class="col-md-6">
+            <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>class TransactionViewModel : ViewModel() {
+    private val _uiState = MutableStateFlow(UiState(5000))
+    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
+
+    fun transfer(amount: Int) {
+        viewModelScope.launch {
+            // 模擬網路事務
+            val success = repository.transferMoney(amount)
+            if (success) {
+                _uiState.update { it.copy(balance = it.balance - amount) }
+            }
+        }
+    }
+}</code></pre>
+        </div>
+    </div>
+    <button class="btn btn-primary">執行</button>
+
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>

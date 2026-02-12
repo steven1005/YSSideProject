@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material 3 基本教學 - Google UI 風格</title>
+    <!-- Roboto 字體（Material 3 預設） -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Web CDN -->
+    <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
+      }
+    }
+  </script>
+    <script type="module">
+        import 'https://esm.run/@material/web/all.js';
+    </script>
+    <!-- Prism.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="p-3 bg-dark text-white">
+    <!-- 章節 1: Material 引入模板 -->
+    <h1 class="SideTabs mt-4 pb-1">1: Material 引入模板</h1>
+    <p>Material Design 3 的官方網頁元件（Web Components）核心理念是提供高度原子化的元件（如按鈕、卡片、文字框）</p>
+    <p>但它並不包含像 Bootstrap 那種 col-6 或 row 的格線系統類別。</p>
+    <p>現代網頁開發大多使用 CSS Grid 或 Flexbox，這已經是瀏覽器標配，Material 不希望強迫你學習一套私有的格線語法。</p>
+    <div class="editor-wrapper">
+        <div class="editor-label"
+            style="white-space: pre-wrap; font-family: 'Roboto Mono', monospace; font-size: 0.92rem; line-height: 1.5; padding: 16px; background: #1e1e1e; color: #e0e0e0; border-bottom: none;">
+            &lt;!DOCTYPE html&gt;
+            &lt;html lang="zh-TW"&gt;
+            &lt;head&gt;
+            &lt;meta charset="UTF-8"&gt;
+            &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+            &lt;title&gt;Material 3 基礎範例&lt;/title&gt;
+
+            &lt;link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+            rel="stylesheet"&gt;
+
+            &lt;script type="importmap"&gt;
+            {
+            "imports": {
+            "@material/web/": "https://esm.run/@material/web/"
+            }
+            }
+            &lt;/script&gt;
+
+            &lt;script type="module"&gt;
+            import '@material/web/all.js';
+            import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+            document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+            &lt;/script&gt;
+
+            &lt;style&gt;
+            body { background: #1c1b1f; color: #e6e1e5; font-family: 'Roboto', sans-serif; padding: 2rem; }
+            &lt;/style&gt;
+            &lt;/head&gt;
+            &lt;body&gt;
+            &lt;h1&gt;Material 3 歡迎頁&lt;/h1&gt;
+            &lt;md-filled-button&gt;點我&lt;/md-filled-button&gt;
+            &lt;/body&gt;
+            &lt;/html&gt;
+        </div>
+        <button class="copy-btn" onclick="copyFullHtml()">複製完整 HTML</button>
+    </div>
+
+    <!-- 核心特性 - Core Features -->
+    <h1 class="SideTabs mt-4 pb-1">核心特性 - Core Features</h1>
+    <p class="subtitle">深入了解 Material 3 如何透過 Web Components 標準提供現代化的互動體驗。</p>
+
+    <div class="demo-container">
+        <div class="container-fluid p-0">
+            <div class="row g-4">
+                <div class="col-12 col-md-6">
+                    <h4 style="color: var(--md-primary); margin-bottom: 12px;">1. 動態配色系統 (Dynamic Color)</h4>
+                    <p>這套算法不只是換主題，更是為了確保視覺的一致性：</p>
+                    <ul class="ms-3">
+                        <li class="mb-2"><b>色調調色盤 (Tonal Palettes)：</b>只需定義一個「種子顏色」，系統自動生成 13 個階梯色調，確保符合對比度標準。</li>
+                        <li><b>一致性：</b>切換深色模式時，元件會自動對應正確色調，無需手動調整個別按鈕。</li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <h4 style="color: var(--md-primary); margin-bottom: 12px;">2. Shadow DOM 樣式封裝</h4>
+                    <p>基於 Lit 開發，解決了長期以來的樣式污染問題：</p>
+                    <ul class="ms-3">
+                        <li class="mb-2"><b>樣式隔離：</b>元件內部的 CSS 不會影響外部，外部樣式也無法輕易干擾內部。</li>
+                        <li><b>標準化：</b>原生支援 Web Components 標準，可於 React、Vue 或純 HTML 環境執行。</li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <h4 style="color: var(--md-primary); margin-bottom: 12px;">3. 狀態層設計 (State Layers)</h4>
+                    <p>元件內建精細的互動回饋機制：</p>
+                    <ul class="ms-3">
+                        <li class="mb-2"><b>四種狀態：</b>內建 Hover (懸停)、Focus (焦點)、Pressed (按下)、Dragged (拖曳) 層級。</li>
+                        <li><b>視覺回饋：</b>點擊自動觸發 Ripple (漣漪) 效果，元件本身即包含所有必要的互動 JS。</li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <h4 style="color: var(--md-primary); margin-bottom: 12px;">4. 輔助功能與語義化 (A11y)</h4>
+                    <p>官方元件在設計之初即考慮到無障礙存取：</p>
+                    <ul class="ms-3">
+                        <li class="mb-2"><b>螢幕閱讀器友善：</b>內置豐富的 ARIA 標籤與語義化結構。</li>
+                        <li><b>鍵盤導航：</b>完整支援鍵盤 Tab 切換與操作，符合大型企業開發規範。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr style="border-color: var(--md-outline); margin: 2rem 0;">
+
+            <h4 class="mb-3" style="color: var(--md-primary);">5. 排版建議：Material Web vs Bootstrap 5</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle"
+                    style="color: var(--md-on-surface); border-color: var(--md-outline);">
+                    <thead style="background: var(--md-primary-container); color: var(--md-on-primary-container);">
+                        <tr>
+                            <th style="width: 25%;">特性</th>
+                            <th>Material Web Components</th>
+                            <th>Bootstrap 5</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>角色</b></td>
+                            <td>元件（組件）本身</td>
+                            <td>佈局（格線）與基礎樣式</td>
+                        </tr>
+                        <tr>
+                            <td><b>樣式控制</b></td>
+                            <td>CSS Variables (自定義屬性)</td>
+                            <td>Utility Classes (類別名稱)</td>
+                        </tr>
+                        <tr>
+                            <td><b>卡片類型</b></td>
+                            <td>Elevated, Filled, Outlined</td>
+                            <td>單一 Card 類別</td>
+                        </tr>
+                        <tr>
+                            <td><b>主要邏輯</b></td>
+                            <td>JavaScript Property (如 <code>.selected</code>)</td>
+                            <td>Data Attributes (如 <code>data-bs-toggle</code>)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 章節 2: 按鈕家族 -->
+    <h1 class="SideTabs mt-4 pb-1">2: 按鈕家族 - Buttons</h1>
+    <p class="subtitle">Material 3 按鈕分為 Filled、Elevated、Tonal、Outlined、Text 等類型。支援 disabled、icon、href 等屬性。按鈕自動套用主題色與
+        ripple 效果。</p>
+
+    <div class="demo-container">
+        <md-filled-button>Filled</md-filled-button>
+        <md-elevated-button>Elevated</md-elevated-button>
+        <md-filled-tonal-button>Tonal</md-filled-tonal-button>
+        <md-outlined-button>Outlined</md-outlined-button>
+        <md-text-button>Text</md-text-button>
+    </div>
+
+    <div class="code-section">
+        <div class="editor-wrapper">
+            <div class="editor-label">HTML</div>
+            <div class="editor-container">
+                <textarea class="code-textarea" data-type="html"></textarea>
+                <pre class="prism-highlight language-html"><code>&lt;md-filled-button&gt;Filled&lt;/md-filled-button&gt;
+&lt;md-elevated-button&gt;Elevated&lt;/md-elevated-button&gt;
+&lt;md-filled-tonal-button&gt;Tonal&lt;/md-filled-tonal-button&gt;
+&lt;md-outlined-button&gt;Outlined&lt;/md-outlined-button&gt;
+&lt;md-text-button&gt;Text&lt;/md-text-button&gt;</code></pre>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+        </div>
+    </div>
+
+    <div class="preview-area" id="preview-2"></div>
+
+    <!-- 章節 3: 文字輸入 -->
+    <h1 class="SideTabs mt-4 pb-1">3: 文字輸入 - Text Field</h1>
+    <div class="demo-container">
+        <md-outlined-text-field id="name-field-3" label="姓名" value="測試使用者"></md-outlined-text-field>
+        <md-filled-button onclick="getNameValue()">取得姓名</md-filled-button>
+        <p id="name-result-3" style="margin-top:16px; color:#ccc;">結果將顯示在這裡</p>
+    </div>
+
+    <div class="code-section">
+        <div class="editor-wrapper">
+            <div class="editor-label">HTML</div>
+            <div class="editor-container">
+                <textarea class="code-textarea" data-type="html"></textarea>
+                <pre class="prism-highlight language-html"><code>&lt;md-outlined-text-field 
+    id="name-field-3" 
+    label="姓名" 
+    value="測試使用者"&gt;
+&lt;/md-outlined-text-field&gt;
+
+&lt;md-filled-button onclick="getNameValue()"&gt;
+    取得姓名
+&lt;/md-filled-button&gt;</code></pre>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+        </div>
+        <div class="editor-wrapper">
+            <div class="editor-label">JavaScript</div>
+            <div class="editor-container">
+                <textarea class="code-textarea" data-type="js"></textarea>
+                <pre class="prism-highlight language-javascript"><code>function getNameValue() {
+    const field = document.getElementById('name-field-3');
+    const result = document.getElementById('name-result-3');
+    const value = field.value.trim();
+
+    if (!value) {
+        alert('請輸入姓名！');
+        return;
+    }
+    result.innerHTML = `你好，&lt;b&gt;${value}&lt;/b&gt;！`;
+}</code></pre>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+        </div>
+    </div>
+
+    <!-- 章節 4: 卡片 -->
+    <h1 class="SideTabs mt-4 pb-1">4: 卡片 - Cards</h1>
+    <p>Material Web Components 提供了「零件」，但「排版（Layout）」需要結合其他技術（如 Bootstrap）來實現。 </p>
+    <ul>
+        <li>Elevated Card (陰影卡片)：具有陰影，適合從背景中凸顯內容 <code>md-elevated-card</code></li>
+        <li>Filled Card (填充卡片)：沒有陰影，有底色（通常與背景對比），視覺較為平整 <code>md-filled-card</code></li>
+        <li>Outlined Card (輪廓卡片)：只有邊框，沒有陰影或底色，適合簡潔風格 <code>md-outlined-card</code></li>
+    </ul>
+    <div class="code-section">
+        <div class="editor-wrapper" style="grid-column: span 2;">
+            <div class="editor-label">HTML</div>
+            <div class="editor-container">
+                <textarea class="code-textarea" data-type="html"></textarea>
+                <pre class="prism-highlight language-html"><code>&lt;md-elevated-card&gt;
+  &lt;div style="padding: 16px;"&gt;
+    &lt;h3&gt;響應式卡片&lt;/h3&gt;
+    &lt;p&gt;這張卡片會根據螢幕寬度自動調整。&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/md-elevated-card&gt;</code></pre>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+        </div>
+    </div>
+    <div class="preview-area"></div>
+
+    <!-- 章節 4: 多卡片佈局 -->
+    <h1 class="SideTabs mt-4 pb-1">4: 卡片類型 - Card Types</h1>
+    <p class="subtitle">展示三種 Material 3 核心卡片，並結合 Bootstrap 5 實現 RWD 響應式佈局與間距控管。</p>
+
+    <div class="demo-container">
+        <div class="container-fluid p-0">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+
+                <div class="col">
+                    <md-elevated-card style="width: 100%;">
+                        <div class="p-3">
+                            <h4 style="color: var(--md-primary); margin-bottom: 12px;">Elevated</h4>
+                            <p>具有立體陰影感的卡片，能有效從背景中凸顯內容，適合主要資訊展示。</p>
+                            <md-filled-button class="mt-2">主要行動</md-filled-button>
+                        </div>
+                    </md-elevated-card>
+                </div>
+
+                <div class="col">
+                    <md-outlined-card style="width: 100%;">
+                        <div class="p-3">
+                            <h4 style="color: var(--md-primary); margin-bottom: 12px;">Outlined</h4>
+                            <p>具有清晰的外框線條，視覺感最輕量且整潔，適合並列顯示多個同級資訊。</p>
+                            <md-tonal-button class="mt-2">詳細資料</md-tonal-button>
+                        </div>
+                    </md-outlined-card>
+                </div>
+
+                <div class="col">
+                    <md-filled-card style="width: 100%;">
+                        <div class="p-3">
+                            <h4 style="color: var(--md-primary); margin-bottom: 12px;">Filled</h4>
+                            <p>使用填滿底色來區隔區塊，視覺上最為平整，適合用於內容較少的次要資訊。</p>
+                            <md-outlined-button class="mt-2">了解更多</md-outlined-button>
+                        </div>
+                    </md-filled-card>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="code-section">
+        <div class="editor-wrapper" style="grid-column: span 2;">
+            <div class="editor-label">HTML (Fixed Border Radius)</div>
+            <div class="editor-container">
+                <textarea class="code-textarea" data-type="html"></textarea>
+                <pre class="prism-highlight language-html"><code>&lt;!-- 使用 Bootstrap 網格，搭配 4px 導角 --&gt;
+&lt;div class="container-fluid"&gt;
+  &lt;div class="row row-cols-1 row-cols-md-3 g-5"&gt;
+    
+    &lt;div class="col text-center"&gt;
+      &lt;md-elevated-card style="width: 100%;"&gt;
+        &lt;div class="p-3  border rounded-1 bg-success"&gt;
+          &lt;h4&gt;Elevated&lt;/h4&gt;
+          &lt;p&gt;導角已設為 1px&lt;/p&gt;
+          &lt;md-elevated-button&gt;Action&lt;/md-elevated-button&gt;
+        &lt;/div&gt;
+      &lt;/md-elevated-card&gt;
+    &lt;/div&gt;
+
+    &lt;div class="col text-center"&gt;
+      &lt;md-outlined-card style="width: 100%;"&gt;
+        &lt;div class="p-3 border rounded-3 bg-info"&gt;
+          &lt;h4&gt;Outlined&lt;/h4&gt;
+          &lt;p&gt;導角已設為 3px&lt;/p&gt;
+          &lt;md-outlined-button&gt;Action&lt;/md-outlined-button&gt;
+        &lt;/div&gt;
+      &lt;/md-outlined-card&gt;
+    &lt;/div&gt;
+
+    &lt;div class="col text-center"&gt;
+      &lt;md-filled-card style="width: 100%;"&gt;
+        &lt;div class="p-3 border rounded-5 bg-warning"&gt;
+          &lt;h4&gt;Filled&lt;/h4&gt;
+          &lt;p&gt;導角已設為 5px&lt;/p&gt;
+          &lt;md-filled-button&gt;Action&lt;/md-filled-button&gt;
+        &lt;/div&gt;
+      &lt;/md-filled-card&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+        </div>
+    </div>
+
+    <div class="preview-area"></div>
+
+    <!-- 章節 5: 圖示按鈕 -->
+    <h1 class="SideTabs mt-4 pb-1">5: 圖示按鈕 - Icon Button</h1>
+    <p class="subtitle">展示 Material 3 的多種圖示按鈕變體，包含切換 (Toggle) 功能與 Bootstrap 佈局。</p>
+    <p>link
+        https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200</a>
+    </p>
+    <p>所有ICON名稱參考 <a href="https://fonts.google.com/icons" target="_blank">https://fonts.google.com/icons</a></p>
+    </p>
+    <div class="row row-cols-2 row-cols-md-4 g-3 text-center">
+        <div class="col">
+            <div class="p-3 border rounded-3 bg-white shadow-sm">
+                <md-icon-button toggle>
+                    <md-icon>favorite_border</md-icon>
+                    <md-icon slot="selected">favorite</md-icon>
+                </md-icon-button>
+                <div class="small mt-2 text-secondary">Standard</div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="p-3 border rounded-3 bg-white shadow-sm">
+                <md-filled-icon-button>
+                    <md-icon>settings</md-icon>
+                </md-filled-icon-button>
+                <div class="small mt-2 text-secondary">Filled</div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="p-3 border rounded-3 bg-white shadow-sm">
+                <md-filled-tonal-icon-button>
+                    <md-icon>share</md-icon>
+                </md-filled-tonal-icon-button>
+                <div class="small mt-2 text-secondary">Tonal</div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="p-3 border rounded-3 bg-white shadow-sm">
+                <md-outlined-icon-button>
+                    <md-icon>edit</md-icon>
+                </md-outlined-icon-button>
+                <div class="small mt-2 text-secondary">Outlined</div>
+            </div>
+        </div>
+
+
+        <div class="col">
+            <div class="p-3 border rounded-3 bg-white shadow-sm">
+                <md-outlined-icon-button toggle>
+                    <md-icon>visibility_off</md-icon>
+                    <md-icon slot="selected">visibility</md-icon>
+                </md-outlined-icon-button>
+                <div class="small mt-2 text-secondary">visibility 顯示/隱藏</div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="p-3 border rounded-3 bg-white shadow-sm">
+                <md-filled-icon-button toggle>
+                    <md-icon>star_border</md-icon>
+                    <md-icon slot="selected">star</md-icon>
+                </md-filled-icon-button>
+                <div class="small mt-2 text-secondary">star 星級收藏</div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="p-3 border rounded-3 bg-white shadow-sm">
+                <md-filled-icon-button toggle>
+                    <md-icon>bookmark_border</md-icon>
+                    <md-icon slot="selected">bookmark</md-icon>
+                </md-filled-icon-button>
+                <div class="small mt-2 text-secondary">bookmark 書籤/儲存</div>
+            </div>
+        </div>
+
+
+        <div class="col">
+            <div class="p-3 border rounded-3 bg-white shadow-sm">
+                <md-filled-icon-button toggle>
+                    <md-icon>notifications_none</md-icon>
+                    <md-icon slot="selected">notifications</md-icon>
+                </md-filled-icon-button>
+                <div class="small mt-2 text-secondary">notifications 通知開關</div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="p-3 border rounded-3 bg-white shadow-sm">
+                <md-filled-icon-button toggle>
+                    <md-icon>volume_off</md-icon>
+                    <md-icon slot="selected">volume_up</md-icon>
+                </md-filled-icon-button>
+                <div class="small mt-2 text-secondary">volume_up 靜音/取消靜音</div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="p-3 border rounded-3 bg-white shadow-sm">
+                <md-filled-icon-button toggle>
+                    <md-icon>lock_open</md-icon>
+                    <md-icon slot="selected">lock</md-icon>
+                </md-filled-icon-button>
+                <div class="small mt-2 text-secondary">lock 鎖定/解鎖</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="code-section">
+        <div class="editor-wrapper" style="grid-column: span 2;">
+            <div class="editor-label">HTML (Icon Button Variants)</div>
+            <div class="editor-container">
+                <textarea class="code-textarea" data-type="html"></textarea>
+                <pre class="prism-highlight language-html"><code>&lt;!-- 1. 標準圖示按鈕 (具備切換狀態) --&gt;
+&lt;md-icon-button toggle&gt;
+  &lt;md-icon&gt;favorite_border&lt;/md-icon&gt;
+  &lt;md-icon slot="selected"&gt;favorite&lt;/md-icon&gt;
+&lt;/md-icon-button&gt;
+
+&lt;!-- 2. 填滿圖示按鈕 --&gt;
+&lt;md-filled-icon-button&gt;
+  &lt;md-icon&gt;settings&lt;/md-icon&gt;
+&lt;/md-filled-icon-button&gt;
+
+&lt;!-- 3. 色調圖示按鈕 --&gt;
+&lt;md-filled-tonal-icon-button&gt;
+  &lt;md-icon&gt;share&lt;/md-icon&gt;
+&lt;/md-filled-tonal-icon-button&gt;
+
+&lt;!-- 4. 外框圖示按鈕 --&gt;
+&lt;md-outlined-icon-button&gt;
+  &lt;md-icon&gt;edit&lt;/md-icon&gt;
+&lt;/md-outlined-icon-button&gt;</code></pre>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+        </div>
+    </div>
+
+    <div class="preview-area"></div>
+
+    <!-- 章節 6: 導航元件 -->
+    <h1 class="SideTabs mt-4 pb-1">6: 導航元件 - Navigation Bar</h1>
+    <p class="subtitle">用於底部主要頁面切換，通常包含 3-5 個選項。</p>
+    <div class="demo-container">
+        <md-navigation-bar active-index="0">
+            <md-navigation-tab label="首頁">
+                <md-icon slot="active-icon">home</md-icon>
+                <md-icon slot="inactive-icon">home_outline</md-icon>
+            </md-navigation-tab>
+            <md-navigation-tab label="搜尋">
+                <md-icon slot="active-icon">search</md-icon>
+                <md-icon slot="inactive-icon">search</md-icon>
+            </md-navigation-tab>
+            <md-navigation-tab label="設定">
+                <md-icon slot="active-icon">settings</md-icon>
+                <md-icon slot="inactive-icon">settings</md-icon>
+            </md-navigation-tab>
+        </md-navigation-bar>
+    </div>
+
+    <div class="code-section">
+        <div class="editor-wrapper" style="grid-column: span 2;">
+            <div class="editor-label">HTML</div>
+            <div class="editor-container">
+                <textarea class="code-textarea" data-type="html"></textarea>
+                <pre class="prism-highlight language-html">
+                    <code>&lt;md-navigation-bar active-index="0"&gt;
+    &lt;md-navigation-tab label="首頁"&gt;
+        &lt;md-icon slot="active-icon"&gt;home&lt;/md-icon&gt;
+        &lt;md-icon slot="inactive-icon"&gt;home&lt;/md-icon&gt;
+    &lt;/md-navigation-tab&gt;
+    &lt;md-navigation-tab label="搜尋"&gt;
+        &lt;md-icon slot="active-icon"&gt;search&lt;/md-icon&gt;
+    &lt;/md-navigation-tab&gt;
+&lt;/md-navigation-bar&gt;</code></pre>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+        </div>
+    </div>
+
+    <!-- 章節 7: Chip 元件 -->
+    <h1 class="SideTabs mt-4 pb-1">7: Chip 元件 - Chips</h1>
+    <p class="subtitle">Chips 可用於篩選、輸入或動作建議。</p>
+    <div class="demo-container">
+        <md-chip-set>
+            <md-filter-chip label="已選擇" selected></md-filter-chip>
+            <md-filter-chip label="未選擇"></md-filter-chip>
+            <md-input-chip label="可移除標籤" removable></md-input-chip>
+        </md-chip-set>
+    </div>
+
+    <div class="code-section">
+        <div class="editor-wrapper" style="grid-column: span 2;">
+            <div class="editor-label">HTML</div>
+            <div class="editor-container">
+                <textarea class="code-textarea" data-type="html"></textarea>
+                <pre class="prism-highlight language-html"><code>&lt;md-chip-set&gt;
+    &lt;md-filter-chip label="篩選標籤" selected&gt;&lt;/md-filter-chip&gt;
+    &lt;md-input-chip label="可移除" removable&gt;&lt;/md-input-chip&gt;
+&lt;/md-chip-set&gt;</code></pre>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+        </div>
+    </div>
+
+
+    <div class="demo-container">
+        <md-chip-set>
+            <md-filter-chip label="音樂" selected>
+                <md-icon slot="icon">music_note</md-icon>
+            </md-filter-chip>
+
+            <md-filter-chip label="王小明" removable>
+                <md-icon slot="icon">account_circle</md-icon>
+            </md-filter-chip>
+
+            <md-filter-chip label="加到行事曆">
+                <md-icon slot="icon">event</md-icon>
+            </md-filter-chip>
+        </md-chip-set>
+    </div>
+
+
+    <div class="code-section">
+        <div class="editor-wrapper" style="grid-column: span 2;">
+            <div class="editor-label">HTML</div>
+            <div class="editor-container">
+                <textarea class="code-textarea" data-type="html"></textarea>
+                <pre class="prism-highlight language-html"><code>
+        &lt;md-chip-set&gt;
+            &lt;md-filter-chip label="音樂" selected&gt;
+            &lt;md-icon slot="icon"&gt;music_note&lt;/md-icon&gt;
+            &lt;/md-filter-chip&gt;
+
+            &lt;md-filter-chip label="王小明" removable&gt;
+            &lt;md-icon slot="icon"&gt;account_circle&lt;/md-icon&gt;
+            &lt;/md-filter-chip&gt;
+
+            &lt;md-filter-chip label="加到行事曆"&gt;
+            &lt;md-icon slot="icon"&gt;event&lt;/md-icon&gt;
+            &lt;/md-filter-chip&gt;
+        &lt;/md-chip-set&gt;</code></pre>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+        </div>
+    </div>
+
+    <!-- 章節 8: 對話框 -->
+    <h1 class="SideTabs mt-4 pb-1">8: 對話框 - Dialog</h1>
+    <div class="demo-container">
+        <md-filled-button onclick="document.getElementById('dialog-demo').show()">開啟對話框</md-filled-button>
+        <md-dialog id="dialog-demo">
+            <div slot="headline">刪除確認</div>
+            <form slot="content" id="form-delete" method="dialog">
+                您確定要刪除這項任務嗎？此動作無法復原。
+            </form>
+            <div slot="actions">
+                <md-text-button form="form-delete" value="cancel">取消</md-text-button>
+                <md-filled-button form="form-delete" value="delete">刪除</md-filled-button>
+            </div>
+        </md-dialog>
+    </div>
+
+    <div class="code-section">
+        <div class="editor-wrapper" style="grid-column: span 2;">
+            <div class="editor-label">HTML</div>
+            <div class="editor-container">
+                <textarea class="code-textarea" data-type="html"></textarea>
+                <pre class="prism-highlight language-html"><code>&lt;md-dialog id="dialog-id"&gt;
+    &lt;div slot="headline"&gt;標題&lt;/div&gt;
+    &lt;form slot="content" id="form-id" method="dialog"&gt;內容區域&lt;/form&gt;
+    &lt;div slot="actions"&gt;
+        &lt;md-text-button form="form-id" value="close"&gt;關閉&lt;/md-text-button&gt;
+    &lt;/div&gt;
+&lt;/md-dialog&gt;
+
+&lt;!-- JS 調用方式: document.getElementById('dialog-id').show(); --&gt;</code></pre>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+        </div>
+    </div>
+
+    <!-- 章節 9: 滑桿與開關 -->
+    <h1 class="SideTabs mt-4 pb-1">9: 滑桿與開關 - Slider & Switch</h1>
+    <div class="demo-container">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <md-slider id="slider-9" min="0" max="100" value="75" style="flex: 1;"></md-slider>
+            <md-switch id="switch-9" selected></md-switch>
+        </div>
+        <md-filled-button style="margin-top: 16px;" onclick="getSliderAndSwitch()">取得狀態</md-filled-button>
+        <p id="slider-result-9" style="margin-top:16px; color:#ccc; font-family: monospace;">結果將顯示在這裡</p>
+    </div>
+
+    <div class="code-section">
+        <div class="editor-wrapper">
+            <div class="editor-label">HTML</div>
+            <div class="editor-container">
+                <textarea class="code-textarea" data-type="html"></textarea>
+                <pre class="prism-highlight language-html"><code>&lt;md-slider id="slider-9" value="75"&gt;&lt;/md-slider&gt;
+&lt;md-switch id="switch-9" selected&gt;&lt;/md-switch&gt;
+&lt;md-filled-button onclick="getSliderAndSwitch()"&gt;
+    取得狀態
+&lt;/md-filled-button&gt;</code></pre>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+        </div>
+        <div class="editor-wrapper">
+            <div class="editor-label">JavaScript</div>
+            <div class="editor-container">
+                <textarea class="code-textarea" data-type="js"></textarea>
+                <pre class="prism-highlight language-javascript"><code>function getSliderAndSwitch() {
+    const slider = document.getElementById('slider-9');
+    const sw = document.getElementById('switch-9');
+    const res = document.getElementById('slider-result-9');
+
+    // Material Web 中，Switch 的狀態屬性是 .selected (boolean)
+    // Slider 的數值是 .value (number)
+    res.innerHTML = `
+        <span style="color:#afffb2">Value:</span> ${slider.value} <br>
+        <span style="color:#afffb2">Status:</span> ${sw.selected ? 'ON (開啟)' : 'OFF (關閉)'}
+    `;
+}</code></pre>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+        </div>
+    </div>
+
+    <!-- 章節 10: Scaffold 架構 -->
+    <h1 class="SideTabs mt-4 pb-1">10: Scaffold 架構</h1>
+    <p class="subtitle">Scaffold 是 Material Design 的基礎佈局，包含 Top App Bar 與 FAB。</p>
+    <div class="code-section">
+        <div class="editor-wrapper" style="grid-column: span 2;">
+            <div class="editor-label">HTML</div>
+            <div class="editor-container">
+                <textarea class="code-textarea" data-type="html"></textarea>
+                <pre class="prism-highlight language-html"><code>&lt;header style="height: 64px; display: flex; align-items: center; padding: 0 16px; background: #333;"&gt;
+    &lt;md-icon-button&gt;&lt;md-icon&gt;menu&lt;/md-icon&gt;&lt;/md-icon-button&gt;
+    &lt;span style="margin-left: 8px;"&gt;我的應用&lt;/span&gt;
+&lt;/header&gt;
+
+&lt;main style="padding: 16px;"&gt;
+    &lt;!-- 頁面主要內容 --&gt;
+&lt;/main&gt;
+
+&lt;md-fab style="position: fixed; bottom: 24px; right: 24px;" aria-label="新增"&gt;
+    &lt;md-icon slot="icon"&gt;add&lt;/md-icon&gt;
+&lt;/md-fab&gt;</code></pre>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+        </div>
+    </div>
+
+    <!-- 章節 11: Checkbox & Radio -->
+    <h1 class="SideTabs mt-4 pb-1">11: 選擇元件 - Checkbox & Radio</h1>
+    <div class="demo-container">
+        <div class="d-flex flex-column gap-3">
+            <label class="d-flex align-items-center gap-2">
+                <md-checkbox checked></md-checkbox>
+                <span>接受服務條款</span>
+            </label>
+            <hr>
+            <div class="d-flex gap-4">
+                <label class="d-flex align-items-center gap-2">
+                    <md-radio name="group" value="A" checked></md-radio> 選項 A
+                </label>
+                <label class="d-flex align-items-center gap-2">
+                    <md-radio name="group" value="B"></md-radio> 選項 B
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

@@ -355,7 +355,7 @@ $("#oldElement").replaceWith("&lt;div id=\"newElement\"&gt;新的元素&lt;/div&
     <div class="col-md-6">
       <h4 class="text-white mb-3">HTML 範例：樣式目標</h4>
       <div class="html-code">
-        <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;div id="myBox" style="width:100px; height:100px; background-color:blue;"&gt;&lt;/div&gt;
+        <pre class="bg-secondary p-3 rounded text-light overflow-auto"><code>&lt;div id="box7" style="width:100px; height:100px; background-color:blue;"&gt;&lt;/div&gt;
 &lt;p class="status-text"&gt;目前狀態：正常&lt;/p&gt;
 &lt;button id="toggleStyleBtn"&gt;切換樣式&lt;/button&gt;</code></pre>
       </div>
@@ -364,27 +364,34 @@ $("#oldElement").replaceWith("&lt;div id=\"newElement\"&gt;新的元素&lt;/div&
       <h4 class="text-white mb-3">jQuery 範例：樣式操作實戰</h4>
       <div class="jquery-code">
         <pre class="bg-secondary p-3 rounded text-light overflow-auto">
-// addClass() - 新增一個或多個 class
-$("p").addClass("highlight blue-text");
 
-// removeClass() - 移除 class
-$("p").removeClass("blue-text");
-
-// toggleClass() - 切換 class
-$("div").on("click", function() {
-  $(this).toggleClass("active");
-});
-
-// css() - 直接設定 CSS 屬性
-$("#box").css({
-  "background-color": "red",
-  "border-radius": "10px",
-  "opacity": "0.8"
-});
 
 // 取得 CSS 屬性值
-let bgColor = $("#myBox").css("background-color");
-console.log("背景顏色: " + bgColor);</code></pre>
+let bgColor = $("#box7").css("background-color");
+console.log("背景顏色: " + bgColor);
+
+$(document).ready(function() {
+  $("#toggleStyleBtn").on("click", function() {
+    let $box = $("#box7");
+    
+    // 檢查目前的背景顏色 (注意：jQuery 取得的顏色通常是 rgb 格式)
+    if ($box.css("background-color") === "rgb(0, 0, 255)") { // 如果是藍色
+      $box.css({
+        "background-color": "red",
+        "border-radius": "50%",
+        "opacity": "0.8"
+      });
+      $(".status-text").text("目前狀態：紅色模式");
+    } else {
+      $box.css({
+        "background-color": "blue",
+        "border-radius": "0px",
+        "opacity": "1"
+      });
+      $(".status-text").text("目前狀態：正常模式");
+    }
+  });
+});</code></pre>
       </div>
     </div>
   </div>
@@ -429,7 +436,7 @@ $("li.active").next().css("text-decoration", "underline");
 $("li.active").prev().css("text-decoration", "line-through");
 
 // closest() - 找到最近的符合條件的祖先元素
-$("span").closest(".container").css("background-color", "#eee");</code></pre>
+$("span").closest(".container").css("background-color", "#000");</code></pre>
       </div>
     </div>
   </div>

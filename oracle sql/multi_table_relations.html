@@ -44,132 +44,215 @@
     <p>建立一個包含多個相關資料表的範例資料庫，展示各種關聯類型和聯動設定。</p>
     <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
         <h4 class="text-white mb-3">建立相關資料表</h4>
-        <div class="html-code">CREATE TABLE customers (<br>
-            customer_id NUMBER(6) PRIMARY KEY,<br>
-            customer_name VARCHAR2(100) NOT NULL,<br>
-            email VARCHAR2(100) UNIQUE,<br>
-            phone VARCHAR2(20),<br>
-            address VARCHAR2(200)<br>
-            );<br>
-            <br>
-            CREATE TABLE products (<br>
-            product_id NUMBER(6) PRIMARY KEY,<br>
-            product_name VARCHAR2(100) NOT NULL,<br>
-            category VARCHAR2(50),<br>
-            price NUMBER(10,2),<br>
-            stock_quantity NUMBER(6)<br>
-            );<br>
-            <br>
-            CREATE TABLE orders (<br>
-            order_id NUMBER(6) PRIMARY KEY,<br>
-            customer_id NUMBER(6) REFERENCES customers(customer_id) ON DELETE CASCADE,<br>
-            order_date DATE NOT NULL,<br>
-            total_amount NUMBER(10,2),<br>
-            status VARCHAR2(20)<br>
-            );<br>
-            <br>
-            CREATE TABLE order_items (<br>
-            order_item_id NUMBER(6) PRIMARY KEY,<br>
-            order_id NUMBER(6) REFERENCES orders(order_id) ON DELETE CASCADE,<br>
-            product_id NUMBER(6) REFERENCES products(product_id),<br>
-            quantity NUMBER(4),<br>
-            unit_price NUMBER(10,2)<br>
-            );<br>
-            <br>
-            CREATE TABLE suppliers (<br>
-            supplier_id NUMBER(6) PRIMARY KEY,<br>
-            supplier_name VARCHAR2(100) NOT NULL,<br>
-            contact_person VARCHAR2(50),<br>
-            phone VARCHAR2(20)<br>
-            );<br>
-            <br>
-            CREATE TABLE product_suppliers (<br>
-            product_id NUMBER(6) REFERENCES products(product_id),<br>
-            supplier_id NUMBER(6) REFERENCES suppliers(supplier_id),<br>
-            supply_price NUMBER(10,2),<br>
-            PRIMARY KEY (product_id, supplier_id)<br>
-            );<br>
+        <div class="html-code">
+            -- 客戶
+            CREATE TABLE customers (
+            customer_id NUMBER(6) PRIMARY KEY,
+            customer_name VARCHAR2(100) CONSTRAINT nn_cust_name NOT NULL,
+            email VARCHAR2(100) CONSTRAINT uk_cust_email UNIQUE,
+            phone VARCHAR2(20),
+            address VARCHAR2(200)
+            );
+
+            -- 產品
+            CREATE TABLE products (
+            product_id NUMBER(6) PRIMARY KEY,
+            product_name VARCHAR2(100) CONSTRAINT nn_prod_name NOT NULL,
+            category VARCHAR2(50),
+            price NUMBER(10,2) CONSTRAINT nn_prod_price NOT NULL,
+            stock_quantity NUMBER(6) CONSTRAINT nn_prod_stock NOT NULL CHECK (stock_quantity >= 0)
+            );
+
+            -- 訂單
+            CREATE TABLE orders (
+            order_id NUMBER(6) PRIMARY KEY,
+            customer_id NUMBER(6)
+            CONSTRAINT fk_orders_customer
+            REFERENCES customers(customer_id) ON DELETE CASCADE,
+            order_date DATE DEFAULT SYSDATE CONSTRAINT nn_order_date NOT NULL,
+            total_amount NUMBER(10,2) CONSTRAINT nn_total_amount NOT NULL
+            CONSTRAINT chk_total_amount CHECK (total_amount >= 0),
+            status VARCHAR2(20) DEFAULT '處理中'
+            CONSTRAINT chk_order_status CHECK (status IN ('處理中','已出貨','已完成','已取消'))
+            );
+
+            -- 訂單項目
+            CREATE TABLE order_items (
+            order_item_id NUMBER(6) PRIMARY KEY,
+            order_id NUMBER(6)
+            CONSTRAINT fk_oi_order
+            REFERENCES orders(order_id) ON DELETE CASCADE,
+            product_id NUMBER(6)
+            CONSTRAINT fk_oi_product
+            REFERENCES products(product_id) ON DELETE RESTRICT,
+            quantity NUMBER(4) CONSTRAINT nn_oi_quantity NOT NULL
+            CONSTRAINT chk_oi_quantity CHECK (quantity > 0),
+            unit_price NUMBER(10,2) CONSTRAINT nn_oi_unit_price NOT NULL
+            );
+
+            -- 供應商
+            CREATE TABLE suppliers (
+            supplier_id NUMBER(6) PRIMARY KEY,
+            supplier_name VARCHAR2(100) CONSTRAINT nn_supplier_name NOT NULL,
+            contact_person VARCHAR2(50),
+            phone VARCHAR2(20)
+            );
+
+            -- 商品-供應商關聯（多對多）
+            CREATE TABLE product_suppliers (
+            product_id NUMBER(6)
+            CONSTRAINT fk_ps_product
+            REFERENCES products(product_id) ON DELETE CASCADE,
+            supplier_id NUMBER(6)
+            CONSTRAINT fk_ps_supplier
+            REFERENCES suppliers(supplier_id) ON DELETE CASCADE,
+            supply_price NUMBER(10,2) CONSTRAINT nn_supply_price NOT NULL,
+            PRIMARY KEY (product_id, supplier_id)
+            );
         </div>
 
-        <h4 class="text-white mb-3">插入範例資料</h4>
-        <div class="html-code">INSERT INTO customers VALUES (1, '張三', 'zhang@example.com', '123-456-7890',
-            '台北市中山區');<br>
-            INSERT INTO customers VALUES (2, '李四', 'li@example.com', '098-765-4321', '台中市西區');<br>
-            INSERT INTO customers VALUES (3, '王五', 'wang@example.com', '111-222-3333', '高雄市前鎮區');<br>
-            <br>
-            INSERT INTO products VALUES (101, '筆記型電腦', '電子產品', 35000, 50);<br>
-            INSERT INTO products VALUES (102, '滑鼠', '電子配件', 500, 200);<br>
-            INSERT INTO products VALUES (103, '鍵盤', '電子配件', 800, 150);<br>
-            INSERT INTO products VALUES (104, '顯示器', '電子產品', 12000, 30);<br>
-            <br>
-            INSERT INTO suppliers VALUES (201, '華碩科技', '陳經理', '02-12345678');<br>
-            INSERT INTO suppliers VALUES (202, '宏碁公司', '林小姐', '04-87654321');<br>
-            INSERT INTO suppliers VALUES (203, '聯想集團', '王先生', '07-11223344');<br>
-            <br>
-            INSERT INTO product_suppliers VALUES (101, 201, 32000);<br>
-            INSERT INTO product_suppliers VALUES (101, 203, 33000);<br>
-            INSERT INTO product_suppliers VALUES (102, 201, 450);<br>
-            INSERT INTO product_suppliers VALUES (103, 202, 700);<br>
-            INSERT INTO product_suppliers VALUES (104, 203, 11000);<br>
-            <br>
-            INSERT INTO orders VALUES (1001, 1, '2023-01-15', 36500, '已完成');<br>
-            INSERT INTO orders VALUES (1002, 2, '2023-01-16', 1300, '處理中');<br>
-            INSERT INTO orders VALUES (1003, 1, '2023-01-20', 12800, '已出貨');<br>
-            <br>
-            INSERT INTO order_items VALUES (1, 1001, 101, 1, 35000);<br>
-            INSERT INTO order_items VALUES (2, 1002, 102, 2, 500);<br>
-            INSERT INTO order_items VALUES (3, 1002, 103, 1, 800);<br>
-            INSERT INTO order_items VALUES (4, 1003, 104, 1, 12000);<br>
+        <h1 lass="SideTabs mt-4 pb-1 text-white mb-3">插入範例資料</h1>
+        <div class="html-code">
+            INSERT INTO customers VALUES (1, '張三', 'zhang@example.com', '123-456-7890', '台北市中山區');
+            INSERT INTO customers VALUES (2, '李四', 'li@example.com', '098-765-4321', '台中市西區');
+            INSERT INTO customers VALUES (3, '王五', 'wang@example.com', '111-222-3333', '高雄市前鎮區');
+
+            INSERT INTO products VALUES (101, '筆記型電腦', '電子產品', 35000, 50);
+            INSERT INTO products VALUES (102, '滑鼠', '電子配件', 500, 200);
+            INSERT INTO products VALUES (103, '鍵盤', '電子配件', 800, 150);
+            INSERT INTO products VALUES (104, '顯示器', '電子產品', 12000, 30);
+
+            INSERT INTO suppliers VALUES (201, '華碩科技', '陳經理', '02-12345678');
+            INSERT INTO suppliers VALUES (202, '宏碁公司', '林小姐', '04-87654321');
+            INSERT INTO suppliers VALUES (203, '聯想集團', '王先生', '07-11223344');
+
+            INSERT INTO product_suppliers VALUES (101, 201, 32000);
+            INSERT INTO product_suppliers VALUES (101, 203, 33000);
+            INSERT INTO product_suppliers VALUES (102, 201, 450);
+            INSERT INTO product_suppliers VALUES (103, 202, 700);
+            INSERT INTO product_suppliers VALUES (104, 203, 11000);
+
+            INSERT INTO orders VALUES (1001, 1, '2023-01-15', 36500, '已完成');
+            INSERT INTO orders VALUES (1002, 2, '2023-01-16', 1300, '處理中');
+            INSERT INTO orders VALUES (1003, 1, '2023-01-20', 12800, '已出貨');
+
+            INSERT INTO order_items VALUES (1, 1001, 101, 1, 35000);
+            INSERT INTO order_items VALUES (2, 1002, 102, 2, 500);
+            INSERT INTO order_items VALUES (3, 1002, 103, 1, 800);
+            INSERT INTO order_items VALUES (4, 1003, 104, 1, 12000);
         </div>
+    </div>
+
+    <h1>2. LEFT JOIN 與多表順序建議</h1>
+    <div class="note">
+        多表 JOIN 時，建議從資料量較小或過濾條件較嚴格的表開始（通常是主表），可提升執行計畫效率。
+    </div>
+    <div class="html-code">
+        -- 找出沒有任何訂單的客戶
+        SELECT c.customer_id, c.customer_name
+        FROM customers c
+        LEFT JOIN orders o ON c.customer_id = o.customer_id
+        WHERE o.order_id IS NULL;
+
+        -- 多表 JOIN 建議順序 + hint
+        SELECT /*+ LEADING(c o oi p) */
+        c.customer_name, o.order_date, p.product_name, oi.quantity
+        FROM customers c
+        JOIN orders o ON c.customer_id = o.customer_id
+        JOIN order_items oi ON o.order_id = oi.order_id
+        JOIN products p ON oi.product_id = p.product_id
+        WHERE o.order_date >= ADD_MONTHS(SYSDATE, -3);
+
+        -- 查詢所有產品及其供應商
+        SELECT p.product_name, s.supplier_name
+        FROM products p
+        LEFT JOIN product_suppliers ps ON p.product_id = ps.product_id
+        LEFT JOIN suppliers s ON ps.supplier_id = s.supplier_id;
+
+        -- 熱門商品排行
+        SELECT p.product_name, COUNT(*) order_count, SUM(oi.quantity) qty
+        FROM products p
+        JOIN order_items oi ON p.product_id = oi.product_id
+        GROUP BY p.product_name
+        ORDER BY qty DESC;
+
+        -- 客戶消費總額 Top 10
+        SELECT c.customer_name, SUM(o.total_amount) spent
+        FROM customers c
+        JOIN orders o ON c.customer_id = o.customer_id
+        GROUP BY c.customer_name
+        ORDER BY spent DESC
+        FETCH FIRST 10 ROWS ONLY;
     </div>
 
     <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">1: 基本 INNER JOIN - 聯結兩個資料表</h1>
     <p>INNER JOIN 回傳兩個資料表中匹配的記錄，常用於關聯查詢。</p>
     <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
         <h4 class="text-white mb-3">INNER JOIN 範例</h4>
-        <div class="html-code">-- 查詢訂單和客戶資訊<br>
-            SELECT o.order_id, c.customer_name, o.order_date, o.total_amount<br>
-            FROM orders o<br>
-            INNER JOIN customers c ON o.customer_id = c.customer_id;<br>
-            <br>
-            -- 查詢訂單項目和產品資訊<br>
-            SELECT oi.order_id, p.product_name, oi.quantity, oi.unit_price<br>
-            FROM order_items oi<br>
-            INNER JOIN products p ON oi.product_id = p.product_id;<br>
+        <div class="html-code">
+            -- 查詢訂單和客戶資訊
+            SELECT o.order_id, c.customer_name, o.order_date, o.total_amount
+            FROM orders o
+            INNER JOIN customers c ON o.customer_id = c.customer_id;
+
+            -- 查詢訂單項目和產品資訊
+            SELECT oi.order_id, p.product_name, oi.quantity, oi.unit_price
+            FROM order_items oi
+            INNER JOIN products p ON oi.product_id = p.product_id;
+
+            -- 建議一律使用表別名（可讀性與維護性）
+            SELECT o.order_id, c.customer_name, o.order_date, o.total_amount
+            FROM orders o
+            INNER JOIN customers c ON o.customer_id = c.customer_id
+            WHERE o.status = '已完成';
         </div>
     </div>
 
     <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
         <h4 class="text-white mb-3">SQL比較</h4>
-        <div class="html-code">-- MySQL / PostgreSQL / SQLite<br>
-            SELECT o.order_id, c.customer_name, o.order_date, o.total_amount<br>
-            FROM orders o<br>
-            JOIN customers c ON o.customer_id = c.customer_id;<br>
-            <br>
-            -- 或使用舊式語法<br>
-            SELECT o.order_id, c.customer_name, o.order_date, o.total_amount<br>
-            FROM orders o, customers c<br>
-            WHERE o.customer_id = c.customer_id;<br>
+        <div class="html-code">
+            -- MySQL / PostgreSQL / SQLite
+            SELECT o.order_id, c.customer_name, o.order_date, o.total_amount
+            FROM orders o
+            JOIN customers c ON o.customer_id = c.customer_id;
+
+            -- 或使用舊式語法
+            SELECT o.order_id, c.customer_name, o.order_date, o.total_amount
+            FROM orders o, customers c
+            WHERE o.customer_id = c.customer_id;
+
+            -- MySQL / PostgreSQL / SQLite
+            SELECT p.product_name, s.supplier_name
+            FROM products p
+            LEFT OUTER JOIN product_suppliers ps ON p.product_id = ps.product_id
+            LEFT OUTER JOIN suppliers s ON ps.supplier_id = s.supplier_id;
+
+            -- OUTER 關鍵字通常可省略
+            SELECT p.product_name, s.supplier_name
+            FROM products p
+            LEFT JOIN product_suppliers ps ON p.product_id = ps.product_id
+            LEFT JOIN suppliers s ON ps.supplier_id = s.supplier_id;
         </div>
     </div>
-    LEFT JOIN product_suppliers ps ON p.product_id = ps.product_id<br>
-    LEFT JOIN suppliers s ON ps.supplier_id = s.supplier_id;<br>
+    LEFT JOIN product_suppliers ps ON p.product_id = ps.product_id
+    LEFT JOIN suppliers s ON ps.supplier_id = s.supplier_id;
     </div>
     </div>
 
     <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
         <h4 class="text-white mb-3">SQL比較</h4>
-        <div class="html-code">-- MySQL / PostgreSQL / SQLite<br>
-            SELECT p.product_name, s.supplier_name<br>
-            FROM products p<br>
-            LEFT OUTER JOIN product_suppliers ps ON p.product_id = ps.product_id<br>
-            LEFT OUTER JOIN suppliers s ON ps.supplier_id = s.supplier_id;<br>
-            <br>
-            -- OUTER 關鍵字通常可省略<br>
-            SELECT p.product_name, s.supplier_name<br>
-            FROM products p<br>
-            LEFT JOIN product_suppliers ps ON p.product_id = ps.product_id<br>
-            LEFT JOIN suppliers s ON ps.supplier_id = s.supplier_id;<br>
+        <div class="html-code">
+            -- MySQL / PostgreSQL / SQLite
+            SELECT p.product_name, s.supplier_name
+            FROM products p
+            LEFT OUTER JOIN product_suppliers ps ON p.product_id = ps.product_id
+            LEFT OUTER JOIN suppliers s ON ps.supplier_id = s.supplier_id;
+
+            -- OUTER 關鍵字通常可省略
+            SELECT p.product_name, s.supplier_name
+            FROM products p
+            LEFT JOIN product_suppliers ps ON p.product_id = ps.product_id
+            LEFT JOIN suppliers s ON ps.supplier_id = s.supplier_id;
         </div>
     </div>
 
@@ -177,40 +260,42 @@
     <p>RIGHT JOIN 回傳右表所有記錄，以及左表匹配的記錄。如果左表沒有匹配，左表欄位為 NULL。</p>
     <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
         <h4 class="text-white mb-3">RIGHT JOIN 範例</h4>
-        <div class="html-code">-- 查詢所有供應商及其供應的產品<br>
-            SELECT s.supplier_name, p.product_name, ps.supply_price<br>
-            FROM suppliers s<br>
-            RIGHT JOIN product_suppliers ps ON s.supplier_id = ps.supplier_id<br>
-            RIGHT JOIN products p ON ps.product_id = p.product_id;<br>
+        <div class="html-code">
+            -- 查詢所有供應商及其供應的產品
+            SELECT s.supplier_name, p.product_name, ps.supply_price
+            FROM suppliers s
+            RIGHT JOIN product_suppliers ps ON s.supplier_id = ps.supplier_id
+            RIGHT JOIN products p ON ps.product_id = p.product_id;
         </div>
     </div>
 
     <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
         <h4 class="text-white mb-3">JOIN類型比較</h4>
-        <div class="html-code">-- LEFT JOIN vs RIGHT JOIN 差別：<br>
-            -- LEFT JOIN：保留左表所有記錄，右表匹配記錄<br>
-            -- RIGHT JOIN：保留右表所有記錄，左表匹配記錄<br>
-            <br>
-            -- 例如：查詢所有客戶及其訂單<br>
-            -- LEFT JOIN：所有客戶，即使沒有訂單<br>
-            SELECT c.customer_name, o.order_id<br>
-            FROM customers c<br>
-            LEFT JOIN orders o ON c.customer_id = o.customer_id;<br>
-            <br>
-            -- RIGHT JOIN：所有訂單，即使客戶不存在（通常不實用）<br>
-            SELECT c.customer_name, o.order_id<br>
-            FROM customers c<br>
-            RIGHT JOIN orders o ON c.customer_id = o.customer_id;<br>
-            <br>
-            -- 注意：LEFT JOIN 可以用 RIGHT JOIN 替換（交換表順序）<br>
-            -- 以下兩個查詢結果相同：<br>
-            SELECT c.customer_name, o.order_id<br>
-            FROM customers c<br>
-            LEFT JOIN orders o ON c.customer_id = o.customer_id;<br>
-            <br>
-            SELECT c.customer_name, o.order_id<br>
-            FROM orders o<br>
-            RIGHT JOIN customers c ON c.customer_id = o.customer_id;<br>
+        <div class="html-code">
+            -- LEFT JOIN vs RIGHT JOIN 差別：
+            -- LEFT JOIN：保留左表所有記錄，右表匹配記錄
+            -- RIGHT JOIN：保留右表所有記錄，左表匹配記錄
+
+            -- 例如：查詢所有客戶及其訂單
+            -- LEFT JOIN：所有客戶，即使沒有訂單
+            SELECT c.customer_name, o.order_id
+            FROM customers c
+            LEFT JOIN orders o ON c.customer_id = o.customer_id;
+
+            -- RIGHT JOIN：所有訂單，即使客戶不存在（通常不實用）
+            SELECT c.customer_name, o.order_id
+            FROM customers c
+            RIGHT JOIN orders o ON c.customer_id = o.customer_id;
+
+            -- 注意：LEFT JOIN 可以用 RIGHT JOIN 替換（交換表順序）
+            -- 以下兩個查詢結果相同：
+            SELECT c.customer_name, o.order_id
+            FROM customers c
+            LEFT JOIN orders o ON c.customer_id = o.customer_id;
+
+            SELECT c.customer_name, o.order_id
+            FROM orders o
+            RIGHT JOIN customers c ON c.customer_id = o.customer_id;
         </div>
     </div>
 
@@ -218,62 +303,66 @@
     <p>FULL OUTER JOIN 回傳左表和右表所有記錄。如果沒有匹配，另一邊的欄位為 NULL。</p>
     <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
         <h4 class="text-white mb-3">FULL OUTER JOIN 範例</h4>
-        <div class="html-code">-- 查詢所有客戶和所有訂單<br>
-            SELECT c.customer_name, o.order_id, o.total_amount<br>
-            FROM customers c<br>
-            FULL OUTER JOIN orders o ON c.customer_id = o.customer_id;<br>
+        <div class="html-code">
+            -- 查詢所有客戶和所有訂單
+            SELECT c.customer_name, o.order_id, o.total_amount
+            FROM customers c
+            FULL OUTER JOIN orders o ON c.customer_id = o.customer_id;
         </div>
     </div>
 
     <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
         <h4 class="text-white mb-3">JOIN類型比較</h4>
-        <div class="html-code">-- INNER JOIN：只回傳匹配的記錄<br>
-            SELECT c.customer_name, COUNT(o.order_id) AS order_count<br>
-            FROM customers c<br>
-            INNER JOIN orders o ON c.customer_id = o.customer_id<br>
-            GROUP BY c.customer_name;<br>
-            <br>
-            -- LEFT JOIN：左表所有記錄 + 匹配的右表記錄<br>
-            SELECT c.customer_name, COUNT(o.order_id) AS order_count<br>
-            FROM customers c<br>
-            LEFT JOIN orders o ON c.customer_id = o.customer_id<br>
-            GROUP BY c.customer_name;<br>
-            <br>
-            -- RIGHT JOIN：右表所有記錄 + 匹配的左表記錄<br>
-            SELECT p.product_name, COUNT(oi.quantity) AS total_quantity<br>
-            FROM products p<br>
-            RIGHT JOIN order_items oi ON p.product_id = oi.product_id<br>
-            GROUP BY p.product_name;<br>
-            <br>
-            -- FULL OUTER JOIN：兩個表的所有記錄<br>
-            SELECT c.customer_name, o.order_id<br>
-            FROM customers c<br>
-            FULL OUTER JOIN orders o ON c.customer_id = o.customer_id;<br>
-            <br>
-            -- 選擇JOIN類型的原則：<br>
-            -- - 需要所有記錄：LEFT/RIGHT/FULL JOIN<br>
-            -- - 只需匹配記錄：INNER JOIN<br>
-            -- - 避免NULL：INNER JOIN<br>
-            -- - 包含NULL：OUTER JOIN<br>
+        <div class="html-code">
+            -- INNER JOIN：只回傳匹配的記錄
+            SELECT c.customer_name, COUNT(o.order_id) AS order_count
+            FROM customers c
+            INNER JOIN orders o ON c.customer_id = o.customer_id
+            GROUP BY c.customer_name;
+
+            -- LEFT JOIN：左表所有記錄 + 匹配的右表記錄
+            SELECT c.customer_name, COUNT(o.order_id) AS order_count
+            FROM customers c
+            LEFT JOIN orders o ON c.customer_id = o.customer_id
+            GROUP BY c.customer_name;
+
+            -- RIGHT JOIN：右表所有記錄 + 匹配的左表記錄
+            SELECT p.product_name, COUNT(oi.quantity) AS total_quantity
+            FROM products p
+            RIGHT JOIN order_items oi ON p.product_id = oi.product_id
+            GROUP BY p.product_name;
+
+            -- FULL OUTER JOIN：兩個表的所有記錄
+            SELECT c.customer_name, o.order_id
+            FROM customers c
+            FULL OUTER JOIN orders o ON c.customer_id = o.customer_id;
+
+            -- 選擇JOIN類型的原則：
+            -- - 需要所有記錄：LEFT/RIGHT/FULL JOIN
+            -- - 只需匹配記錄：INNER JOIN
+            -- - 避免NULL：INNER JOIN
+            -- - 包含NULL：OUTER JOIN
         </div>
+        <div class="note">強化提示：FULL JOIN 效能較差，可改寫為 LEFT JOIN UNION RIGHT JOIN。</div>
     </div>
 
     <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">5: 多表聯結 - 三個或更多資料表的聯結</h1>
     <p>可以連續聯結多個資料表，構建複雜的查詢。</p>
     <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
         <h4 class="text-white mb-3">多表聯結範例</h4>
-        <div class="html-code">-- 查詢訂單詳細資訊：客戶、訂單、產品<br>
-            SELECT c.customer_name, o.order_date, p.product_name, oi.quantity, oi.unit_price<br>
-            FROM customers c<br>
-            JOIN orders o ON c.customer_id = o.customer_id<br>
-            JOIN order_items oi ON o.order_id = oi.order_id<br>
-            JOIN products p ON oi.product_id = p.product_id;<br>
-            <br>
-            -- 查詢產品及其所有供應商<br>
-            SELECT p.product_name, s.supplier_name, ps.supply_price<br>
-            FROM products p<br>
-            JOIN product_suppliers ps ON p.product_id = ps.product_id<br>
-            JOIN suppliers s ON ps.supplier_id = s.supplier_id;<br>
+        <div class="html-code">
+            -- 查詢訂單詳細資訊：客戶、訂單、產品
+            SELECT c.customer_name, o.order_date, p.product_name, oi.quantity, oi.unit_price
+            FROM customers c
+            JOIN orders o ON c.customer_id = o.customer_id
+            JOIN order_items oi ON o.order_id = oi.order_id
+            JOIN products p ON oi.product_id = p.product_id;
+
+            -- 查詢產品及其所有供應商
+            SELECT p.product_name, s.supplier_name, ps.supply_price
+            FROM products p
+            JOIN product_suppliers ps ON p.product_id = ps.product_id
+            JOIN suppliers s ON ps.supplier_id = s.supplier_id;
         </div>
     </div>
 
@@ -281,356 +370,460 @@
     <p>自聯結用於查詢同一資料表內的階層或關聯關係。</p>
     <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
         <h4 class="text-white mb-3">自聯結範例</h4>
-        <div class="html-code">-- 假設有員工表中的經理關聯<br>
-            SELECT e.employee_name, m.employee_name AS manager_name<br>
-            FROM employees e<br>
-            LEFT JOIN employees m ON e.manager_id = m.employee_id;<br>
-            <br>
-            -- 查詢同一客戶的多個訂單<br>
-            SELECT o1.order_id, o2.order_id, o1.order_date<br>
-            FROM orders o1<br>
-            JOIN orders o2 ON o1.customer_id = o2.customer_id AND o1.order_id < o2.order_id;<br>
-        </div>
-    </div>
+        <div class="html-code">
+            -- 假設有員工表中的經理關聯
+            SELECT e.employee_name, m.employee_name AS manager_name
+            FROM employees e
+            LEFT JOIN employees m ON e.manager_id = m.employee_id;
 
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">7: 交叉聯結 (CROSS JOIN) - 笛卡兒積</h1>
-    <p>CROSS JOIN 產生兩個資料表所有可能的組合，通常與 WHERE 子句一起使用。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">CROSS JOIN 範例</h4>
-        <div class="html-code">-- 產生所有客戶和產品的組合（通常不實用）<br>
-            SELECT c.customer_name, p.product_name<br>
-            FROM customers c<br>
-            CROSS JOIN products p;<br>
-            <br>
-            -- 實際應用：分配任務<br>
-            SELECT c.customer_name, p.product_name<br>
-            FROM customers c<br>
-            CROSS JOIN products p<br>
-            WHERE p.category = '電子產品' AND c.customer_name LIKE '張%';<br>
+            -- 查詢同一客戶的多個訂單
+            SELECT o1.order_id, o2.order_id, o1.order_date
+            FROM orders o1
+            JOIN orders o2 ON o1.customer_id = o2.customer_id AND o1.order_id < o2.order_id; </div>
         </div>
-    </div>
 
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">8: 聯動更新 (CASCADE UPDATE) - 外鍵聯動</h1>
-    <p>當主鍵更新時，自動更新相關的外鍵值（Oracle 不支援 CASCADE UPDATE，通常使用觸發器實現）。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">聯動更新範例</h4>
-        <div class="html-code">-- Oracle 中使用觸發器實現聯動更新<br>
-            CREATE OR REPLACE TRIGGER trg_cascade_update_orders<br>
-            BEFORE UPDATE OF customer_id ON customers<br>
-            FOR EACH ROW<br>
-            BEGIN<br>
-            UPDATE orders SET customer_id = :NEW.customer_id<br>
-            WHERE customer_id = :OLD.customer_id;<br>
-            END;<br>
-            /<br>
-            <br>
-            -- 更新客戶 ID<br>
-            UPDATE customers SET customer_id = 10 WHERE customer_id = 1;<br>
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">7: 交叉聯結 (CROSS JOIN) - 笛卡兒積</h1>
+        <p>CROSS JOIN 產生兩個資料表所有可能的組合，通常與 WHERE 子句一起使用。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">CROSS JOIN 範例</h4>
+            <div class="html-code">
+                -- 產生所有客戶和產品的組合（通常不實用）
+                SELECT c.customer_name, p.product_name
+                FROM customers c
+                CROSS JOIN products p;
+
+                -- 實際應用：分配任務
+                SELECT c.customer_name, p.product_name
+                FROM customers c
+                CROSS JOIN products p
+                WHERE p.category = '電子產品' AND c.customer_name LIKE '張%';
+            </div>
         </div>
-    </div>
 
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">9: 聯動刪除 (CASCADE DELETE) - 外鍵聯動</h1>
-    <p>當主鍵記錄刪除時，自動刪除相關的外鍵記錄。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">聯動刪除範例</h4>
-        <div class="html-code">-- 刪除客戶時自動刪除其訂單（已在表定義中設定 ON DELETE CASCADE）<br>
-            DELETE FROM customers WHERE customer_id = 1;<br>
-            -- 這會自動刪除 customer_id = 1 的所有訂單和訂單項目<br>
-            <br>
-            -- 檢查聯動效果<br>
-            SELECT * FROM orders WHERE customer_id = 1; -- 應該沒有記錄<br>
-            SELECT * FROM order_items WHERE order_id IN (SELECT order_id FROM orders WHERE customer_id = 1); --
-            應該沒有記錄<br>
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">8: 聯動更新 (CASCADE UPDATE) - 外鍵聯動</h1>
+        <p>當主鍵更新時，自動更新相關的外鍵值（Oracle 不支援 CASCADE UPDATE，通常使用觸發器實現）。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">聯動更新範例</h4>
+            <div class="html-code">
+                -- Oracle 中使用觸發器實現聯動更新
+                CREATE OR REPLACE TRIGGER trg_cascade_update_orders
+                BEFORE UPDATE OF customer_id ON customers
+                FOR EACH ROW
+                BEGIN
+                UPDATE orders SET customer_id = :NEW.customer_id
+                WHERE customer_id = :OLD.customer_id;
+                END;
+                /
+
+                -- 更新客戶 ID
+                UPDATE customers SET customer_id = 10 WHERE customer_id = 1;
+            </div>
+            <div class="note">強化提示：Oracle 不原生支援 ON UPDATE CASCADE，應用程式層控制為替代方案。</div>
         </div>
-    </div>
 
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">聯動操作比較</h4>
-        <div class="html-code">-- CASCADE DELETE：刪除主鍵時自動刪除外鍵記錄<br>
-            -- 適用於：訂單-訂單項目（刪除訂單時刪除項目）<br>
-            FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE<br>
-            <br>
-            -- RESTRICT/NO ACTION：如果有外鍵記錄，防止刪除主鍵<br>
-            -- 適用於：重要資料，需要手動處理<br>
-            FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE RESTRICT<br>
-            <br>
-            -- SET NULL：刪除主鍵時將外鍵設為NULL<br>
-            -- 適用於：可選關聯，保留外鍵記錄<br>
-            FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE SET NULL<br>
-            <br>
-            -- 比較：<br>
-            -- CASCADE：自動清理，資料一致性高，但危險<br>
-            -- RESTRICT：安全，但需要手動處理<br>
-            -- SET NULL：保留資料，但可能造成孤兒記錄<br>
-            <br>
-            -- 選擇原則：<br>
-            -- - 從屬資料：CASCADE<br>
-            -- - 重要資料：RESTRICT<br>
-            -- - 可選關聯：SET NULL<br>
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">9: 聯動刪除 (CASCADE DELETE) - 外鍵聯動</h1>
+        <p>當主鍵記錄刪除時，自動刪除相關的外鍵記錄。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">聯動刪除範例</h4>
+            <div class="html-code">
+                -- 刪除客戶時自動刪除其訂單（已在表定義中設定 ON DELETE CASCADE）
+                DELETE FROM customers WHERE customer_id = 1;
+                -- 這會自動刪除 customer_id = 1 的所有訂單和訂單項目
+
+                -- 檢查聯動效果
+                SELECT * FROM orders WHERE customer_id = 1;
+                SELECT * FROM order_items WHERE order_id IN (SELECT order_id FROM orders WHERE customer_id = 1);
+            </div>
         </div>
-    </div>
 
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">10: 限制刪除 (RESTRICT DELETE) - 防止聯動刪除</h1>
-    <p>當存在相關記錄時，防止刪除主鍵記錄。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">限制刪除範例</h4>
-        <div class="html-code">-- 建立表時設定 RESTRICT<br>
-            CREATE TABLE child_table (<br>
-            id NUMBER PRIMARY KEY,<br>
-            parent_id NUMBER REFERENCES parent_table(id) ON DELETE RESTRICT<br>
-            );<br>
-            <br>
-            -- 嘗試刪除有子記錄的父記錄會失敗<br>
-            DELETE FROM parent_table WHERE id = 1; -- 如果 child_table 有 parent_id = 1 的記錄，會報錯<br>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">聯動操作比較</h4>
+            <div class="html-code">
+                -- CASCADE DELETE：刪除主鍵時自動刪除外鍵記錄
+                -- 適用於：訂單-訂單項目（刪除訂單時刪除項目）
+                FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE
+
+                -- RESTRICT/NO ACTION：如果有外鍵記錄，防止刪除主鍵
+                -- 適用於：重要資料，需要手動處理
+                FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE RESTRICT
+
+                -- SET NULL：刪除主鍵時將外鍵設為NULL
+                -- 適用於：可選關聯，保留外鍵記錄
+                FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE SET NULL
+
+                -- 比較：
+                -- CASCADE：自動清理，資料一致性高，但危險
+                -- RESTRICT：安全，但需要手動處理
+                -- SET NULL：保留資料，但可能造成孤兒記錄
+
+                -- 選擇原則：
+                -- - 從屬資料：CASCADE
+                -- - 重要資料：RESTRICT
+                -- - 可選關聯：SET NULL
+            </div>
         </div>
-    </div>
 
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">11: 子查詢聯動 - 使用子查詢處理關聯</h1>
-    <p>使用子查詢來處理多表間的複雜關聯邏輯。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">子查詢聯動範例</h4>
-        <div class="html-code">-- 查詢有訂單的客戶<br>
-            SELECT * FROM customers<br>
-            WHERE customer_id IN (SELECT DISTINCT customer_id FROM orders);<br>
-            <br>
-            -- 查詢訂購特定產品的客戶<br>
-            SELECT * FROM customers<br>
-            WHERE customer_id IN (<br>
-            SELECT o.customer_id FROM orders o<br>
-            JOIN order_items oi ON o.order_id = oi.order_id<br>
-            WHERE oi.product_id = 101<br>
-            );<br>
-            <br>
-            -- 更新基於子查詢<br>
-            UPDATE products SET stock_quantity = stock_quantity - (<br>
-            SELECT SUM(oi.quantity) FROM order_items oi<br>
-            WHERE oi.product_id = products.product_id<br>
-            ) WHERE product_id IN (SELECT DISTINCT product_id FROM order_items);<br>
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">10: 限制刪除 (RESTRICT DELETE) - 防止聯動刪除</h1>
+        <p>當存在相關記錄時，防止刪除主鍵記錄。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">限制刪除範例</h4>
+            <div class="html-code">
+                -- 建立表時設定 RESTRICT
+                CREATE TABLE child_table (
+                id NUMBER PRIMARY KEY,
+                parent_id NUMBER REFERENCES parent_table(id) ON DELETE RESTRICT
+                );
+
+                -- 嘗試刪除有子記錄的父記錄會失敗
+                DELETE FROM parent_table WHERE id = 1; -- 如果 child_table 有 parent_id = 1 的記錄，會報錯
+            </div>
         </div>
-    </div>
 
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">12: EXISTS 子查詢聯動</h1>
-    <p>使用 EXISTS 檢查是否存在相關記錄，比 IN 更有效率。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">EXISTS 聯動範例</h4>
-        <div class="html-code">-- 查詢有訂單的客戶<br>
-            SELECT * FROM customers c<br>
-            WHERE EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.customer_id);<br>
-            <br>
-            -- 查詢有庫存的產品<br>
-            SELECT * FROM products p<br>
-            WHERE EXISTS (SELECT 1 FROM product_suppliers ps WHERE ps.product_id = p.product_id);<br>
-            <br>
-            -- 刪除沒有訂單的客戶<br>
-            DELETE FROM customers<br>
-            WHERE NOT EXISTS (SELECT 1 FROM orders WHERE orders.customer_id = customers.customer_id);<br>
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">11: 子查詢聯動 - 使用子查詢處理關聯</h1>
+        <p>使用子查詢來處理多表間的複雜關聯邏輯。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">子查詢聯動範例</h4>
+            <div class="html-code">
+                -- 查詢有訂單的客戶
+                SELECT * FROM customers
+                WHERE customer_id IN (SELECT DISTINCT customer_id FROM orders);
+
+                -- 查詢訂購特定產品的客戶
+                SELECT * FROM customers
+                WHERE customer_id IN (
+                SELECT o.customer_id FROM orders o
+                JOIN order_items oi ON o.order_id = oi.order_id
+                WHERE oi.product_id = 101
+                );
+
+                -- 更新基於子查詢
+                UPDATE products SET stock_quantity = stock_quantity - (
+                SELECT SUM(oi.quantity) FROM order_items oi
+                WHERE oi.product_id = products.product_id
+                ) WHERE product_id IN (SELECT DISTINCT product_id FROM order_items);
+            </div>
+            <div class="note">強化提示：相關子查詢效能較差，大資料量時轉用 JOIN。</div>
         </div>
-    </div>
 
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">13: 複雜搜尋 - 多條件跨表查詢</h1>
-    <p>結合多個 JOIN 和條件進行複雜的搜尋操作。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">複雜搜尋範例</h4>
-        <div class="html-code">-- 搜尋特定客戶的訂單詳細資訊<br>
-            SELECT c.customer_name, o.order_date, p.product_name, oi.quantity, oi.unit_price * oi.quantity AS
-            line_total<br>
-            FROM customers c<br>
-            JOIN orders o ON c.customer_id = o.customer_id<br>
-            JOIN order_items oi ON o.order_id = oi.order_id<br>
-            JOIN products p ON oi.product_id = p.product_id<br>
-            WHERE c.customer_name LIKE '%張%' AND o.order_date >= '2023-01-01';<br>
-            <br>
-            -- 搜尋熱門產品（訂購次數最多）<br>
-            SELECT p.product_name, COUNT(oi.order_item_id) AS order_count<br>
-            FROM products p<br>
-            LEFT JOIN order_items oi ON p.product_id = oi.product_id<br>
-            GROUP BY p.product_id, p.product_name<br>
-            ORDER BY order_count DESC;<br>
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">12: EXISTS 子查詢聯動</h1>
+        <p>使用 EXISTS 檢查是否存在相關記錄，比 IN 更有效率。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">EXISTS 聯動範例</h4>
+            <div class="html-code">
+                -- 查詢有訂單的客戶
+                SELECT * FROM customers c
+                WHERE EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.customer_id);
+
+                -- 查詢有庫存的產品
+                SELECT * FROM products p
+                WHERE EXISTS (SELECT 1 FROM product_suppliers ps WHERE ps.product_id = p.product_id);
+
+                -- 刪除沒有訂單的客戶
+                DELETE FROM customers
+                WHERE NOT EXISTS (SELECT 1 FROM orders WHERE orders.customer_id = customers.customer_id);
+            </div>
+            <div class="note">強化提示：EXISTS 忽略子查詢結果，只檢查存在，適合大表。</div>
         </div>
-    </div>
 
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">14: 聚合函數跨表 - GROUP BY 與 HAVING</h1>
-    <p>在多表聯結中使用聚合函數進行統計分析。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">聚合函數跨表範例</h4>
-        <div class="html-code">-- 計算每個客戶的總消費金額<br>
-            SELECT c.customer_name, SUM(o.total_amount) AS total_spent<br>
-            FROM customers c<br>
-            LEFT JOIN orders o ON c.customer_id = o.customer_id<br>
-            GROUP BY c.customer_id, c.customer_name<br>
-            ORDER BY total_spent DESC;<br>
-            <br>
-            -- 計算每個產品類別的銷售額<br>
-            SELECT p.category, SUM(oi.quantity * oi.unit_price) AS category_sales<br>
-            FROM products p<br>
-            JOIN order_items oi ON p.product_id = oi.product_id<br>
-            GROUP BY p.category<br>
-            HAVING SUM(oi.quantity * oi.unit_price) > 10000;<br>
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">13: 複雜搜尋 - 多條件跨表查詢</h1>
+        <p>結合多個 JOIN 和條件進行複雜的搜尋操作。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">複雜搜尋範例</h4>
+            <div class="html-code">
+                -- 搜尋特定客戶的訂單詳細資訊
+                SELECT c.customer_name, o.order_date, p.product_name, oi.quantity, oi.unit_price * oi.quantity AS
+                line_total
+                FROM customers c
+                JOIN orders o ON c.customer_id = o.customer_id
+                JOIN order_items oi ON o.order_id = oi.order_id
+                JOIN products p ON oi.product_id = p.product_id
+                WHERE c.customer_name LIKE '%張%' AND o.order_date >= '2023-01-01';
+
+                -- 搜尋熱門產品（訂購次數最多）
+                SELECT p.product_name, COUNT(oi.order_item_id) AS order_count
+                FROM products p
+                LEFT JOIN order_items oi ON p.product_id = oi.product_id
+                GROUP BY p.product_id, p.product_name
+                ORDER BY order_count DESC;
+            </div>
         </div>
-    </div>
 
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">15: 視圖跨表聯動 - 簡化複雜查詢</h1>
-    <p>建立跨多個資料表的視圖，簡化常見的聯動查詢。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">視圖跨表範例</h4>
-        <div class="html-code">-- 建立訂單摘要視圖<br>
-            CREATE VIEW order_summary AS<br>
-            SELECT c.customer_name, o.order_id, o.order_date, o.total_amount, o.status<br>
-            FROM customers c<br>
-            JOIN orders o ON c.customer_id = o.customer_id;<br>
-            <br>
-            -- 建立產品供應鏈視圖<br>
-            CREATE VIEW product_supply_chain AS<br>
-            SELECT p.product_name, s.supplier_name, ps.supply_price<br>
-            FROM products p<br>
-            JOIN product_suppliers ps ON p.product_id = ps.product_id<br>
-            JOIN suppliers s ON ps.supplier_id = s.supplier_id;<br>
-            <br>
-            -- 查詢視圖<br>
-            SELECT * FROM order_summary WHERE status = '已完成';<br>
-            SELECT * FROM product_supply_chain WHERE supply_price < 1000;<br>
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">14: 聚合函數跨表 - GROUP BY 與 HAVING</h1>
+        <p>在多表聯結中使用聚合函數進行統計分析。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">聚合函數跨表範例</h4>
+            <div class="html-code">
+                -- 計算每個客戶的總消費金額
+                SELECT c.customer_name, SUM(o.total_amount) AS total_spent
+                FROM customers c
+                LEFT JOIN orders o ON c.customer_id = o.customer_id
+                GROUP BY c.customer_id, c.customer_name
+                ORDER BY total_spent DESC;
+
+                -- 計算每個產品類別的銷售額
+                SELECT p.category, SUM(oi.quantity * oi.unit_price) AS category_sales
+                FROM products p
+                JOIN order_items oi ON p.product_id = oi.product_id
+                GROUP BY p.category
+                HAVING SUM(oi.quantity * oi.unit_price) > 10000;
+            </div>
         </div>
-    </div>
 
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">16: 觸發器實現聯動邏輯</h1>
-    <p>使用觸發器實現複雜的聯動更新和業務邏輯。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">觸發器聯動範例</h4>
-        <div class="html-code">-- 訂單插入時自動更新產品庫存<br>
-            CREATE OR REPLACE TRIGGER trg_update_stock<br>
-            AFTER INSERT ON order_items<br>
-            FOR EACH ROW<br>
-            BEGIN<br>
-            UPDATE products SET stock_quantity = stock_quantity - :NEW.quantity<br>
-            WHERE product_id = :NEW.product_id;<br>
-            END;<br>
-            /<br>
-            <br>
-            -- 訂單取消時恢復庫存<br>
-            CREATE OR REPLACE TRIGGER trg_restore_stock<br>
-            AFTER UPDATE OF status ON orders<br>
-            FOR EACH ROW<br>
-            WHEN (NEW.status = '已取消' AND OLD.status != '已取消')<br>
-            BEGIN<br>
-            UPDATE products SET stock_quantity = stock_quantity + (<br>
-            SELECT SUM(quantity) FROM order_items WHERE order_id = :NEW.order_id<br>
-            ) WHERE product_id IN (SELECT product_id FROM order_items WHERE order_id = :NEW.order_id);<br>
-            END;<br>
-            /<br>
+        <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">15: 視圖跨表聯動 - 簡化複雜查詢</h1>
+        <p>建立跨多個資料表的視圖，簡化常見的聯動查詢。</p>
+        <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+            <h4 class="text-white mb-3">視圖跨表範例</h4>
+            <div class="html-code">
+                -- 建立訂單摘要視圖
+                CREATE VIEW order_summary AS
+                SELECT c.customer_name, o.order_id, o.order_date, o.total_amount, o.status
+                FROM customers c
+                JOIN orders o ON c.customer_id = o.customer_id;
+
+                -- 建立產品供應鏈視圖
+                CREATE VIEW product_supply_chain AS
+                SELECT p.product_name, s.supplier_name, ps.supply_price
+                FROM products p
+                JOIN product_suppliers ps ON p.product_id = ps.product_id
+                JOIN suppliers s ON ps.supplier_id = s.supplier_id;
+
+                -- 查詢視圖
+                SELECT * FROM order_summary WHERE status = '已完成';
+                SELECT * FROM product_supply_chain WHERE supply_price < 1000; </div>
+            </div>
+
+            <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">16: 觸發器實現聯動邏輯</h1>
+            <p>使用觸發器實現複雜的聯動更新和業務邏輯。</p>
+            <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+                <h4 class="text-white mb-3">觸發器聯動範例</h4>
+                <div class="html-code">
+                    -- 訂單插入時自動更新產品庫存
+                    CREATE OR REPLACE TRIGGER trg_update_stock
+                    AFTER INSERT ON order_items
+                    FOR EACH ROW
+                    BEGIN
+                    UPDATE products SET stock_quantity = stock_quantity - :NEW.quantity
+                    WHERE product_id = :NEW.product_id;
+                    END;
+                    /
+
+                    -- 訂單取消時恢復庫存
+                    CREATE OR REPLACE TRIGGER trg_restore_stock
+                    AFTER UPDATE OF status ON orders
+                    FOR EACH ROW
+                    WHEN (NEW.status = '已取消' AND OLD.status != '已取消')
+                    BEGIN
+                    UPDATE products SET stock_quantity = stock_quantity + (
+                    SELECT SUM(quantity) FROM order_items WHERE order_id = :NEW.order_id
+                    ) WHERE product_id IN (SELECT product_id FROM order_items WHERE order_id = :NEW.order_id);
+                    END;
+                    /
+                </div>
+                <div class="note">強化提示：使用 FOR EACH ROW 為行級觸發器。考慮自主交易 PRAGMA AUTONOMOUS_TRANSACTION 避免鎖定。</div>
+            </div>
+
+            <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">17: 索引在聯動查詢中的作用</h1>
+            <p>在關聯欄位上建立適當的索引，提升聯動查詢效能。</p>
+            <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+                <h4 class="text-white mb-3">索引聯動範例</h4>
+                <div class="html-code">
+                    -- 在外鍵欄位建立索引
+                    CREATE INDEX idx_orders_customer_id ON orders(customer_id);
+                    CREATE INDEX idx_order_items_order_id ON order_items(order_id);
+                    CREATE INDEX idx_order_items_product_id ON order_items(product_id);
+                    CREATE INDEX idx_product_suppliers_product_id ON product_suppliers(product_id);
+                    CREATE INDEX idx_product_suppliers_supplier_id ON product_suppliers(supplier_id);
+
+                    -- 複合索引提升 JOIN 效能
+                    CREATE INDEX idx_orders_customer_date ON orders(customer_id, order_date);
+
+                    -- 查看索引使用情況
+                    SELECT * FROM DBA_INDEXES WHERE TABLE_NAME = 'ORDERS';
+                </div>
+            </div>
+
+            <h1 class="text-white mb-3">索引使用統計（進階）</h1>
+            <div class="html-code">
+                -- 收集統計
+                EXEC DBMS_STATS.GATHER_TABLE_STATS('YOUR_SCHEMA', 'ORDERS');
+
+                -- 查看索引統計
+                SELECT INDEX_NAME, NUM_ROWS, LAST_ANALYZED
+                FROM DBA_IND_STATISTICS
+                WHERE TABLE_NAME = 'ORDERS';
+            </div>
+            <div class="note">強化提示：定期收集統計確保優化器使用正確索引。函數索引適用於 UPPER() 等函數。</div>
+
+            <h1>16. 觸發器實務應用（強化）</h1>
+            <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+                <div class="html-code">
+                    -- 訂單明細新增 → 扣庫存
+                    CREATE OR REPLACE TRIGGER trg_deduct_stock
+                    AFTER INSERT ON order_items
+                    FOR EACH ROW
+                    BEGIN
+                    UPDATE products
+                    SET stock_quantity = stock_quantity - :NEW.quantity
+                    WHERE product_id = :NEW.product_id;
+                    END;
+                    /
+
+                    -- 訂單狀態變更為「已取消」 → 恢復庫存
+                    CREATE OR REPLACE TRIGGER trg_restore_stock_on_cancel
+                    AFTER UPDATE OF status ON orders
+                    FOR EACH ROW
+                    WHEN (NEW.status = '已取消' AND OLD.status != '已取消')
+                    DECLARE
+                    v_total_qty NUMBER;
+                    BEGIN
+                    SELECT SUM(quantity)
+                    INTO v_total_qty
+                    FROM order_items
+                    WHERE order_id = :NEW.order_id;
+
+                    IF v_total_qty > 0 THEN
+                    UPDATE products p
+                    SET p.stock_quantity = p.stock_quantity + (
+                    SELECT quantity
+                    FROM order_items oi
+                    WHERE oi.order_id = :NEW.order_id
+                    AND oi.product_id = p.product_id
+                    )
+                    WHERE p.product_id IN (
+                    SELECT product_id FROM order_items WHERE order_id = :NEW.order_id
+                    );
+                    END IF;
+                    END;
+                    /
+                </div>
+            </div>
+
+            <!-- 效能優化 -->
+            <h1>20. 效能優化重點（強化）</h1>
+            <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+                <div class="html-code">
+                    -- 推薦：EXISTS 比 IN 更有效率（特別是大表）
+                    SELECT customer_name
+                    FROM customers c
+                    WHERE EXISTS (
+                    SELECT 1 FROM orders o WHERE o.customer_id = c.customer_id
+                    );
+
+                    -- 避免在索引欄位上使用函數
+                    -- 壞：WHERE UPPER(customer_name) LIKE '張%'
+                    -- 好：建立函數索引 CREATE INDEX idx_upper_cust_name ON customers(UPPER(customer_name));
+
+                    -- 涵蓋索引範例
+                    CREATE INDEX idx_orders_cust_date_amount
+                    ON orders(customer_id, order_date, total_amount);
+
+                    -- 檢查執行計畫
+                    EXPLAIN PLAN FOR
+                    SELECT ... /* 你的查詢 */;
+
+                    -- 查看執行計畫
+                    SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
+                </div>
+                <div class="note">強化提示：定期收集統計確保優化器使用正確索引。函數索引適用於 UPPER() 等函數。</div>
+            </div>
+
+            <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">18: 資料完整性約束 - 確保關聯一致性</h1>
+            <p>使用 CHECK、UNIQUE、NOT NULL 等約束確保資料完整性。</p>
+            <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+                <h4 class="text-white mb-3">資料完整性範例</h4>
+                <div class="html-code">
+                    -- 檢查約束：訂單總金額必須大於 0
+                    ALTER TABLE orders ADD CONSTRAINT chk_order_amount CHECK (total_amount > 0);
+
+                    -- 唯一約束：產品名稱在類別內唯一
+                    ALTER TABLE products ADD CONSTRAINT uk_product_name_category UNIQUE (product_name, category);
+
+                    -- NOT NULL 約束
+                    ALTER TABLE customers MODIFY (customer_name NOT NULL);
+
+                    -- 檢查現有約束
+                    SELECT * FROM DBA_CONSTRAINTS WHERE TABLE_NAME = 'ORDERS';
+                </div>
+            </div>
+
+            <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">19: 進階搜尋技巧 - 模糊搜尋與全文檢索</h1>
+            <p>使用 LIKE、REGEXP_LIKE 等進行模糊搜尋，或使用 Oracle Text 進行全文檢索。</p>
+            <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+                <h4 class="text-white mb-3">進階搜尋範例</h4>
+                <div class="html-code">
+                    -- 模糊搜尋客戶名稱
+                    SELECT * FROM customers WHERE customer_name LIKE '%張%';
+
+                    -- 正規表達式搜尋
+                    SELECT * FROM customers WHERE REGEXP_LIKE(phone, '^09[0-9]{8}$');
+
+                    -- 跨表搜尋
+                    SELECT DISTINCT c.customer_name
+                    FROM customers c
+                    JOIN orders o ON c.customer_id = o.customer_id
+                    JOIN order_items oi ON o.order_id = oi.order_id
+                    JOIN products p ON oi.product_id = p.product_id
+                    WHERE p.product_name LIKE '%電腦%' OR c.address LIKE '%台北%';
+
+                    -- 全文檢索（需要 Oracle Text）
+                    -- CREATE INDEX idx_customers_address ON customers(address) INDEXTYPE IS CTXSYS.CONTEXT;
+                    -- SELECT * FROM customers WHERE CONTAINS(address, '台北') > 0;
+                </div>
+            </div>
+
+            <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">20: 效能優化 - 聯動查詢的最佳化</h1>
+            <p>優化多表聯動查詢的效能，包括查詢重寫、索引策略等。</p>
+            <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
+                <h4 class="text-white mb-3">效能優化範例</h4>
+                <div class="html-code">
+                    -- 使用 EXISTS 替代 IN 提升效能
+                    SELECT * FROM customers c
+                    WHERE EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.customer_id);
+
+                    -- 使用適當的 JOIN 順序
+                    SELECT /*+ LEADING(c, o, oi, p) */ c.customer_name, p.product_name
+                    FROM customers c
+                    JOIN orders o ON c.customer_id = o.customer_id
+                    JOIN order_items oi ON o.order_id = oi.order_id
+                    JOIN products p ON oi.product_id = p.product_id;
+
+                    -- 建立涵蓋索引
+                    CREATE INDEX idx_customer_order_summary ON orders(customer_id, order_date, total_amount);
+
+                    -- 查詢重寫：使用內聯視圖
+                    SELECT * FROM (
+                    SELECT c.customer_name, COUNT(o.order_id) AS order_count
+                    FROM customers c
+                    LEFT JOIN orders o ON c.customer_id = o.customer_id
+                    GROUP BY c.customer_id, c.customer_name
+                    ) WHERE order_count > 0;
+                </div>
+            </div>
+
         </div>
-    </div>
 
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">17: 索引在聯動查詢中的作用</h1>
-    <p>在關聯欄位上建立適當的索引，提升聯動查詢效能。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">索引聯動範例</h4>
-        <div class="html-code">-- 在外鍵欄位建立索引<br>
-            CREATE INDEX idx_orders_customer_id ON orders(customer_id);<br>
-            CREATE INDEX idx_order_items_order_id ON order_items(order_id);<br>
-            CREATE INDEX idx_order_items_product_id ON order_items(product_id);<br>
-            CREATE INDEX idx_product_suppliers_product_id ON product_suppliers(product_id);<br>
-            CREATE INDEX idx_product_suppliers_supplier_id ON product_suppliers(supplier_id);<br>
-            <br>
-            -- 複合索引提升 JOIN 效能<br>
-            CREATE INDEX idx_orders_customer_date ON orders(customer_id, order_date);<br>
-            <br>
-            -- 查看索引使用情況<br>
-            SELECT * FROM DBA_INDEXES WHERE TABLE_NAME = 'ORDERS';<br>
-        </div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">18: 資料完整性約束 - 確保關聯一致性</h1>
-    <p>使用 CHECK、UNIQUE、NOT NULL 等約束確保資料完整性。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">資料完整性範例</h4>
-        <div class="html-code">-- 檢查約束：訂單總金額必須大於 0<br>
-            ALTER TABLE orders ADD CONSTRAINT chk_order_amount CHECK (total_amount > 0);<br>
-            <br>
-            -- 唯一約束：產品名稱在類別內唯一<br>
-            ALTER TABLE products ADD CONSTRAINT uk_product_name_category UNIQUE (product_name, category);<br>
-            <br>
-            -- NOT NULL 約束<br>
-            ALTER TABLE customers MODIFY (customer_name NOT NULL);<br>
-            <br>
-            -- 檢查現有約束<br>
-            SELECT * FROM DBA_CONSTRAINTS WHERE TABLE_NAME = 'ORDERS';<br>
-        </div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">19: 進階搜尋技巧 - 模糊搜尋與全文檢索</h1>
-    <p>使用 LIKE、REGEXP_LIKE 等進行模糊搜尋，或使用 Oracle Text 進行全文檢索。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">進階搜尋範例</h4>
-        <div class="html-code">-- 模糊搜尋客戶名稱<br>
-            SELECT * FROM customers WHERE customer_name LIKE '%張%';<br>
-            <br>
-            -- 正規表達式搜尋<br>
-            SELECT * FROM customers WHERE REGEXP_LIKE(phone, '^09[0-9]{8}$');<br>
-            <br>
-            -- 跨表搜尋<br>
-            SELECT DISTINCT c.customer_name<br>
-            FROM customers c<br>
-            JOIN orders o ON c.customer_id = o.customer_id<br>
-            JOIN order_items oi ON o.order_id = oi.order_id<br>
-            JOIN products p ON oi.product_id = p.product_id<br>
-            WHERE p.product_name LIKE '%電腦%' OR c.address LIKE '%台北%';<br>
-            <br>
-            -- 全文檢索（需要 Oracle Text）<br>
-            -- CREATE INDEX idx_customers_address ON customers(address) INDEXTYPE IS CTXSYS.CONTEXT;<br>
-            -- SELECT * FROM customers WHERE CONTAINS(address, '台北') > 0;<br>
-        </div>
-    </div>
-
-    <h1 class="SideTabs mt-4 pb-1" style="border-bottom: 1px solid #555;">20: 效能優化 - 聯動查詢的最佳化</h1>
-    <p>優化多表聯動查詢的效能，包括查詢重寫、索引策略等。</p>
-    <div class="code-example bg-dark border border-secondary p-4 mb-4 rounded">
-        <h4 class="text-white mb-3">效能優化範例</h4>
-        <div class="html-code">-- 使用 EXISTS 替代 IN 提升效能<br>
-            SELECT * FROM customers c<br>
-            WHERE EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.customer_id);<br>
-            <br>
-            -- 使用適當的 JOIN 順序<br>
-            SELECT /*+ LEADING(c, o, oi, p) */ c.customer_name, p.product_name<br>
-            FROM customers c<br>
-            JOIN orders o ON c.customer_id = o.customer_id<br>
-            JOIN order_items oi ON o.order_id = oi.order_id<br>
-            JOIN products p ON oi.product_id = p.product_id;<br>
-            <br>
-            -- 建立涵蓋索引<br>
-            CREATE INDEX idx_customer_order_summary ON orders(customer_id, order_date, total_amount);<br>
-            <br>
-            -- 查詢重寫：使用內聯視圖<br>
-            SELECT * FROM (<br>
-            SELECT c.customer_name, COUNT(o.order_id) AS order_count<br>
-            FROM customers c<br>
-            LEFT JOIN orders o ON c.customer_id = o.customer_id<br>
-            GROUP BY c.customer_id, c.customer_name<br>
-            ) WHERE order_count > 0;<br>
-        </div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const codeBlocks = document.querySelectorAll('.html-code');
-            codeBlocks.forEach(block => {
-                const text = block.innerHTML.replace(/<br\s*\/?>/gi, '\n');
-                const pre = document.createElement('pre');
-                const code = document.createElement('code');
-                code.className = 'language-sql';
-                code.innerHTML = text;
-                pre.appendChild(code);
-                block.parentNode.replaceChild(pre, block);
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const codeBlocks = document.querySelectorAll('.html-code');
+                codeBlocks.forEach(block => {
+                    const text = block.innerHTML.replace(/<br\s*\/?>/gi, '\n');
+                    const pre = document.createElement('pre');
+                    const code = document.createElement('code');
+                    code.className = 'language-sql';
+                    code.innerHTML = text;
+                    pre.appendChild(code);
+                    block.parentNode.replaceChild(pre, block);
+                });
+                Prism.highlightAll();
             });
-            Prism.highlightAll();
-        });
-    </script>
+        </script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-    <script src="js/script.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+        <script src="js/script.js"></script>
 </body>
 
 </html>

@@ -22,6 +22,11 @@
     <h1 class="SideTabs mt-4 pb-1">Flutter SDK</h1>
     <p><a href="https://docs.flutter.dev/install/manual">下載SDK</a></p>
     <P>新增環境變數在path內加上flutter/bin資料夾路徑</P>
+
+    <pre class="bg-secondary text-white p-3 rounded text-left">
+        C:\Users\u11033\flutter\bin
+        C:\tools\dart-sdk\bin
+    </pre>
     <p>測試安裝版本：flutter --version</p>
 
     <h1 class="SideTabs mt-4 pb-1">檢查Flutter安裝</h1>
@@ -69,11 +74,17 @@
         for troubleshooting tips.
         PS D:\SOURCE\flutter\HelloWorld>
         </pre>
-    <p>產生環境：flutter create .</p>
-    <p>列出並確認模擬器名稱：flutter emulators</p>
-    <p>啟動模擬器：flutter emulators --launch PA768</p>
 
     <h1 class="SideTabs mt-4 pb-1">建立hello專案</h1>
+
+    <p>產生環境：flutter create . (flutter 會產生基本的專案結構)</p>
+
+    使用指令flutter run -d chrome 在瀏覽器中執行應用程式<br>
+    使用指令flutter run -d windows 在系統視窗中執行應用程式<br>
+    使用指令flutter run -d Edge 在Edge中執行應用程式<br>
+
+    <p>列出並確認模擬器名稱：flutter emulators</p>
+    <p>啟動模擬器：flutter emulators --launch PA768</p>
 
     <table class="table table-dark text-white">
         <thead>
@@ -154,19 +165,19 @@
 
     <pre class="bg-secondary text-white p-3 rounded text-left">
         class HelloWorldPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Hello World')),  // ← 頂部欄
-      body: const Center(
-        child: Text(
-          'Hello, World!',
-          style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
-}
+            @override
+            Widget build(BuildContext context) {
+                return Scaffold(
+                appBar: AppBar(title: const Text('Hello World')),  // ← 頂部欄
+                body: const Center(
+                    child: Text(
+                    'Hello, World!',
+                    style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+                    ),
+                ),
+                );
+            }
+        }
     </pre>
 
     <p>Scaffold：提供 Material Design 的佈局（appBar + body）</p>
@@ -178,13 +189,13 @@
 
     <pre class="bg-secondary text-white p-3 rounded text-left">
         child: Text(
-  'Hello, World!',
-  style: TextStyle(
-    fontSize: 48,
-    fontWeight: FontWeight.bold,
-    color: Colors.red,  // ← 加入這一行
-  ),
-),
+            'Hello, World!',
+            style: TextStyle(
+                fontSize: 48,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,  // ← 加入這一行
+            ),
+        ),
     </pre>
     <p>儲存文件，在 Chrome 運行的終端按 r（Hot Reload），你會立即看到變化！</p>
 
