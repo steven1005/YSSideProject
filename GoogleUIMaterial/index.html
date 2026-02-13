@@ -590,9 +590,26 @@ chipSet.addEventListener('click', (e) => {
 
     <!-- 章節 8: 對話框 -->
     <h1 class="SideTabs mt-4 pb-1">8: 對話框 - Dialog</h1>
+    <p class="subtitle">展示基礎確認對話框與進階表單輸入對話框，並獲取回傳數據。</p>
+
     <div class="demo-container">
-        <md-filled-button onclick="document.getElementById('dialog-demo').show()">開啟對話框</md-filled-button>
-        <md-dialog id="dialog-demo">
+        <div class="d-flex gap-3 mb-4">
+            <md-filled-button onclick="document.getElementById('dialog-delete').show()">
+                開啟刪除確認
+            </md-filled-button>
+
+            <md-filled-tonal-button onclick="document.getElementById('dialog-login').show()">
+                開啟登入輸入
+            </md-filled-tonal-button>
+        </div>
+
+        <div id="dialog-output-area" class="p-3 border rounded-3 bg-dark text-info"
+            style="font-family: 'Roboto Mono', monospace; min-height: 100px; border-radius: 4px !important;">
+            <div style="color: #888;">// 狀態顯示區域</div>
+            <div id="dialog-status-text">等待操作中...</div>
+        </div>
+
+        <md-dialog id="dialog-delete">
             <div slot="headline">刪除確認</div>
             <form slot="content" id="form-delete" method="dialog">
                 您確定要刪除這項任務嗎？此動作無法復原。
@@ -602,36 +619,20 @@ chipSet.addEventListener('click', (e) => {
                 <md-filled-button form="form-delete" value="delete">刪除</md-filled-button>
             </div>
         </md-dialog>
-    </div>
 
-    <div class="code-section">
-        <div class="editor-wrapper" style="grid-column: span 2;">
-            <div class="editor-label">HTML</div>
-            <div class="editor-container">
-                <textarea class="code-textarea" data-type="html"></textarea>
-                <pre class="prism-highlight language-html"><code>&lt;md-dialog id="dialog-id"&gt;
-    &lt;div slot="headline"&gt;標題&lt;/div&gt;
-    &lt;form slot="content" id="form-id" method="dialog"&gt;內容區域&lt;/form&gt;
-    &lt;div slot="actions"&gt;
-        &lt;md-text-button form="form-id" value="close"&gt;關閉&lt;/md-text-button&gt;
-    &lt;/div&gt;
-&lt;/md-dialog&gt;
-
-&lt;!-- JS 調用方式: document.getElementById('dialog-id').show(); --&gt;</code></pre>
+        <md-dialog id="dialog-login">
+            <div slot="headline">身分驗證</div>
+            <form slot="content" id="form-login" method="dialog"
+                style="display: flex; flex-direction: column; gap: 16px;">
+                <md-outlined-text-field label="帳號" name="username" id="login-user"></md-outlined-text-field>
+                <md-outlined-text-field label="密碼" name="password" id="login-pass"
+                    type="password"></md-outlined-text-field>
+            </form>
+            <div slot="actions">
+                <md-text-button form="form-login" value="cancel">取消</md-text-button>
+                <md-filled-button form="form-login" value="login">登入</md-filled-button>
             </div>
-            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
-        </div>
-    </div>
-
-    <!-- 章節 9: 滑桿與開關 -->
-    <h1 class="SideTabs mt-4 pb-1">9: 滑桿與開關 - Slider & Switch</h1>
-    <div class="demo-container">
-        <div style="display: flex; align-items: center; gap: 20px;">
-            <md-slider id="slider-9" min="0" max="100" value="75" style="flex: 1;"></md-slider>
-            <md-switch id="switch-9" selected></md-switch>
-        </div>
-        <md-filled-button style="margin-top: 16px;" onclick="getSliderAndSwitch()">取得狀態</md-filled-button>
-        <p id="slider-result-9" style="margin-top:16px; color:#ccc; font-family: monospace;">結果將顯示在這裡</p>
+        </md-dialog>
     </div>
 
     <div class="code-section">
@@ -639,22 +640,125 @@ chipSet.addEventListener('click', (e) => {
             <div class="editor-label">HTML</div>
             <div class="editor-container">
                 <textarea class="code-textarea" data-type="html"></textarea>
-                <pre class="prism-highlight language-html"><code>&lt;md-slider id="slider-9" value="75"&gt;&lt;/md-slider&gt;
-&lt;md-switch id="switch-9" selected&gt;&lt;/md-switch&gt;
-&lt;md-filled-button onclick="getSliderAndSwitch()"&gt;
-    取得狀態
-&lt;/md-filled-button&gt;</code></pre>
+                <pre class="prism-highlight language-html"><code>
+&lt;md&hyphen;dialog id="dialog&hyphen;delete"&gt;
+            &lt;div slot="headline"&gt;刪除確認&lt;/div&gt;
+            &lt;form slot="content" id="form&hyphen;delete" method="dialog"&gt;
+                您確定要刪除這項任務嗎？此動作無法復原。
+            &lt;/form&gt;
+            &lt;div slot="actions"&gt;
+                &lt;md&hyphen;text&hyphen;button form="form&hyphen;delete" value="cancel"&gt;取消&lt;/md&hyphen;text&hyphen;button&gt;
+                &lt;md&hyphen;filled&hyphen;button form="form&hyphen;delete" value="delete"&gt;刪除&lt;/md&hyphen;filled&hyphen;button&gt;
+            &lt;/div&gt;
+        &lt;/md&hyphen;dialog&gt;
+
+        &lt;md&hyphen;dialog id="dialog&hyphen;login"&gt;
+            &lt;div slot="headline"&gt;身分驗證&lt;/div&gt;
+            &lt;form slot="content" id="form&hyphen;login" method="dialog"
+                style="display&colon; flex&semi; flex&hyphen;direction&colon; column&semi; gap&colon; 16px&semi;"&gt;
+                &lt;md&hyphen;outlined&hyphen;text&hyphen;field label="帳號" name="username" id="login&hyphen;user"&gt;&lt;/md&hyphen;outlined&hyphen;text&hyphen;field&gt;
+                &lt;md&hyphen;outlined&hyphen;text&hyphen;field label="密碼" name="password" id="login&hyphen;pass"
+                    type="password"&gt;&lt;/md&hyphen;outlined&hyphen;text&hyphen;field&gt;
+            &lt;/form&gt;
+            &lt;div slot="actions"&gt;
+                &lt;md&hyphen;text&hyphen;button form="form&hyphen;login" value="cancel"&gt;取消&lt;/md&hyphen;text&hyphen;button&gt;
+                &lt;md&hyphen;filled&hyphen;button form="form&hyphen;login" value="login"&gt;登入&lt;/md&hyphen;filled&hyphen;button&gt;
+            &lt;/div&gt;
+        &lt;/md&hyphen;dialog&gt;
+                    </code></pre>
             </div>
             <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
         </div>
-        <div class="editor-wrapper">
-            <div class="editor-label">JavaScript</div>
-            <div class="editor-container">
-                <textarea class="code-textarea" data-type="js"></textarea>
-                <pre class="prism-highlight language-javascript"><code>function getSliderAndSwitch() {
-    const slider = document.getElementById('slider-9');
-    const sw = document.getElementById('switch-9');
-    const res = document.getElementById('slider-result-9');
+
+        <div class="code-section">
+            <div class="editor-wrapper" style="grid-column: span 2;">
+                <div class="editor-label">JavaScript (完整互動邏輯)</div>
+                <div class="editor-container">
+                    <textarea class="code-textarea" data-type="javascript"></textarea>
+                    <pre class="prism-highlight language-javascript"><code>
+                    // 以下是針對**「刪除確認」與「帳密登入」**完整且修正後的 JavaScript 代碼
+                    document.addEventListener('DOMContentLoaded', () => {
+    // 取得顯示區域
+    const statusText = document.getElementById('dialog-status-text');
+
+    // --- 1. 處理刪除確認 ---
+    const diagDelete = document.getElementById('dialog-delete'); 
+    // 請確認你的 HTML 裡 md-dialog 的 id 是不是 dialog-delete
+    
+    if (diagDelete) {
+        diagDelete.addEventListener('close', () => {
+            const action = diagDelete.returnValue; // 取得按鈕的 value ("delete" 或 "cancel")
+            
+            if (action === 'delete') {
+                statusText.innerHTML = `<span style="color: #ff5555;">> [刪除成功] 已執行刪除動作 (returnValue: ${action})</span>`;
+            } else {
+                statusText.innerHTML = `<span style="color: #888;">> [取消] 使用者點擊了取消</span>`;
+            }
+        });
+    }
+
+    // --- 2. 處理登入輸入 ---
+    const diagLogin = document.getElementById('dialog-login');
+    if (diagLogin) {
+        diagLogin.addEventListener('close', () => {
+            const action = diagLogin.returnValue;
+            if (action === 'login') {
+                // 改用 ID 取值，最穩定
+                const user = document.getElementById('login-user').value;
+                const pass = document.getElementById('login-pass').value;
+                statusText.innerHTML = `
+                    <span style="color: #64ffda;">> [登入成功]</span><br>
+                    帳號：${user || '未填'}<br>
+                    密碼：${pass || '未填'}
+                `;
+                // 清空輸入框
+                document.getElementById('login-user').value = '';
+                document.getElementById('login-pass').value = '';
+            } else {
+                statusText.innerHTML = `<span style="color: #ffb86c;">> [登入取消] 使用者未提交</span>`;
+            }
+        });
+    }
+});</code></pre>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+            </div>
+        </div>
+
+        <!-- 章節 9: 滑桿與開關 -->
+        <h1 class="SideTabs mt-4 pb-1">9: 滑桿與開關 - Slider & Switch Button Get</h1>
+        <div class="demo-container">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <md-slider id="slider-9-btnGet" min="0" max="100" value="75" style="flex: 1;"></md-slider>
+                <md-switch id="switch-9-btnGet" selected></md-switch>
+            </div>
+            <md-filled-button style="margin-top: 16px;" onclick="getSliderAndSwitch()">取得狀態</md-filled-button>
+            <p id="slider-result-9-btnGet" style="margin-top:16px; color:#ccc; font-family: monospace;">結果將顯示在這裡</p>
+        </div>
+
+        <div class="code-section">
+            <div class="editor-wrapper">
+                <div class="editor-label">HTML</div>
+                <div class="editor-container">
+                    <textarea class="code-textarea" data-type="html"></textarea>
+                    <pre
+                        class="prism-highlight language-html"><code>&lt;div style="display&colon; flex&semi; align&hyphen;items&colon; center&semi; gap&colon; 20px&semi;"&gt;
+            &lt;md&hyphen;slider id="slider&hyphen;9&hyphen;btnGet" min="0" max="100" value="75" style="flex&colon; 1&semi;"&gt;&lt;/md&hyphen;slider&gt;
+            &lt;md&hyphen;switch id="switch&hyphen;9&hyphen;btnGet" selected&gt;&lt;/md&hyphen;switch&gt;
+        &lt;/div&gt;
+        &lt;md&hyphen;filled&hyphen;button style="margin&hyphen;top&colon; 16px&semi;" onclick="getSliderAndSwitch&lpar;&rpar;"&gt;取得狀態&lt;/md&hyphen;filled&hyphen;button&gt;
+        &lt;p id="slider&hyphen;result&hyphen;9&hyphen;btnGet" style="margin&hyphen;top&colon;16px&semi; color&colon;&num;ccc&semi; font&hyphen;family&colon; monospace&semi;"&gt;結果將顯示在這裡&lt;/p&gt;</code></pre>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+            </div>
+            <div class="editor-wrapper">
+                <div class="editor-label">JavaScript</div>
+                <div class="editor-container">
+                    <textarea class="code-textarea" data-type="js"></textarea>
+                    <pre class="prism-highlight language-javascript"><code>function getSliderAndSwitch() {
+    const slider = document.getElementById('slider-9-btnGet');
+    const sw = document.getElementById('switch-9-btnGet');
+    const res = document.getElementById('slider-result-9-btnGet');
 
     // Material Web 中，Switch 的狀態屬性是 .selected (boolean)
     // Slider 的數值是 .value (number)
@@ -663,57 +767,289 @@ chipSet.addEventListener('click', (e) => {
         <span style="color:#afffb2">Status:</span> ${sw.selected ? 'ON (開啟)' : 'OFF (關閉)'}
     `;
 }</code></pre>
-            </div>
-            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
-        </div>
-    </div>
-
-    <!-- 章節 10: Scaffold 架構 -->
-    <h1 class="SideTabs mt-4 pb-1">10: Scaffold 架構</h1>
-    <p class="subtitle">Scaffold 是 Material Design 的基礎佈局，包含 Top App Bar 與 FAB。</p>
-    <div class="code-section">
-        <div class="editor-wrapper" style="grid-column: span 2;">
-            <div class="editor-label">HTML</div>
-            <div class="editor-container">
-                <textarea class="code-textarea" data-type="html"></textarea>
-                <pre class="prism-highlight language-html"><code>&lt;header style="height: 64px; display: flex; align-items: center; padding: 0 16px; background: #333;"&gt;
-    &lt;md-icon-button&gt;&lt;md-icon&gt;menu&lt;/md-icon&gt;&lt;/md-icon-button&gt;
-    &lt;span style="margin-left: 8px;"&gt;我的應用&lt;/span&gt;
-&lt;/header&gt;
-
-&lt;main style="padding: 16px;"&gt;
-    &lt;!-- 頁面主要內容 --&gt;
-&lt;/main&gt;
-
-&lt;md-fab style="position: fixed; bottom: 24px; right: 24px;" aria-label="新增"&gt;
-    &lt;md-icon slot="icon"&gt;add&lt;/md-icon&gt;
-&lt;/md-fab&gt;</code></pre>
-            </div>
-            <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
-        </div>
-    </div>
-
-    <!-- 章節 11: Checkbox & Radio -->
-    <h1 class="SideTabs mt-4 pb-1">11: 選擇元件 - Checkbox & Radio</h1>
-    <div class="demo-container">
-        <div class="d-flex flex-column gap-3">
-            <label class="d-flex align-items-center gap-2">
-                <md-checkbox checked></md-checkbox>
-                <span>接受服務條款</span>
-            </label>
-            <hr>
-            <div class="d-flex gap-4">
-                <label class="d-flex align-items-center gap-2">
-                    <md-radio name="group" value="A" checked></md-radio> 選項 A
-                </label>
-                <label class="d-flex align-items-center gap-2">
-                    <md-radio name="group" value="B"></md-radio> 選項 B
-                </label>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
             </div>
         </div>
-    </div>
 
-    <script src="js/script.js"></script>
+        <h1 class="SideTabs mt-4 pb-1">9: 滑桿與開關 - Slider & Switch Realtime Get</h1>
+        <div class="demo-container">
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <span style="min-width: 50px;">數值:</span>
+                    <md-slider id="slider-9-realtime" min="0" max="100" value="75" labeled style="flex: 1;"></md-slider>
+                    <span id="slider-val-text-realtime"
+                        style="min-width: 40px; color: #64ffda; font-weight: bold;">75</span>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <span style="min-width: 50px;">狀態:</span>
+                    <md-switch id="switch-9-realtime" selected></md-switch>
+                    <span id="switch-val-text-realtime" style="color: #64ffda; font-weight: bold;">ON (開啟)</span>
+                </div>
+            </div>
+
+            <div id="slider-result-9-realtime" class="mt-4 p-3 border rounded-3 bg-dark"
+                style="color:#ccc; font-family: 'Roboto Mono', monospace; border-radius: 4px !important;">
+                <span style="color: #888;">// Real-time Monitor</span>
+                <div id="realtime-log-9-realtime">> 等待變動中...</div>
+            </div>
+        </div>
+
+        <div class="code-section">
+            <div class="editor-wrapper">
+                <div class="editor-label">HTML</div>
+                <div class="editor-container">
+                    <textarea class="code-textarea" data-type="html"></textarea>
+                    <pre class="prism-highlight language-html"><code>&lt;div style="display&colon; flex&semi; flex&hyphen;direction&colon; column&semi; gap&colon; 24px&semi;"&gt;
+            &lt;div style="display&colon; flex&semi; align&hyphen;items&colon; center&semi; gap&colon; 20px&semi;"&gt;
+                &lt;span style="min&hyphen;width&colon; 50px&semi;"&gt;數值&colon;&lt;/span&gt;
+                &lt;md&hyphen;slider id="slider&hyphen;9&hyphen;realtime" min="0" max="100" value="75" labeled style="flex&colon; 1&semi;"&gt;&lt;/md&hyphen;slider&gt;
+                &lt;span id="slider&hyphen;val&hyphen;text&hyphen;realtime"
+                    style="min&hyphen;width&colon; 40px&semi; color&colon; &num;64ffda&semi; font&hyphen;weight&colon; bold&semi;"&gt;75&lt;/span&gt;
+            &lt;/div&gt;
+
+            &lt;div style="display&colon; flex&semi; align&hyphen;items&colon; center&semi; gap&colon; 20px&semi;"&gt;
+                &lt;span style="min&hyphen;width&colon; 50px&semi;"&gt;狀態&colon;&lt;/span&gt;
+                &lt;md&hyphen;switch id="switch&hyphen;9&hyphen;realtime" selected&gt;&lt;/md&hyphen;switch&gt;
+                &lt;span id="switch&hyphen;val&hyphen;text&hyphen;realtime" style="color&colon; &num;64ffda&semi; font&hyphen;weight&colon; bold&semi;"&gt;ON &lpar;開啟&rpar;&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;</code></pre>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+            </div>
+
+            <div class="editor-wrapper">
+                <div class="editor-label">JavaScript</div>
+                <div class="editor-container">
+                    <textarea class="code-textarea" data-type="javascript"></textarea>
+                    <pre class="prism-highlight language-javascript"><code>const slider = document.getElementById('slider-9-realtime');
+const sliderText = document.getElementById('slider-val-text-realtime');
+const sw = document.getElementById('switch-9-realtime');
+const swText = document.getElementById('switch-val-text-realtime');
+const log = document.getElementById('realtime-log-9-realtime');
+
+// 監聽滑桿 (使用 input 事件達成即時跳動)
+slider.addEventListener('input', () => {
+    sliderText.textContent = slider.value;
+    log.innerHTML = `Value: ${slider.value}`;
+});
+
+// 監聽開關 (使用 change 事件)
+sw.addEventListener('change', () => {
+    const status = sw.selected ? 'ON (開啟)' : 'OFF (關閉)';
+    swText.textContent = status;
+    log.innerHTML = `Switch: ${status}`;
+});</code></pre>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+            </div>
+        </div>
+
+        <!-- 章節 10: Scaffold 架構 -->
+        <h1 class="SideTabs mt-4 pb-1">10: Scaffold 架構 - App Structure</h1>
+
+        <div class="demo-container">
+            <div
+                style="position: relative; height: 300px; background: #1a1a1a; overflow: hidden; border: 1px solid #444; border-radius: 8px; display: flex; flex-direction: column;">
+
+                <header
+                    style="height: 64px; display: flex; align-items: center; padding: 0 16px; background: #2b2b2b; color: white;">
+                    <md-icon-button id="scaffold-menu-trigger"><md-icon>menu</md-icon></md-icon-button>
+                    <span id="scaffold-display-title" style="margin-left: 8px; font-weight: 500;">首頁</span>
+                </header>
+
+                <main id="scaffold-display-content" style="flex: 1; padding: 20px; color: #eee;">
+                    <p>這是主要的內容區域。</p>
+                </main>
+
+                <footer
+                    style="height: 56px; background: #222; display: flex; justify-content: space-around; align-items: center;">
+                    <md-icon-button onclick="updateScaffold('首頁', '這是首頁的內容')"><md-icon>home</md-icon></md-icon-button>
+                    <md-icon-button
+                        onclick="updateScaffold('郵件', '您有 3 封未讀郵件')"><md-icon>mail</md-icon></md-icon-button>
+                    <md-icon-button
+                        onclick="updateScaffold('設定', '在此調整您的偏好設定')"><md-icon>settings</md-icon></md-icon-button>
+                </footer>
+
+                <md-fab id="scaffold-fab-btn" style="position: absolute; bottom: 70px; right: 16px;">
+                    <md-icon slot="icon">add</md-icon>
+                </md-fab>
+            </div>
+
+            <div id="scaffold-debug-log" class="mt-4 p-3 border rounded-3 bg-dark"
+                style="color:#64ffda; font-family: monospace;">
+                > 等待操作中...
+            </div>
+        </div>
+
+        <div class="code-section">
+            <div class="editor-wrapper">
+                <div class="editor-label">HTML</div>
+                <div class="editor-container">
+                    <textarea class="code-textarea" data-type="html"></textarea>
+                    <pre class="prism-highlight language-html"><code>&lt;header
+                style="height&colon; 64px&semi; display&colon; flex&semi; align&hyphen;items&colon; center&semi; padding&colon; 0 16px&semi; background&colon; &num;2b2b2b&semi; color&colon; white&semi;"&gt;
+                &lt;md&hyphen;icon&hyphen;button id="scaffold&hyphen;menu&hyphen;trigger"&gt;&lt;md&hyphen;icon&gt;menu&lt;/md&hyphen;icon&gt;&lt;/md&hyphen;icon&hyphen;button&gt;
+                &lt;span id="scaffold&hyphen;display&hyphen;title" style="margin&hyphen;left&colon; 8px&semi; font&hyphen;weight&colon; 500&semi;"&gt;首頁&lt;/span&gt;
+            &lt;/header&gt;
+
+            &lt;main id="scaffold&hyphen;display&hyphen;content" style="flex&colon; 1&semi; padding&colon; 20px&semi; color&colon; &num;eee&semi;"&gt;
+                &lt;p&gt;這是主要的內容區域。&lt;/p&gt;
+            &lt;/main&gt;
+
+            &lt;footer
+                style="height&colon; 56px&semi; background&colon; &num;222&semi; display&colon; flex&semi; justify&hyphen;content&colon; space&hyphen;around&semi; align&hyphen;items&colon; center&semi;"&gt;
+                &lt;md&hyphen;icon&hyphen;button onclick="updateScaffold&lpar;'首頁', '這是首頁的內容'&rpar;"&gt;&lt;md&hyphen;icon&gt;home&lt;/md&hyphen;icon&gt;&lt;/md&hyphen;icon&hyphen;button&gt;
+                &lt;md&hyphen;icon&hyphen;button onclick="updateScaffold&lpar;'郵件', '您有 3 封未讀郵件'&rpar;"&gt;&lt;md&hyphen;icon&gt;mail&lt;/md&hyphen;icon&gt;&lt;/md&hyphen;icon&hyphen;button&gt;
+                &lt;md&hyphen;icon&hyphen;button
+                    onclick="updateScaffold&lpar;'設定', '在此調整您的偏好設定'&rpar;"&gt;&lt;md&hyphen;icon&gt;settings&lt;/md&hyphen;icon&gt;&lt;/md&hyphen;icon&hyphen;button&gt;
+            &lt;/footer&gt;
+
+            &lt;md&hyphen;fab id="scaffold&hyphen;fab&hyphen;btn" style="position&colon; absolute&semi; bottom&colon; 70px&semi; right&colon; 16px&semi;"&gt;
+                &lt;md&hyphen;icon slot="icon"&gt;add&lt;/md&hyphen;icon&gt;
+            &lt;/md&hyphen;fab&gt;</code></pre>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+            </div>
+
+            <div class="editor-wrapper">
+                <div class="editor-label">JavaScript</div>
+                <div class="editor-container">
+                    <textarea class="code-textarea" data-type="javascript"></textarea>
+                    <pre class="prism-highlight language-javascript"><code>
+                    // 監聽 FAB 放在DOMContentLoaded裡面
+document.addEventListener('DOMContentLoaded', () => {
+    const fab = document.getElementById('scaffold-fab-btn');
+    if (fab) {
+        fab.addEventListener('click', () => alert('點擊了新增！'));
+    }
+});
+                    // 必須放在最外層（全域），HTML 才抓得到
+function updateScaffold(title, text) {
+  document.getElementById('scaffold-display-title').textContent = title;
+  document.getElementById('scaffold-display-content').innerHTML = `&lt;p&gt;\${text}&lt;/p&gt;`;
+  document.getElementById('scaffold-debug-log').innerText = `> 切換至: \${title}`;
+}</code></pre>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+            </div>
+        </div>
+        <h1 class="SideTabs mt-4 pb-1">11: 選擇元件 - Checkbox & Radio</h1>
+        <div class="demo-container">
+            <div class="d-flex flex-column gap-4">
+
+                <div>
+                    <div style="margin-bottom: 10px; color: #888;">// 多選群組 (興趣)</div>
+                    <div class="d-flex flex-wrap gap-3">
+                        <label class="d-flex align-items-center gap-2">
+                            <md-checkbox class="interest-check" value="寫程式" checked></md-checkbox>
+                            <span>寫程式</span>
+                        </label>
+                        <label class="d-flex align-items-center gap-2">
+                            <md-checkbox class="interest-check" value="看電影"></md-checkbox>
+                            <span>看電影</span>
+                        </label>
+                        <label class="d-flex align-items-center gap-2">
+                            <md-checkbox class="interest-check" value="旅行"></md-checkbox>
+                            <span>旅行</span>
+                        </label>
+                    </div>
+                </div>
+
+                <hr style="border-color: #444;">
+
+                <div>
+                    <div style="margin-bottom: 10px; color: #888;">// 單選群組 (性別)</div>
+                    <div class="d-flex gap-4">
+                        <label class="d-flex align-items-center gap-2">
+                            <md-radio name="gender-group" value="男" checked></md-radio>
+                            <span>男</span>
+                        </label>
+                        <label class="d-flex align-items-center gap-2">
+                            <md-radio name="gender-group" value="女"></md-radio>
+                            <span>女</span>
+                        </label>
+                        <label class="d-flex align-items-center gap-2">
+                            <md-radio name="gender-group" value="不公開"></md-radio>
+                            <span>不公開</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="selection-result" class="mt-4 p-3 border rounded-3 bg-dark"
+                style="color:#64ffda; font-family: 'Roboto Mono', monospace; border-radius: 4px !important;">
+                <span style="color: #888;">// Selection Monitor</span>
+                <div id="selection-log">> 準備就緒</div>
+            </div>
+        </div>
+
+        <div class="code-section">
+            <div class="editor-wrapper">
+                <div class="editor-label">HTML</div>
+                <div class="editor-container">
+                    <textarea class="code-textarea" data-type="html"></textarea>
+                    <pre class="prism-highlight language-html"><code>&lt;!-- 多選使用相同 class 方便 JS 選取 --&gt;
+&lt;md-checkbox class="interest-item" value="寫程式" checked&gt;&lt;/md-checkbox&gt;
+&lt;md-checkbox class="interest-item" value="看電影"&gt;&lt;/md-checkbox&gt;
+&lt;md-checkbox class="interest-item" value="旅行"&gt;&lt;/md-checkbox&gt;
+
+&lt;!-- 單選使用相同 name 屬性達到互斥 --&gt;
+&lt;md-radio name="gender-group" value="男" checked&gt;&lt;/md-radio&gt;
+&lt;md-radio name="gender-group" value="女"&gt;&lt;/md-radio&gt;
+&lt;md-radio name="gender-group" value="不公開"&gt;&lt;/md-radio&gt;</code></pre>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+            </div>
+
+            <div class="editor-wrapper">
+                <div class="editor-label">JavaScript</div>
+                <div class="editor-container">
+                    <textarea class="code-textarea" data-type="javascript"></textarea>
+                    <pre class="prism-highlight language-javascript"><code>document.addEventListener('DOMContentLoaded', () => {
+    const selectionLog = document.getElementById('selection-log');
+
+    // 1. 處理 Checkbox 多選
+    const checkboxes = document.querySelectorAll('.interest-check');
+    checkboxes.forEach(cb => {
+        cb.addEventListener('change', updateSelectionOutput);
+    });
+
+    // 2. 處理 Radio 單選
+    const radios = document.querySelectorAll('md-radio[name="gender-group"]');
+    radios.forEach(rd => {
+        rd.addEventListener('change', updateSelectionOutput);
+    });
+
+    function updateSelectionOutput() {
+        // 抓取所有被勾選的興趣
+        const selectedInterests = Array.from(checkboxes)
+            .filter(i => i.checked)
+            .map(i => i.value);
+
+        // 抓取目前選中的性別
+        const selectedGender = Array.from(radios)
+            .find(r => r.checked)?.value || '未選擇';
+
+        // 更新日誌顯示
+        if (selectionLog) {
+            selectionLog.innerHTML = `
+                <span style="color: #64ffda;">> 興趣:</span> [${selectedInterests.join(', ') || '無'}] <br>
+                <span style="color: #64ffda;">> 性別:</span> ${selectedGender}
+            `;
+        }
+    }
+
+    // 初始化顯示一次
+    updateSelectionOutput();
+});</code></pre>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard(this)">複製</button>
+            </div>
+        </div>
+
+        <script src="js/script.js"></script>
 </body>
 
 </html>
